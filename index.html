@@ -6,105 +6,587 @@
 <title>Sea & Paper – gegen Silas</title>
 <style>
 :root{--bg:#f6f3ec;--panel:#fff;--ink:#16202a;--muted:#68727d;--line:#d8d2c8;--accent:#2b7a78;--accent2:#f2d4a7;--danger:#a23b3b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.app{max-width:980px;margin:auto;padding:14px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.title{font-weight:800;font-size:22px}.sub{color:var(--muted);font-size:13px}.score{display:flex;gap:14px;font-weight:800;font-size:18px}.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:14px;padding:12px 15px;font-weight:750;min-height:46px;cursor:pointer}.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}.btn.warn{background:#fff5e8;border-color:#e9b46d}.btn:disabled{opacity:.4;cursor:not-allowed}.board{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px}.deck{min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.waves{font-size:38px}.pile-title{font-size:12px;color:var(--muted);margin-bottom:6px}.card{border-radius:15px;padding:10px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(0,0,0,.12);color:#101820}.card .ico{font-size:30px}.card .name{font-weight:850;line-height:1.1}.card .meta{font-size:12px;opacity:.7}.darkblue{background:#c9dcf5}.turquoise{background:#c9efef}.yellow{background:#faed96}.black{background:#d9dade}.green{background:#d4ebc8}.gray{background:#e7e8e9}.lavender{background:#e1d3ef}.pink{background:#f2c9db}.peach{background:#f3d0b5}.orange{background:#efb06a}.tan{background:#e5d3b7}.white{background:#fff}.section{margin-top:14px}.section-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.hand{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.played{display:flex;gap:7px;flex-wrap:wrap}.mini{width:92px;min-height:90px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.choice{margin-top:14px;background:#fffdf8;border:1px solid #dfc9a5;border-radius:18px;padding:12px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.hidden{display:none!important}.status{margin-top:12px;padding:11px 13px;border-radius:14px;background:#eef7f6;border:1px solid #c5dfdd;font-weight:650}.log{max-height:220px;overflow:auto;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:5px}.ai{display:grid;grid-template-columns:1fr 1fr;gap:10px}.reveal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}.tag{display:inline-block;border-radius:999px;padding:5px 9px;background:#eef0f2;font-size:12px;font-weight:700}.footer{font-size:12px;color:var(--muted);margin:14px 0 6px}
-@media(max-width:680px){.board{grid-template-columns:1fr}.hand{grid-template-columns:repeat(2,minmax(0,1fr))}.ai{grid-template-columns:1fr}.reveal{grid-template-columns:repeat(2,minmax(0,1fr))}.card{min-height:104px}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.app{max-width:980px;margin:auto;padding:14px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.title{font-weight:800;font-size:22px}
+.sub{color:var(--muted);font-size:13px}
+.score{display:flex;gap:14px;font-weight:800;font-size:18px}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:14px;padding:12px 15px;font-weight:750;min-height:46px;cursor:pointer}
+.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+.btn.warn{background:#fff5e8;border-color:#e9b46d}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.board{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px}
+.deck{min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.waves{font-size:38px}
+.pile-title{font-size:12px;color:var(--muted);margin-bottom:6px}
+.card{border-radius:15px;padding:10px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(0,0,0,.12);color:#101820}
+.card .ico{font-size:30px}
+.card .name{font-weight:850;line-height:1.1}
+.card .meta{font-size:12px;opacity:.7}
+.darkblue{background:#c9dcf5}
+.turquoise{background:#c9efef}
+.yellow{background:#faed96}
+.black{background:#d9dade}
+.green{background:#d4ebc8}
+.gray{background:#e7e8e9}
+.lavender{background:#e1d3ef}
+.pink{background:#f2c9db}
+.peach{background:#f3d0b5}
+.orange{background:#efb06a}
+.tan{background:#e5d3b7}
+.white{background:#fff}
+.section{margin-top:14px}
+.section-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.hand{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.played{display:flex;gap:7px;flex-wrap:wrap}
+.mini{width:92px;min-height:90px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.choice{margin-top:14px;background:#fffdf8;border:1px solid #dfc9a5;border-radius:18px;padding:12px}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.hidden{display:none!important}
+.status{margin-top:12px;padding:11px 13px;border-radius:14px;background:#eef7f6;border:1px solid #c5dfdd;font-weight:650}
+.log{max-height:220px;overflow:auto;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.ai{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.reveal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
+.tag{display:inline-block;border-radius:999px;padding:5px 9px;background:#eef0f2;font-size:12px;font-weight:700}
+.footer{font-size:12px;color:var(--muted);margin:14px 0 6px}
+@media(max-width:680px){
+  .board{grid-template-columns:1fr}
+  .hand{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ai{grid-template-columns:1fr}
+  .reveal{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card{min-height:104px}
+}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="top">
-    <div><div class="title">Sea & Paper – gegen Silas</div><div class="sub">2 Spieler · Partie bis 40 Punkte</div></div>
-    <div class="score"><span>Du: <b id="youTotal">0</b></span><span>Silas: <b id="aiTotal">0</b></span></div>
-    <button id="newBtn" type="button" class="btn primary" onclick="newGame()">Neue Partie</button>
+    <div>
+      <div class="title">Sea & Paper – gegen Silas</div>
+      <div class="sub">2 Spieler · Partie bis 40 Punkte</div>
+    </div>
+    <div class="score">
+      <span>Du: <b id="youTotal">0</b></span>
+      <span>Silas: <b id="aiTotal">0</b></span>
+    </div>
+    <button id="newBtn" type="button" class="btn primary">Neue Partie</button>
   </div>
-  <div id="status" class="status">Version 3 geladen. Tippe auf „Neue Partie“.</div>
+
+  <div id="status" class="status">Version 4 lädt …</div>
 
   <div class="board">
-    <button id="drawBtn" type="button" class="panel deck btn" onclick="drawTwo()"><div class="waves">🌊</div><div><b>2 Karten ziehen</b></div><div class="sub"><span id="deckCount">0</span> Karten übrig</div></button>
-    <button id="pileA" type="button" class="panel btn" onclick="takePile(0)"><div class="pile-title">Ablage A</div><div id="pileAcard"></div></button>
-    <button id="pileB" type="button" class="panel btn" onclick="takePile(1)"><div class="pile-title">Ablage B</div><div id="pileBcard"></div></button>
+    <button id="drawBtn" type="button" class="panel deck btn">
+      <div class="waves">🌊</div>
+      <div><b>2 Karten ziehen</b></div>
+      <div class="sub"><span id="deckCount">0</span> Karten übrig</div>
+    </button>
+
+    <button id="pileA" type="button" class="panel btn">
+      <div class="pile-title">Ablage A</div>
+      <div id="pileAcard"></div>
+    </button>
+
+    <button id="pileB" type="button" class="panel btn">
+      <div class="pile-title">Ablage B</div>
+      <div id="pileBcard"></div>
+    </button>
   </div>
 
-  <div id="choiceBox" class="choice hidden"><div id="choiceTitle" style="font-weight:800;margin-bottom:9px"></div><div id="choiceGrid" class="choice-grid"></div></div>
+  <div id="choiceBox" class="choice hidden">
+    <div id="choiceTitle" style="font-weight:800;margin-bottom:9px"></div>
+    <div id="choiceGrid" class="choice-grid"></div>
+  </div>
 
   <div class="section panel">
-    <div class="section-head"><div><b>Deine Hand</b> · aktueller Wert: <b id="youRound">0</b></div><div class="actions"><button id="stopBtn" type="button" class="btn" onclick="youStop()">Stopp</button><button id="chanceBtn" type="button" class="btn warn" onclick="youLast()">Letzte Chance</button></div></div>
+    <div class="section-head">
+      <div>
+        <b>Deine Hand</b> · aktueller Wert: <b id="youRound">0</b>
+      </div>
+      <div class="actions">
+        <button id="stopBtn" type="button" class="btn">Stopp</button>
+        <button id="chanceBtn" type="button" class="btn warn">Letzte Chance</button>
+      </div>
+    </div>
+
     <div id="hand" class="hand"></div>
-    <div style="margin-top:12px"><b>Ausgespielt</b></div><div id="youPlayed" class="played" style="margin-top:7px"></div>
+
+    <div style="margin-top:12px"><b>Ausgespielt</b></div>
+    <div id="youPlayed" class="played" style="margin-top:7px"></div>
+
     <div id="duoActions" class="actions"></div>
   </div>
 
   <div class="section ai">
-    <div class="panel"><b>Silas</b><div class="sub" style="margin-top:4px">Verdeckte Hand: <span id="aiCount">0</span> Karten</div><div style="margin-top:9px"><b>Offen ausgespielt</b></div><div id="aiPlayed" class="played" style="margin-top:7px"></div><div id="aiRevealWrap" class="hidden"><div style="margin-top:12px"><b>Silas deckt auf</b></div><div id="aiReveal" class="reveal"></div><div id="aiRevealScore" class="sub" style="margin-top:7px"></div></div></div>
-    <div class="panel"><b>Spielverlauf</b><div id="log" class="log" style="margin-top:8px"></div></div>
+    <div class="panel">
+      <b>Silas</b>
+      <div class="sub" style="margin-top:4px">
+        Verdeckte Hand: <span id="aiCount">0</span> Karten
+      </div>
+
+      <div style="margin-top:9px"><b>Offen ausgespielt</b></div>
+      <div id="aiPlayed" class="played" style="margin-top:7px"></div>
+
+      <div id="aiRevealWrap" class="hidden">
+        <div style="margin-top:12px"><b>Silas deckt auf</b></div>
+        <div id="aiReveal" class="reveal"></div>
+        <div id="aiRevealScore" class="sub" style="margin-top:7px"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <b>Spielverlauf</b>
+      <div id="log" class="log" style="margin-top:8px"></div>
+    </div>
   </div>
-  <div class="footer">Eigene Fan-Spieloberfläche. Gegnername: Silas. Kartenmotive werden durch Symbole dargestellt; keine Originalgrafiken werden verwendet.</div>
+
+  <div class="footer">
+    Eigene Fan-Spieloberfläche. Gegnername: Silas. Kartenmotive werden durch Symbole dargestellt; keine Originalgrafiken werden verwendet.
+  </div>
 </div>
+
 <script>
+(()=>{
 'use strict';
-const $=id=>document.getElementById(id);
-const NAME={crab:'Mr Krabs',boat:'Boot',fish:'Fisch',shark:'Hai',swimmer:'Schwimmer',shell:'Muschel',octopus:'Oktopus',penguin:'Pinguin',sailor:'Seemann',mermaid:'Meerjungfrau',lighthouse:'eine pro Boot',shoal:'ein pro Fisch',colony:'zwei pro Pinguin',captain:'Kapitän'};
-const ICON={crab:'🦀',boat:'⛵',fish:'🐟',shark:'🦈',swimmer:'🏊',shell:'🐚',octopus:'🐙',penguin:'🐧',sailor:'⚓',mermaid:'🧜‍♀️',lighthouse:'🗼',shoal:'🐟',colony:'🐧',captain:'🧭'};
-const CNAME={darkblue:'Dunkelblau',turquoise:'Türkis',yellow:'Gelb',black:'Schwarz',green:'Grün',gray:'Grau',lavender:'Lila',pink:'Rosa',peach:'Pfirsich',orange:'Orange',tan:'Beige',white:'Weiß'};
-const typeCounts={crab:9,boat:8,fish:7,shark:5,swimmer:5,shell:6,octopus:5,penguin:3,sailor:2,lighthouse:1,shoal:1,colony:1,captain:1,mermaid:4};
-const colorCounts={darkblue:9,turquoise:9,yellow:8,black:8,green:6,gray:4,lavender:4,pink:2,peach:2,orange:1,tan:1,white:4};
-let uid=1;
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+const $ = id => document.getElementById(id);
+
+const NAME = {
+  crab:'Mr Krabs',
+  boat:'Boot',
+  fish:'Fisch',
+  shark:'Hai',
+  swimmer:'Schwimmer',
+  shell:'Muschel',
+  octopus:'Oktopus',
+  penguin:'Pinguin',
+  sailor:'Seemann',
+  mermaid:'Meerjungfrau',
+  lighthouse:'eine pro Boot',
+  shoal:'ein pro Fisch',
+  colony:'zwei pro Pinguin',
+  captain:'Kapitän'
+};
+
+const ICON = {
+  crab:'🦀',
+  boat:'⛵',
+  fish:'🐟',
+  shark:'🦈',
+  swimmer:'🏊',
+  shell:'🐚',
+  octopus:'🐙',
+  penguin:'🐧',
+  sailor:'⚓',
+  mermaid:'🧜‍♀️',
+  lighthouse:'🗼',
+  shoal:'🐟',
+  colony:'🐧',
+  captain:'🧭'
+};
+
+const CNAME = {
+  darkblue:'Dunkelblau',
+  turquoise:'Türkis',
+  yellow:'Gelb',
+  black:'Schwarz',
+  green:'Grün',
+  gray:'Grau',
+  lavender:'Lila',
+  pink:'Rosa',
+  peach:'Pfirsich',
+  orange:'Orange',
+  tan:'Beige',
+  white:'Weiß'
+};
+
+const typeCounts = {
+  crab:9,
+  boat:8,
+  fish:7,
+  shark:5,
+  swimmer:5,
+  shell:6,
+  octopus:5,
+  penguin:3,
+  sailor:2,
+  lighthouse:1,
+  shoal:1,
+  colony:1,
+  captain:1,
+  mermaid:4
+};
+
+const colorCounts = {
+  darkblue:9,
+  turquoise:9,
+  yellow:8,
+  black:8,
+  green:6,
+  gray:4,
+  lavender:4,
+  pink:2,
+  peach:2,
+  orange:1,
+  tan:1,
+  white:4
+};
+
+let uid = 1;
+
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
 function buildDeck(){
-  const types=[];Object.entries(typeCounts).forEach(([t,n])=>{if(t!=='mermaid')for(let i=0;i<n;i++)types.push(t)});
-  const colors=[];Object.entries(colorCounts).forEach(([c,n])=>{if(c!=='white')for(let i=0;i<n;i++)colors.push(c)});
-  const csh=shuffle(colors);const cards=types.map((type,i)=>({id:uid++,type,color:csh[i]}));
-  for(let i=0;i<4;i++)cards.push({id:uid++,type:'mermaid',color:'white'});
+  const types = [];
+  Object.entries(typeCounts).forEach(([t,n])=>{
+    if(t!=='mermaid'){
+      for(let i=0;i<n;i++) types.push(t);
+    }
+  });
+
+  const colors = [];
+  Object.entries(colorCounts).forEach(([c,n])=>{
+    if(c!=='white'){
+      for(let i=0;i<n;i++) colors.push(c);
+    }
+  });
+
+  const csh = shuffle(colors);
+
+  const cards = types.map((type,i)=>({
+    id:uid++,
+    type,
+    color:csh[i]
+  }));
+
+  for(let i=0;i<4;i++){
+    cards.push({
+      id:uid++,
+      type:'mermaid',
+      color:'white'
+    });
+  }
+
   return shuffle(cards);
 }
-const S={youTotal:0,aiTotal:0,deck:[],piles:[[],[]],you:[],ai:[],youPlayed:[],aiPlayed:[],turn:'none',busy:false,roundOver:true,extraYou:false,aiExtra:false,awaitingAiLast:false,gameNo:0};
-const count=(cards,t)=>cards.filter(c=>c.type===t).length;
-const all=(h,p)=>h.concat(p);
+
+const S = {
+  youTotal:0,
+  aiTotal:0,
+  deck:[],
+  piles:[[],[]],
+  you:[],
+  ai:[],
+  youPlayed:[],
+  aiPlayed:[],
+  turn:'none',
+  busy:false,
+  roundOver:true,
+  extraYou:false,
+  aiExtra:false,
+  awaitingAiLast:false,
+  gameNo:0
+};
+
+const count = (cards,t) => cards.filter(c=>c.type===t).length;
+const all = (h,p) => h.concat(p);
+
 function score(hand,played){
-  const c=all(hand,played);let s=0;
-  s+=Math.floor(count(c,'crab')/2)+Math.floor(count(c,'boat')/2)+Math.floor(count(c,'fish')/2)+Math.min(count(c,'shark'),count(c,'swimmer'));
-  const shells=[0,0,2,4,6,8,10],oct=[0,0,3,6,9,12],peng=[0,1,3,5],sail=[0,0,5];
-  s+=shells[Math.min(6,count(c,'shell'))]||0;s+=oct[Math.min(5,count(c,'octopus'))]||0;s+=peng[Math.min(3,count(c,'penguin'))]||0;s+=sail[Math.min(2,count(c,'sailor'))]||0;
-  if(count(c,'lighthouse'))s+=count(c,'boat');if(count(c,'shoal'))s+=count(c,'fish');if(count(c,'colony'))s+=2*count(c,'penguin');if(count(c,'captain'))s+=3*count(c,'sailor');
-  const m=count(c,'mermaid');if(m){const f={};c.forEach(x=>f[x.color]=(f[x.color]||0)+1);const v=Object.values(f).sort((a,b)=>b-a);for(let i=0;i<m;i++)s+=v[i]||0}
+  const c = all(hand,played);
+  let s = 0;
+
+  s += Math.floor(count(c,'crab')/2);
+  s += Math.floor(count(c,'boat')/2);
+  s += Math.floor(count(c,'fish')/2);
+  s += Math.min(count(c,'shark'),count(c,'swimmer'));
+
+  const shells=[0,0,2,4,6,8,10];
+  const oct=[0,0,3,6,9,12];
+  const peng=[0,1,3,5];
+  const sail=[0,0,5];
+
+  s += shells[Math.min(6,count(c,'shell'))] || 0;
+  s += oct[Math.min(5,count(c,'octopus'))] || 0;
+  s += peng[Math.min(3,count(c,'penguin'))] || 0;
+  s += sail[Math.min(2,count(c,'sailor'))] || 0;
+
+  if(count(c,'lighthouse')) s += count(c,'boat');
+  if(count(c,'shoal')) s += count(c,'fish');
+  if(count(c,'colony')) s += 2*count(c,'penguin');
+  if(count(c,'captain')) s += 3*count(c,'sailor');
+
+  const m = count(c,'mermaid');
+
+  if(m){
+    const f={};
+    c.forEach(x=>{
+      f[x.color]=(f[x.color]||0)+1;
+    });
+
+    const v=Object.values(f).sort((a,b)=>b-a);
+
+    for(let i=0;i<m;i++){
+      s += v[i] || 0;
+    }
+  }
+
   return s;
 }
-function colorBonus(hand,played){const f={};all(hand,played).forEach(c=>f[c.color]=(f[c.color]||0)+1);return Math.max(0,...Object.values(f))}
-function cardHTML(c,mini=false){return `<div class="card ${c.color}${mini?' mini':''}"><div><div class="ico">${ICON[c.type]}</div><div class="name">${NAME[c.type]}</div></div><div class="meta">${CNAME[c.color]}</div></div>`}
-function log(t){const d=document.createElement('div');d.textContent=t;$('log').prepend(d)}
-function top(i){const p=S.piles[i];return p[p.length-1]||null}
-function setStatus(t){$('status').textContent=t}
-function render(){
-  $('youTotal').textContent=S.youTotal;$('aiTotal').textContent=S.aiTotal;$('deckCount').textContent=S.deck.length;$('youRound').textContent=score(S.you,S.youPlayed);$('aiCount').textContent=S.ai.length;
-  $('hand').innerHTML=S.you.map(c=>cardHTML(c)).join('')||'<span class="sub">keine Karten</span>';$('youPlayed').innerHTML=S.youPlayed.map(c=>cardHTML(c,true)).join('')||'<span class="sub">–</span>';$('aiPlayed').innerHTML=S.aiPlayed.map(c=>`<span class="tag">${ICON[c.type]} ${NAME[c.type]}</span>`).join('')||'<span class="sub">–</span>';
-  [0,1].forEach(i=>{const c=top(i);$(i?'pileBcard':'pileAcard').innerHTML=c?cardHTML(c):'<span class="sub">leer</span>'});
-  const yourTurn=S.turn==='you'&&!S.busy&&!S.roundOver;$('drawBtn').disabled=!yourTurn||S.deck.length<2;$('pileA').disabled=!yourTurn||!top(0);$('pileB').disabled=!yourTurn||!top(1);const canEnd=yourTurn&&score(S.you,S.youPlayed)>=7;$('stopBtn').disabled=!canEnd;$('chanceBtn').disabled=!canEnd;renderDuos();
-}
-function showChoice(title,buttons){S.busy=true;$('choiceTitle').textContent=title;$('choiceGrid').innerHTML='';$('choiceBox').classList.remove('hidden');buttons.forEach(({html,label,fn})=>{const b=document.createElement('button');b.className='btn';b.type='button';b.innerHTML=html||label;b.addEventListener('click',()=>{fn()});$('choiceGrid').appendChild(b)});render()}
-function closeChoice(){S.busy=false;$('choiceBox').classList.add('hidden');$('choiceGrid').innerHTML=''}
-function chooseDiscard(card,done){showChoice(`${NAME[card.type]} ablegen auf …`,[{label:'Stapel A',fn:()=>{S.piles[0].push(card);closeChoice();done()}},{label:'Stapel B',fn:()=>{S.piles[1].push(card);closeChoice();done()}}])}
-function afterYou(){render();if(count(all(S.you,S.youPlayed),'mermaid')===4){finishGame('Du hast alle vier Meerjungfrauen – sofortiger Sieg!');return}if(S.awaitingAiLast){endRound('last','ai');return}if(S.extraYou){S.extraYou=false;S.turn='you';setStatus('Extra-Zug für dich.');render();return}S.turn='ai';setStatus('Silas ist dran …');render();setTimeout(aiTurn,300)}
-function drawTwo(){if(S.deck.length<2)return;const a=S.deck.pop(),b=S.deck.pop();showChoice('Welche Karte behältst du?',[{html:cardHTML(a),fn:()=>chooseDiscard(b,()=>{S.you.push(a);log(`Du behältst ${NAME[a.type]}.`);afterYou()})},{html:cardHTML(b),fn:()=>chooseDiscard(a,()=>{S.you.push(b);log(`Du behältst ${NAME[b.type]}.`);afterYou()})}])}
-function takePile(i){const c=S.piles[i].pop();S.you.push(c);log(`Du nimmst ${NAME[c.type]}.`);afterYou()}
-function removePair(hand,a,b){const ia=hand.findIndex(c=>c.type===a);if(ia<0)return null;const ca=hand.splice(ia,1)[0];const ib=hand.findIndex(c=>c.type===b);if(ib<0){hand.push(ca);return null}const cb=hand.splice(ib,1)[0];return[ca,cb]}
-function renderDuos(){const box=$('duoActions');box.innerHTML='';if(S.turn!=='you'||S.busy||S.roundOver)return;const defs=[['crab','crab','Mr-Krabs-Duo'],['boat','boat','Boot-Duo'],['fish','fish','Fisch-Duo'],['shark','swimmer','Hai + Schwimmer']];defs.forEach(([a,b,label])=>{if(count(S.you,a)>=(a===b?2:1)&&count(S.you,b)>=1){const btn=document.createElement('button');btn.className='btn';btn.textContent=label+' ausspielen';btn.addEventListener('click',()=>playDuo(a,b));box.appendChild(btn)}})}
-function playDuo(a,b){const pair=removePair(S.you,a,b);if(!pair)return;S.youPlayed.push(...pair);log(`Du spielst ${a===b?NAME[a]+'-Duo':NAME[a]+' + '+NAME[b]} aus.`);if(a==='boat'){S.extraYou=true;afterYou();return}if(a==='fish'){if(S.deck.length)S.you.push(S.deck.pop());afterYou();return}if(a==='shark'){if(S.ai.length){const ix=Math.floor(Math.random()*S.ai.length);const c=S.ai.splice(ix,1)[0];S.you.push(c);log(`Du stiehlst ${NAME[c.type]} von Silas.`)}afterYou();return}if(a==='crab'){crabBrowse();return}afterYou()}
-function crabBrowse(){showChoice('Welchen Ablagestapel möchtest du durchsuchen?',[{label:'Stapel A durchsuchen',fn:()=>showCrabPile(0)},{label:'Stapel B durchsuchen',fn:()=>showCrabPile(1)}])}
-function showCrabPile(i){$('choiceTitle').textContent=`Stapel ${i===0?'A':'B'} – eine Karte wählen`;$('choiceGrid').innerHTML='';S.piles[i].slice().reverse().forEach(c=>{const b=document.createElement('button');b.className='btn';b.innerHTML=cardHTML(c);b.addEventListener('click',()=>{const ix=S.piles[i].findIndex(x=>x.id===c.id);S.you.push(S.piles[i].splice(ix,1)[0]);closeChoice();log(`Mr Krabs holt ${NAME[c.type]} aus Stapel ${i===0?'A':'B'}.`);afterYou()});$('choiceGrid').appendChild(b)})}
-function aiValue(c){let v=0;if(['penguin','octopus','shell','sailor','mermaid'].includes(c.type))v+=3;if(['lighthouse','shoal','colony','captain'].includes(c.type))v+=2;if(['crab','boat','fish'].includes(c.type)&&count(S.ai,c.type))v+=3;if(c.type==='shark'&&count(S.ai,'swimmer'))v+=3;if(c.type==='swimmer'&&count(S.ai,'shark'))v+=3;return v}
-function aiAutoDuo(){let changed=true;while(changed){changed=false;for(const [a,b] of [['boat','boat'],['fish','fish'],['shark','swimmer'],['crab','crab']]){if(count(S.ai,a)>=(a===b?2:1)&&count(S.ai,b)>=1){const pair=removePair(S.ai,a,b);if(!pair)continue;S.aiPlayed.push(...pair);changed=true;if(a==='fish'&&S.deck.length)S.ai.push(S.deck.pop());if(a==='shark'&&S.you.length){S.ai.push(S.you.splice(Math.floor(Math.random()*S.you.length),1)[0])}if(a==='crab'){let best=null;for(let pi=0;pi<2;pi++)S.piles[pi].forEach((c,ix)=>{const v=aiValue(c);if(!best||v>best.v)best={pi,ix,v}});if(best)S.ai.push(S.piles[best.pi].splice(best.ix,1)[0])}if(a==='boat')S.aiExtra=true;break}}}}
-function aiOneDraw(){const tops=[top(0),top(1)];let best=-1,bi=-1;tops.forEach((c,i)=>{if(c&&aiValue(c)>best){best=aiValue(c);bi=i}});if(best>=4){S.ai.push(S.piles[bi].pop());log('Silas nimmt eine offene Karte.')}else if(S.deck.length>=2){const a=S.deck.pop(),b=S.deck.pop();const keep=aiValue(a)>=aiValue(b)?a:b,disc=keep===a?b:a;S.ai.push(keep);S.piles[Math.random()<.5?0:1].push(disc);log('Silas zieht zwei Karten und legt eine ab.')}else if(bi>=0){S.ai.push(S.piles[bi].pop())}}
-function aiTurn(){if(S.roundOver)return;aiOneDraw();aiAutoDuo();if(count(all(S.ai,S.aiPlayed),'mermaid')===4){finishGame('Silas hat alle vier Meerjungfrauen.');return}if(S.aiExtra){S.aiExtra=false;setTimeout(aiTurn,250);return}const sc=score(S.ai,S.aiPlayed);if(sc>=12){endRound('stop','ai');return}S.turn='you';setStatus('Du bist dran.');render()}
-function revealAI(){ $('aiRevealWrap').classList.remove('hidden');$('aiReveal').innerHTML=S.ai.map(c=>cardHTML(c,true)).join('');$('aiRevealScore').textContent=`Kartenwert: ${score(S.ai,S.aiPlayed)} · Farbbonus: ${colorBonus(S.ai,S.aiPlayed)}` }
-function endRound(mode,caller){S.roundOver=true;S.busy=true;const ys=score(S.you,S.youPlayed),as=score(S.ai,S.aiPlayed),yb=colorBonus(S.you,S.youPlayed),ab=colorBonus(S.ai,S.aiPlayed);let ya=0,aa=0;if(mode==='stop'){ya=ys;aa=as}else if(caller==='you'){if(ys>=as){ya=ys+yb;aa=ab}else{ya=yb;aa=as}}else{if(as>=ys){aa=as+ab;ya=yb}else{aa=ab;ya=ys}}S.youTotal+=ya;S.aiTotal+=aa;revealAI();log(`Runde: Du +${ya}, Silas +${aa}.`);setStatus(`Runde beendet: Du ${ys} Kartenpunkte, Silas ${as}.`);render();if(S.youTotal>=40||S.aiTotal>=40){finishGame(S.youTotal>S.aiTotal?'Du gewinnst die Partie! 🎉':'Silas gewinnt die Partie.');return}setTimeout(startRound,1500)}
-function youStop(){endRound('stop','you')}
-function youLast(){S.turn='ai';S.busy=true;setStatus('Letzte Chance: Silas bekommt genau einen letzten Zug.');render();setTimeout(()=>{aiOneDraw();aiAutoDuo();revealAI();endRound('last','you')},350)}
-function finishGame(t){S.roundOver=true;setStatus(t);log(t);render()}
-function startRound(){S.deck=buildDeck();S.piles=[[],[]];S.you=[];S.ai=[];S.youPlayed=[];S.aiPlayed=[];S.turn='you';S.busy=false;S.roundOver=false;S.extraYou=false;S.aiExtra=false;S.awaitingAiLast=false;$('aiRevealWrap').classList.add('hidden');$('aiReveal').innerHTML='';S.piles[0].push(S.deck.pop());S.piles[1].push(S.deck.pop());setStatus('Neue Runde – du bist dran.');log('Neue Runde gestartet.');render()}
-function newGame(){setStatus('Neue Partie wird gestartet …');S.gameNo++;S.youTotal=0;S.aiTotal=0;$('log').innerHTML='';startRound();setStatus('Partie '+S.gameNo+' gestartet – du bist dran.');log('Neue Partie gestartet.')}
-function initIdle(){S.deck=[];S.piles=[[],[]];S.you=[];S.ai=[];S.youPlayed=[];S.aiPlayed=[];S.turn='none';S.busy=false;S.roundOver=true;$('aiRevealWrap').classList.add('hidden');$('deckCount').textContent='0';setStatus('Tippe auf „Neue Partie“, um zu starten.');render();}
 
-window.addEventListener('error',e=>{setStatus('Technischer Fehler: '+e.message)});
-initIdle();
-</script>
-</body></html>
+function colorBonus(hand,played){
+  const f={};
+
+  all(hand,played).forEach(c=>{
+    f[c.color]=(f[c.color]||0)+1;
+  });
+
+  return Math.max(0,...Object.values(f));
+}
+
+function cardHTML(c,mini=false){
+  return `
+    <div class="card ${c.color}${mini?' mini':''}">
+      <div>
+        <div class="ico">${ICON[c.type]}</div>
+        <div class="name">${NAME[c.type]}</div>
+      </div>
+      <div class="meta">${CNAME[c.color]}</div>
+    </div>
+  `;
+}
+
+function log(t){
+  const d=document.createElement('div');
+  d.textContent=t;
+  $('log').prepend(d);
+}
+
+function pileTop(i){
+  const p=S.piles[i];
+  return p[p.length-1] || null;
+}
+
+function setStatus(t){
+  $('status').textContent=t;
+}
+
+function render(){
+  $('youTotal').textContent=S.youTotal;
+  $('aiTotal').textContent=S.aiTotal;
+  $('deckCount').textContent=S.deck.length;
+  $('youRound').textContent=score(S.you,S.youPlayed);
+  $('aiCount').textContent=S.ai.length;
+
+  $('hand').innerHTML=
+    S.you.map(c=>cardHTML(c)).join('') ||
+    '<span class="sub">keine Karten</span>';
+
+  $('youPlayed').innerHTML=
+    S.youPlayed.map(c=>cardHTML(c,true)).join('') ||
+    '<span class="sub">–</span>';
+
+  $('aiPlayed').innerHTML=
+    S.aiPlayed.map(c=>`<span class="tag">${ICON[c.type]} ${NAME[c.type]}</span>`).join('') ||
+    '<span class="sub">–</span>';
+
+  [0,1].forEach(i=>{
+    const c=pileTop(i);
+
+    $(i?'pileBcard':'pileAcard').innerHTML =
+      c ? cardHTML(c) : '<span class="sub">leer</span>';
+  });
+
+  const yourTurn =
+    S.turn==='you' &&
+    !S.busy &&
+    !S.roundOver;
+
+  $('drawBtn').disabled =
+    !yourTurn || S.deck.length<2;
+
+  $('pileA').disabled =
+    !yourTurn || !pileTop(0);
+
+  $('pileB').disabled =
+    !yourTurn || !pileTop(1);
+
+  const canEnd =
+    yourTurn &&
+    score(S.you,S.youPlayed)>=7;
+
+  $('stopBtn').disabled=!canEnd;
+  $('chanceBtn').disabled=!canEnd;
+
+  renderDuos();
+}
+
+function showChoice(title,buttons){
+  S.busy=true;
+
+  $('choiceTitle').textContent=title;
+  $('choiceGrid').innerHTML='';
+  $('choiceBox').classList.remove('hidden');
+
+  buttons.forEach(({html,label,fn})=>{
+    const b=document.createElement('button');
+    b.className='btn';
+    b.type='button';
+    b.innerHTML=html || label;
+    b.addEventListener('click',fn);
+    $('choiceGrid').appendChild(b);
+  });
+
+  render();
+}
+
+function closeChoice(){
+  S.busy=false;
+  $('choiceBox').classList.add('hidden');
+  $('choiceGrid').innerHTML='';
+}
+
+function chooseDiscard(card,done){
+  showChoice(
+    `${NAME[card.type]} ablegen auf …`,
+    [
+      {
+        label:'Stapel A',
+        fn:()=>{
+          S.piles[0].push(card);
+          closeChoice();
+          done();
+        }
+      },
+      {
+        label:'Stapel B',
+        fn:()=>{
+          S.piles[1].push(card);
+          closeChoice();
+          done();
+        }
+      }
+    ]
+  );
+}
+
+function afterYou(){
+  render();
+
+  if(count(all(S.you,S.youPlayed),'mermaid')===4){
+    finishGame('Du hast alle vier Meerjungfrauen – sofortiger Sieg!');
+    return;
+  }
+
+  if(S.awaitingAiLast){
+    endRound('last','ai');
+    return;
+  }
+
+  if(S.extraYou){
+    S.extraYou=false;
+    S.turn='you';
+    setStatus('Extra-Zug für dich.');
+    render();
+    return;
+  }
+
+  S.turn='ai';
+  setStatus('Silas ist dran …');
+  render();
+
+  setTimeout(aiTurn,300);
+}
+
+function drawTwo(){
+  if(S.deck.length<2) return;
+
+  const a=S.deck.pop();
+  const b=S.deck.pop();
+
+  showChoice(
+    'Welche Karte behältst du?',
+    [
+      {
+        html:cardHTML(a),
+        fn:()=>{
+          chooseDiscard(b,()=>{
+            S.you.push(a);
+            log(`Du behältst ${NAME[a.type]}.`);
+            afterYou();
+          });
+        }
+      },
+      {
+        html:cardHTML(b),
+        fn:()=>{
+          chooseDiscard(a,()=>{
+            S.you.push(b);
+            log(`Du behältst ${NAME[b.type]}.`);
+            afterYou();
+          });
+        }
+      }
+    ]
+  );
+}
+
+function takePile(i){
+  const c=S.piles[i].pop();
+  if(!c) return;
+
+  S.you.push(c);
+  log(`Du nimmst ${NAME[c.type]}.`);
+  afterYou();
+}
+
+function removePair(hand,a,b){
+  const ia=hand.findIndex(c=>c.type===a);
+  if(ia<0) return null;
+
+  const ca=hand.splice(ia,1)[0];
+
+  const ib=hand.findIndex(c=>c.type===b);
+
+  if(ib<0){
+    hand.push(ca);
+    return null;
+  }
+
+  const cb=hand.splice(ib,1)[0];
+
+  return [ca,cb];
+}
+
+function renderDuos(){
+  const box=$('duoActions');
+  box.innerHTML='';
+
+  if(S.turn!=='you' || S.busy || S.roundOver) return;
+
+  const defs=[
+    ['crab','crab','Mr-Krabs-Duo'],
+    ['boat','boat','Boot-Duo'],
+    ['fish','fish','Fisch-Duo'],
+    ['shark','swimmer','Hai + Schwimmer']
+  ];
+
+  defs.forEach(([a,b,label])=>{
+    const needA = a===b ? 2 : 1;
+
+    if(
+      count(S.you,a)>=needA &&
+      count(S.you,b)>=1
+    ){
+      const btn=document.createElement('button');
+      btn.className='btn';
+      btn.type='
