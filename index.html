@@ -1,11 +1,17 @@
 <!doctype html>
 <html lang="de">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Silke gegen Silas – Version 8a</title>
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Silke gegen Silas – Version 8b</title>
 
 <style>
+
 :root{
   --bg:#f6f3ec;
   --ink:#17202a;
@@ -15,7 +21,9 @@
   --accent2:#fff4df;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -43,9 +51,13 @@ h1{
   margin:0;
 }
 
-.sub{color:var(--muted)}
+.sub{
+  color:var(--muted);
+}
 
-button{font:inherit}
+button{
+  font:inherit;
+}
 
 .btn{
   border:1px solid var(--line);
@@ -82,7 +94,8 @@ button{font:inherit}
 
 .silasBox,
 .hand,
-.playedBox{
+.playedBox,
+.resultBox{
   background:#fff;
   border:1px solid var(--line);
   border-radius:18px;
@@ -148,7 +161,9 @@ button{font:inherit}
   text-align:center;
 }
 
-.wave{font-size:44px}
+.wave{
+  font-size:44px;
+}
 
 .card{
   border:1px solid rgba(0,0,0,.15);
@@ -160,27 +175,66 @@ button{font:inherit}
   justify-content:space-between;
 }
 
-.ico{font-size:34px}
+.ico{
+  font-size:34px;
+}
 
-.name{font-weight:800}
+.name{
+  font-weight:800;
+}
 
 .meta{
   font-size:12px;
   color:#4e5963;
 }
 
-.darkblue{background:#cfe1f8}
-.turquoise{background:#cff0ef}
-.yellow{background:#faee9a}
-.black{background:#dedfe2}
-.green{background:#d9edcf}
-.gray{background:#ececee}
-.lavender{background:#e6d8f2}
-.pink{background:#f4cedf}
-.peach{background:#f4d3ba}
-.orange{background:#f1b978}
-.tan{background:#e8d8c1}
-.white{background:#fff}
+.darkblue{
+  background:#cfe1f8;
+}
+
+.turquoise{
+  background:#cff0ef;
+}
+
+.yellow{
+  background:#faee9a;
+}
+
+.black{
+  background:#dedfe2;
+}
+
+.green{
+  background:#d9edcf;
+}
+
+.gray{
+  background:#ececee;
+}
+
+.lavender{
+  background:#e6d8f2;
+}
+
+.pink{
+  background:#f4cedf;
+}
+
+.peach{
+  background:#f4d3ba;
+}
+
+.orange{
+  background:#f1b978;
+}
+
+.tan{
+  background:#e8d8c1;
+}
+
+.white{
+  background:#fff;
+}
 
 .choice{
   margin-top:16px;
@@ -191,7 +245,7 @@ button{font:inherit}
 }
 
 .hidden{
-  display:none;
+  display:none !important;
 }
 
 .choiceGrid{
@@ -232,7 +286,13 @@ button{font:inherit}
   font-weight:700;
 }
 
+.resultLine{
+  font-size:18px;
+  margin-top:8px;
+}
+
 @media(max-width:620px){
+
   .board{
     grid-template-columns:1fr;
   }
@@ -240,274 +300,620 @@ button{font:inherit}
   .handGrid{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="app">
 
   <div class="top">
+
     <div>
-      <h1>Silke gegen Silas</h1>
-      <div class="sub">Version 8a – Punkte + Stopp</div>
+
+      <h1>
+        Silke gegen Silas
+      </h1>
+
+      <div class="sub">
+        Version 8b – Punkte + Stopp + Aufdecken
+      </div>
+
     </div>
 
-    <button id="newBtn" class="btn primary" type="button">
+
+    <button
+      id="newBtn"
+      class="btn primary"
+      type="button">
+
       Neue Partie
+
     </button>
+
   </div>
 
-  <div id="status" class="status">
-    Version 8a aktiv. Tippe auf „Neue Partie“.
+
+  <div
+    id="status"
+    class="status">
+
+    Version 8b aktiv. Tippe auf „Neue Partie“.
+
   </div>
+
 
   <div class="silasBox">
+
     <div class="silasHead">
 
       <div>
-        <strong>Silas</strong>
+
+        <strong>
+          Silas
+        </strong>
 
         <div class="sub">
+
           Verdeckte Hand:
-          <span id="silasCount">0</span> Karten
+
+          <span id="silasCount">
+            0
+          </span>
+
+          Karten
+
         </div>
+
       </div>
 
-      <div id="silasMove" class="sub">
+
+      <div
+        id="silasMove"
+        class="sub">
+
         wartet
+
       </div>
 
     </div>
 
-    <div id="silasCards" class="backRow"></div>
+
+    <div
+      id="silasCards"
+      class="backRow">
+    </div>
+
   </div>
+
 
   <div class="board">
 
-    <button id="drawBtn" class="zone deck" type="button" disabled>
-      <div class="wave">🌊</div>
 
-      <strong>2 Karten ziehen</strong>
+    <button
+      id="drawBtn"
+      class="zone deck"
+      type="button"
+      disabled>
+
+      <div class="wave">
+        🌊
+      </div>
+
+      <strong>
+        2 Karten ziehen
+      </strong>
 
       <div class="sub">
-        <span id="deckCount">0</span> Karten übrig
+
+        <span id="deckCount">
+          0
+        </span>
+
+        Karten übrig
+
       </div>
+
     </button>
 
-    <button id="pileA" class="zone" type="button" disabled>
-      <h2>Ablage A</h2>
-      <div id="pileAcard">leer</div>
+
+    <button
+      id="pileA"
+      class="zone"
+      type="button"
+      disabled>
+
+      <h2>
+        Ablage A
+      </h2>
+
+      <div id="pileAcard">
+        leer
+      </div>
+
     </button>
 
-    <button id="pileB" class="zone" type="button" disabled>
-      <h2>Ablage B</h2>
-      <div id="pileBcard">leer</div>
+
+    <button
+      id="pileB"
+      class="zone"
+      type="button"
+      disabled>
+
+      <h2>
+        Ablage B
+      </h2>
+
+      <div id="pileBcard">
+        leer
+      </div>
+
     </button>
+
 
   </div>
 
-  <div id="choiceBox" class="choice hidden">
 
-    <strong id="choiceTitle"></strong>
+  <div
+    id="choiceBox"
+    class="choice hidden">
 
-    <div id="choiceGrid" class="choiceGrid"></div>
+    <strong id="choiceTitle">
+    </strong>
+
+    <div
+      id="choiceGrid"
+      class="choiceGrid">
+    </div>
 
   </div>
+
 
   <div class="hand">
 
     <div class="handHead">
 
       <div>
-        <strong>Deine Hand</strong>
+
+        <strong>
+          Deine Hand
+        </strong>
 
         <div class="pointsBox">
+
           Punkte:
-          <span id="youPoints">0</span>
+
+          <span id="youPoints">
+            0
+          </span>
+
         </div>
+
       </div>
 
-      <button id="stopBtn" class="btn" type="button" disabled>
+
+      <button
+        id="stopBtn"
+        class="btn"
+        type="button"
+        disabled>
+
         Stopp
+
       </button>
 
     </div>
 
-    <div id="handGrid" class="handGrid"></div>
 
-    <div id="duoActions" class="duoActions"></div>
+    <div
+      id="handGrid"
+      class="handGrid">
+    </div>
+
+
+    <div
+      id="duoActions"
+      class="duoActions">
+    </div>
 
   </div>
 
+
   <div class="playedBox">
 
-    <strong>Ausgespielte Duos</strong>
+    <strong>
+      Ausgespielte Duos
+    </strong>
 
-    <div id="playedGrid" class="playedGrid"></div>
+    <div
+      id="playedGrid"
+      class="playedGrid">
+    </div>
+
+  </div>
+
+
+  <div
+    id="roundResult"
+    class="resultBox hidden">
+
+    <strong>
+      Rundenergebnis
+    </strong>
+
+
+    <div
+      id="resultText"
+      style="margin-top:10px">
+    </div>
+
+
+    <div style="margin-top:18px">
+
+      <strong>
+        Silas deckt auf
+      </strong>
+
+    </div>
+
+
+    <div
+      id="silasReveal"
+      class="handGrid">
+    </div>
 
   </div>
 
 </div>
 
+
+
 <script>
+
 (() => {
 
 'use strict';
 
-const $ = id => document.getElementById(id);
+
+const $ =
+  id =>
+    document.getElementById(id);
+
+
 
 const names = {
+
   crab:'Mr Krabs',
+
   boat:'Boot',
+
   fish:'Fisch',
+
   shark:'Hai',
+
   swimmer:'Schwimmer',
+
   shell:'Muschel',
+
   octopus:'Oktopus',
+
   penguin:'Pinguin',
+
   sailor:'Seemann',
+
   mermaid:'Meerjungfrau',
+
   lighthouse:'eine pro Boot',
+
   shoal:'ein pro Fisch',
+
   colony:'zwei pro Pinguin',
+
   captain:'Kapitän'
+
 };
+
+
 
 const icons = {
+
   crab:'🦀',
+
   boat:'⛵',
+
   fish:'🐟',
+
   shark:'🦈',
+
   swimmer:'🏊',
+
   shell:'🐚',
+
   octopus:'🐙',
+
   penguin:'🐧',
+
   sailor:'⚓',
+
   mermaid:'🧜‍♀️',
+
   lighthouse:'🗼',
+
   shoal:'🐟',
+
   colony:'🐧',
+
   captain:'🧭'
+
 };
+
+
 
 const colorNames = {
+
   darkblue:'Dunkelblau',
+
   turquoise:'Türkis',
+
   yellow:'Gelb',
+
   black:'Schwarz',
+
   green:'Grün',
+
   gray:'Grau',
+
   lavender:'Lila',
+
   pink:'Rosa',
+
   peach:'Pfirsich',
+
   orange:'Orange',
+
   tan:'Beige',
+
   white:'Weiß'
+
 };
+
+
 
 const typeCounts = {
+
   crab:9,
+
   boat:8,
+
   fish:7,
+
   shark:5,
+
   swimmer:5,
+
   shell:6,
+
   octopus:5,
+
   penguin:3,
+
   sailor:2,
+
   lighthouse:1,
+
   shoal:1,
+
   colony:1,
+
   captain:1,
+
   mermaid:4
+
 };
 
+
+
 const colorCounts = {
+
   darkblue:9,
+
   turquoise:9,
+
   yellow:8,
+
   black:8,
+
   green:6,
+
   gray:4,
+
   lavender:4,
+
   pink:2,
+
   peach:2,
+
   orange:1,
+
   tan:1,
+
   white:4
+
 };
+
+
 
 let uid = 1;
 
+
+
 function shuffle(arr){
 
-  const a = arr.slice();
+  const a =
+    arr.slice();
 
-  for(let i=a.length-1;i>0;i--){
+
+  for(
+    let i=a.length-1;
+    i>0;
+    i--
+  ){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() *
+        (i+1)
       );
 
-    [a[i],a[j]] =
-      [a[j],a[i]];
+
+    [
+      a[i],
+      a[j]
+    ] =
+    [
+      a[j],
+      a[i]
+    ];
+
   }
 
+
   return a;
+
 }
+
+
 
 function makeDeck(){
 
   const types = [];
 
-  Object.entries(typeCounts)
-    .forEach(([type,n])=>{
 
-      if(type !== 'mermaid'){
+  Object.entries(
+    typeCounts
+  )
+  .forEach(
+    ([type,n])=>{
 
-        for(let i=0;i<n;i++){
-          types.push(type);
+
+      if(
+        type !==
+        'mermaid'
+      ){
+
+        for(
+          let i=0;
+          i<n;
+          i++
+        ){
+
+          types.push(
+            type
+          );
+
         }
+
       }
-    });
+
+    }
+  );
+
+
 
   const colors = [];
 
-  Object.entries(colorCounts)
-    .forEach(([color,n])=>{
 
-      if(color !== 'white'){
+  Object.entries(
+    colorCounts
+  )
+  .forEach(
+    ([color,n])=>{
 
-        for(let i=0;i<n;i++){
-          colors.push(color);
+
+      if(
+        color !==
+        'white'
+      ){
+
+        for(
+          let i=0;
+          i<n;
+          i++
+        ){
+
+          colors.push(
+            color
+          );
+
         }
+
       }
-    });
+
+    }
+  );
+
+
 
   const shuffledColors =
-    shuffle(colors);
+    shuffle(
+      colors
+    );
+
+
 
   const cards =
-    types.map((type,i)=>({
-      id:uid++,
-      type:type,
-      color:shuffledColors[i]
-    }));
+    types.map(
+      (type,i)=>({
 
-  for(let i=0;i<4;i++){
+        id:
+          uid++,
+
+        type:
+          type,
+
+        color:
+          shuffledColors[i]
+
+      })
+    );
+
+
+
+  for(
+    let i=0;
+    i<4;
+    i++
+  ){
 
     cards.push({
-      id:uid++,
-      type:'mermaid',
-      color:'white'
+
+      id:
+        uid++,
+
+      type:
+        'mermaid',
+
+      color:
+        'white'
+
     });
+
   }
 
-  return shuffle(cards);
+
+
+  return shuffle(
+    cards
+  );
+
 }
+
+
 
 const state = {
 
@@ -533,93 +939,179 @@ const state = {
   turn:'none',
 
   extraTurn:false
+
 };
 
-function allCards(){
 
-  return state.hand.concat(
-    state.played
-  );
-}
 
-function countType(cards,type){
+function countType(
+  cards,
+  type
+){
 
   return cards.filter(
-    card=>card.type===type
+    card =>
+      card.type ===
+      type
   ).length;
+
 }
 
-function score(){
+
+
+function scoreCards(
+  hand,
+  played
+){
 
   const cards =
-    allCards();
+    hand.concat(
+      played
+    );
+
 
   let points = 0;
 
-  points +=
-    Math.floor(
-      countType(cards,'crab') / 2
-    );
+
 
   points +=
     Math.floor(
-      countType(cards,'boat') / 2
+      countType(
+        cards,
+        'crab'
+      ) / 2
     );
+
+
 
   points +=
     Math.floor(
-      countType(cards,'fish') / 2
+      countType(
+        cards,
+        'boat'
+      ) / 2
     );
+
+
+
+  points +=
+    Math.floor(
+      countType(
+        cards,
+        'fish'
+      ) / 2
+    );
+
+
 
   points +=
     Math.min(
-      countType(cards,'shark'),
-      countType(cards,'swimmer')
+
+      countType(
+        cards,
+        'shark'
+      ),
+
+      countType(
+        cards,
+        'swimmer'
+      )
+
     );
 
+
+
   const shellPoints =
-    [0,0,2,4,6,8,10];
+    [
+      0,
+      0,
+      2,
+      4,
+      6,
+      8,
+      10
+    ];
+
 
   points +=
     shellPoints[
       Math.min(
-        countType(cards,'shell'),
+        countType(
+          cards,
+          'shell'
+        ),
         6
       )
     ] || 0;
 
+
+
   const octopusPoints =
-    [0,0,3,6,9,12];
+    [
+      0,
+      0,
+      3,
+      6,
+      9,
+      12
+    ];
+
 
   points +=
     octopusPoints[
       Math.min(
-        countType(cards,'octopus'),
+        countType(
+          cards,
+          'octopus'
+        ),
         5
       )
     ] || 0;
 
+
+
   const penguinPoints =
-    [0,1,3,5];
+    [
+      0,
+      1,
+      3,
+      5
+    ];
+
 
   points +=
     penguinPoints[
       Math.min(
-        countType(cards,'penguin'),
+        countType(
+          cards,
+          'penguin'
+        ),
         3
       )
     ] || 0;
 
+
+
   const sailorPoints =
-    [0,0,5];
+    [
+      0,
+      0,
+      5
+    ];
+
 
   points +=
     sailorPoints[
       Math.min(
-        countType(cards,'sailor'),
+        countType(
+          cards,
+          'sailor'
+        ),
         2
       )
     ] || 0;
+
+
 
   if(
     countType(
@@ -633,7 +1125,10 @@ function score(){
         cards,
         'boat'
       );
+
   }
+
+
 
   if(
     countType(
@@ -647,7 +1142,10 @@ function score(){
         cards,
         'fish'
       );
+
   }
+
+
 
   if(
     countType(
@@ -662,7 +1160,10 @@ function score(){
         cards,
         'penguin'
       );
+
   }
+
+
 
   if(
     countType(
@@ -677,7 +1178,10 @@ function score(){
         cards,
         'sailor'
       );
+
   }
+
+
 
   const mermaids =
     countType(
@@ -685,22 +1189,42 @@ function score(){
       'mermaid'
     );
 
-  if(mermaids>0){
 
-    const colors = {};
 
-    cards.forEach(card=>{
+  if(
+    mermaids > 0
+  ){
 
-      colors[card.color] =
-        (colors[card.color] || 0)
+    const colors =
+      {};
+
+
+    cards.forEach(
+      card=>{
+
+        colors[
+          card.color
+        ] =
+        (
+          colors[
+            card.color
+          ] || 0
+        )
         + 1;
-    });
+
+      }
+    );
+
 
     const frequencies =
-      Object.values(colors)
-        .sort(
-          (a,b)=>b-a
-        );
+      Object.values(
+        colors
+      )
+      .sort(
+        (a,b)=>
+          b-a
+      );
+
 
     for(
       let i=0;
@@ -709,101 +1233,174 @@ function score(){
     ){
 
       points +=
-        frequencies[i] || 0;
+        frequencies[i]
+        || 0;
+
     }
+
   }
 
+
+
   return points;
+
 }
+
+
+
+function score(){
+
+  return scoreCards(
+    state.hand,
+    state.played
+  );
+
+}
+
+
 
 function setStatus(text){
 
-  $('status').textContent =
+  $('status')
+    .textContent =
     text;
+
 }
+
+
 
 function topCard(index){
 
   const pile =
-    state.piles[index];
+    state.piles[
+      index
+    ];
+
 
   return (
-    pile[pile.length-1] ||
+    pile[
+      pile.length-1
+    ] ||
     null
   );
+
 }
 
-function cardHTML(card,mini=false){
+
+
+function cardHTML(
+  card,
+  mini=false
+){
 
   return `
+
     <div class="card ${card.color}${mini?' mini':''}">
 
       <div>
 
         <div class="ico">
+
           ${icons[card.type]}
+
         </div>
 
+
         <div class="name">
+
           ${names[card.type]}
+
         </div>
 
       </div>
 
+
       <div class="meta">
+
         ${colorNames[card.color]}
+
       </div>
 
     </div>
+
   `;
+
 }
+
+
 
 function renderSilas(){
 
-  $('silasCount').textContent =
+  $('silasCount')
+    .textContent =
     state.silasHand.length;
 
-  $('silasCards').innerHTML =
+
+  $('silasCards')
+    .innerHTML =
     '';
 
-  state.silasHand.forEach(()=>{
 
-    const back =
-      document.createElement(
-        'div'
-      );
+  state.silasHand
+    .forEach(
+      ()=>{
 
-    back.className =
-      'backCard';
 
-    back.textContent =
-      '✦';
+        const back =
+          document.createElement(
+            'div'
+          );
 
-    $('silasCards')
-      .appendChild(back);
-  });
+
+        back.className =
+          'backCard';
+
+
+        back.textContent =
+          '✦';
+
+
+        $('silasCards')
+          .appendChild(
+            back
+          );
+
+      }
+    );
+
 }
+
+
 
 function renderDuos(){
 
   const box =
     $('duoActions');
 
+
   box.innerHTML =
     '';
+
+
 
   if(
     !state.started ||
     state.busy ||
     state.roundOver ||
-    state.turn !== 'you'
+    state.turn !==
+      'you'
   ){
+
     return;
+
   }
+
+
 
   const duos = [
 
     {
+
       label:
         'Mr-Krabs-Duo ausspielen',
 
@@ -818,9 +1415,12 @@ function renderDuos(){
           'crab',
           'crab'
         )
+
     },
 
+
     {
+
       label:
         'Boot-Duo ausspielen',
 
@@ -835,9 +1435,12 @@ function renderDuos(){
           'boat',
           'boat'
         )
+
     },
 
+
     {
+
       label:
         'Fisch-Duo ausspielen',
 
@@ -852,18 +1455,24 @@ function renderDuos(){
           'fish',
           'fish'
         )
+
     },
 
+
     {
+
       label:
         'Hai + Schwimmer ausspielen',
 
       possible:
+
         countType(
           state.hand,
           'shark'
         ) >= 1
+
         &&
+
         countType(
           state.hand,
           'swimmer'
@@ -874,128 +1483,230 @@ function renderDuos(){
           'shark',
           'swimmer'
         )
+
     }
+
   ];
 
-  duos.forEach(duo=>{
 
-    if(duo.possible){
 
-      const button =
-        document.createElement(
-          'button'
+  duos.forEach(
+    duo=>{
+
+
+      if(
+        duo.possible
+      ){
+
+        const button =
+          document.createElement(
+            'button'
+          );
+
+
+        button.type =
+          'button';
+
+
+        button.className =
+          'btn duoBtn';
+
+
+        button.textContent =
+          duo.label;
+
+
+        button.addEventListener(
+          'click',
+          duo.action
         );
 
-      button.type =
-        'button';
 
-      button.className =
-        'btn duoBtn';
+        box.appendChild(
+          button
+        );
 
-      button.textContent =
-        duo.label;
+      }
 
-      button.addEventListener(
-        'click',
-        duo.action
-      );
-
-      box.appendChild(
-        button
-      );
     }
-  });
+  );
+
 }
+
+
 
 function render(){
 
-  $('deckCount').textContent =
+  $('deckCount')
+    .textContent =
     state.deck.length;
 
-  $('youPoints').textContent =
+
+  $('youPoints')
+    .textContent =
     score();
+
+
 
   const cardA =
     topCard(0);
 
+
   const cardB =
     topCard(1);
 
-  $('pileAcard').innerHTML =
+
+
+  $('pileAcard')
+    .innerHTML =
     cardA
-      ? cardHTML(cardA)
+      ? cardHTML(
+          cardA
+        )
       : 'leer';
 
-  $('pileBcard').innerHTML =
+
+
+  $('pileBcard')
+    .innerHTML =
     cardB
-      ? cardHTML(cardB)
+      ? cardHTML(
+          cardB
+        )
       : 'leer';
 
-  $('handGrid').innerHTML =
+
+
+  $('handGrid')
+    .innerHTML =
     state.hand.length
+
       ? state.hand
           .map(
-            card=>
-              cardHTML(card)
+            card =>
+              cardHTML(
+                card
+              )
           )
           .join('')
+
       : '<span class="sub">Noch keine Karten.</span>';
 
-  $('playedGrid').innerHTML =
+
+
+  $('playedGrid')
+    .innerHTML =
     state.played.length
+
       ? state.played
           .map(
-            card=>
+            card =>
               cardHTML(
                 card,
                 true
               )
           )
           .join('')
+
       : '<span class="sub">Noch nichts ausgespielt.</span>';
+
+
 
   renderSilas();
 
+
   renderDuos();
 
+
+
   const active =
-    state.started &&
-    !state.busy &&
-    !state.roundOver &&
-    state.turn === 'you';
 
-  $('drawBtn').disabled =
-    !active ||
-    state.deck.length < 2;
+    state.started
 
-  $('pileA').disabled =
-    !active ||
-    !cardA;
+    &&
 
-  $('pileB').disabled =
-    !active ||
-    !cardB;
+    !state.busy
 
-  $('stopBtn').disabled =
-    !active ||
-    score() < 7;
+    &&
+
+    !state.roundOver
+
+    &&
+
+    state.turn ===
+      'you';
+
+
+
+  $('drawBtn')
+    .disabled =
+
+      !active
+
+      ||
+
+      state.deck.length < 2;
+
+
+
+  $('pileA')
+    .disabled =
+
+      !active
+
+      ||
+
+      !cardA;
+
+
+
+  $('pileB')
+    .disabled =
+
+      !active
+
+      ||
+
+      !cardB;
+
+
+
+  $('stopBtn')
+    .disabled =
+
+      !active
+
+      ||
+
+      score() < 7;
+
 }
+
+
 
 function closeChoice(){
 
   state.busy =
     false;
 
+
   $('choiceBox')
     .classList
-    .add('hidden');
+    .add(
+      'hidden'
+    );
+
 
   $('choiceGrid')
     .innerHTML =
     '';
 
+
   render();
+
 }
+
+
 
 function showChoice(
   title,
@@ -1005,53 +1716,75 @@ function showChoice(
   state.busy =
     true;
 
+
   $('choiceTitle')
     .textContent =
     title;
+
 
   $('choiceGrid')
     .innerHTML =
     '';
 
+
   $('choiceBox')
     .classList
-    .remove('hidden');
+    .remove(
+      'hidden'
+    );
+
+
 
   options.forEach(
     option=>{
+
 
       const button =
         document.createElement(
           'button'
         );
 
+
       button.type =
         'button';
+
 
       button.className =
         'btn';
 
+
       button.innerHTML =
-        option.html ||
+        option.html
+        ||
         option.label;
+
 
       button.addEventListener(
         'click',
         option.onClick
       );
 
+
       $('choiceGrid')
-        .appendChild(button);
+        .appendChild(
+          button
+        );
+
     }
   );
 
+
   render();
+
 }
+
+
 
 function newGame(){
 
   state.deck =
     makeDeck();
+
 
   state.piles =
     [
@@ -1059,97 +1792,168 @@ function newGame(){
       []
     ];
 
+
   state.hand =
     [];
+
 
   state.silasHand =
     [];
 
+
   state.played =
     [];
+
 
   state.started =
     true;
 
+
   state.busy =
     false;
+
 
   state.roundOver =
     false;
 
+
   state.turn =
     'you';
 
+
   state.extraTurn =
     false;
+
+
 
   state.piles[0]
     .push(
       state.deck.pop()
     );
 
+
   state.piles[1]
     .push(
       state.deck.pop()
     );
 
+
+
   $('silasMove')
     .textContent =
     'wartet';
+
+
+
+  $('roundResult')
+    .classList
+    .add(
+      'hidden'
+    );
+
+
+  $('silasReveal')
+    .innerHTML =
+    '';
+
+
+  $('resultText')
+    .innerHTML =
+    '';
+
+
 
   setStatus(
     'Neue Partie gestartet. Du bist dran.'
   );
 
+
   render();
+
 }
+
+
 
 function drawTwo(){
 
   if(
-    state.deck.length < 2 ||
-    state.busy ||
-    state.roundOver ||
-    state.turn !== 'you'
+
+    state.deck.length < 2
+
+    ||
+
+    state.busy
+
+    ||
+
+    state.roundOver
+
+    ||
+
+    state.turn !==
+      'you'
+
   ){
+
     return;
+
   }
+
+
 
   const first =
     state.deck.pop();
 
+
   const second =
     state.deck.pop();
 
+
+
   showChoice(
+
     'Welche Karte möchtest du behalten?',
+
     [
 
       {
+
         html:
-          cardHTML(first),
+          cardHTML(
+            first
+          ),
 
         onClick:
           ()=>chooseDiscard(
             first,
             second
           )
+
       },
 
+
       {
+
         html:
-          cardHTML(second),
+          cardHTML(
+            second
+          ),
 
         onClick:
           ()=>chooseDiscard(
             second,
             first
           )
+
       }
 
     ]
+
   );
+
 }
+
+
 
 function chooseDiscard(
   keep,
@@ -1157,106 +1961,206 @@ function chooseDiscard(
 ){
 
   showChoice(
-    names[discard.type] +
+
+    names[
+      discard.type
+    ]
+    +
     ' ablegen auf …',
+
     [
 
       {
+
         label:
           'Ablage A',
 
-        onClick:()=>{
+        onClick:
+          ()=>{
 
-          state.hand.push(
-            keep
-          );
 
-          state.piles[0]
-            .push(
-              discard
+            state.hand
+              .push(
+                keep
+              );
+
+
+            state.piles[0]
+              .push(
+                discard
+              );
+
+
+            closeChoice();
+
+
+            setStatus(
+
+              'Du behältst '
+
+              +
+
+              names[
+                keep.type
+              ]
+
+              +
+
+              '.'
+
             );
 
-          closeChoice();
 
-          setStatus(
-            'Du behältst ' +
-            names[keep.type] +
-            '.'
-          );
+            finishYourTurn();
 
-          finishYourTurn();
-        }
+          }
+
       },
 
+
       {
+
         label:
           'Ablage B',
 
-        onClick:()=>{
+        onClick:
+          ()=>{
 
-          state.hand.push(
-            keep
-          );
 
-          state.piles[1]
-            .push(
-              discard
+            state.hand
+              .push(
+                keep
+              );
+
+
+            state.piles[1]
+              .push(
+                discard
+              );
+
+
+            closeChoice();
+
+
+            setStatus(
+
+              'Du behältst '
+
+              +
+
+              names[
+                keep.type
+              ]
+
+              +
+
+              '.'
+
             );
 
-          closeChoice();
 
-          setStatus(
-            'Du behältst ' +
-            names[keep.type] +
-            '.'
-          );
+            finishYourTurn();
 
-          finishYourTurn();
-        }
+          }
+
       }
 
     ]
+
   );
+
 }
 
-function takePile(index){
+
+
+function takePile(
+  index
+){
 
   if(
-    state.busy ||
-    state.roundOver ||
-    state.turn !== 'you'
+
+    state.busy
+
+    ||
+
+    state.roundOver
+
+    ||
+
+    state.turn !==
+      'you'
+
   ){
+
     return;
+
   }
+
+
 
   const card =
-    state.piles[index]
-      .pop();
+    state.piles[
+      index
+    ]
+    .pop();
 
-  if(!card){
+
+
+  if(
+    !card
+  ){
+
     return;
+
   }
 
-  state.hand.push(
-    card
-  );
+
+
+  state.hand
+    .push(
+      card
+    );
+
+
 
   setStatus(
-    'Du nimmst ' +
-    names[card.type] +
-    ' aus Ablage ' +
+
+    'Du nimmst '
+
+    +
+
+    names[
+      card.type
+    ]
+
+    +
+
+    ' aus Ablage '
+
+    +
+
     (
       index===0
         ? 'A'
         : 'B'
-    ) +
+    )
+
+    +
+
     '.'
+
   );
+
+
 
   render();
 
+
   finishYourTurn();
+
 }
+
+
 
 function removeCards(
   typeA,
@@ -1264,47 +2168,76 @@ function removeCards(
 ){
 
   const firstIndex =
-    state.hand.findIndex(
-      card=>
-        card.type===typeA
-    );
+    state.hand
+      .findIndex(
+        card =>
+          card.type ===
+          typeA
+      );
 
-  if(firstIndex<0){
+
+
+  if(
+    firstIndex < 0
+  ){
+
     return null;
+
   }
 
+
+
   const first =
-    state.hand.splice(
-      firstIndex,
-      1
-    )[0];
+    state.hand
+      .splice(
+        firstIndex,
+        1
+      )[0];
+
+
 
   const secondIndex =
-    state.hand.findIndex(
-      card=>
-        card.type===typeB
-    );
+    state.hand
+      .findIndex(
+        card =>
+          card.type ===
+          typeB
+      );
 
-  if(secondIndex<0){
+
+
+  if(
+    secondIndex < 0
+  ){
 
     state.hand.push(
       first
     );
 
+
     return null;
+
   }
 
+
+
   const second =
-    state.hand.splice(
-      secondIndex,
-      1
-    )[0];
+    state.hand
+      .splice(
+        secondIndex,
+        1
+      )[0];
+
+
 
   return [
     first,
     second
   ];
+
 }
+
+
 
 function playDuo(
   typeA,
@@ -1312,12 +2245,25 @@ function playDuo(
 ){
 
   if(
-    state.busy ||
-    state.roundOver ||
-    state.turn !== 'you'
+
+    state.busy
+
+    ||
+
+    state.roundOver
+
+    ||
+
+    state.turn !==
+      'you'
+
   ){
+
     return;
+
   }
+
+
 
   const pair =
     removeCards(
@@ -1325,58 +2271,112 @@ function playDuo(
       typeB
     );
 
-  if(!pair){
+
+
+  if(
+    !pair
+  ){
+
     return;
+
   }
 
-  state.played.push(
-    ...pair
-  );
+
+
+  state.played
+    .push(
+      ...pair
+    );
+
+
 
   render();
 
-  if(typeA==='boat'){
+
+
+  if(
+    typeA ===
+    'boat'
+  ){
 
     state.extraTurn =
       true;
+
 
     setStatus(
       'Boot-Duo ausgespielt. Du bekommst sofort einen Extra-Zug.'
     );
 
+
     finishYourTurn();
 
+
     return;
+
   }
 
-  if(typeA==='fish'){
 
-    if(state.deck.length){
+
+  if(
+    typeA ===
+    'fish'
+  ){
+
+    if(
+      state.deck.length
+    ){
 
       const card =
         state.deck.pop();
 
-      state.hand.push(
-        card
-      );
+
+      state.hand
+        .push(
+          card
+        );
+
 
       setStatus(
-        'Fisch-Duo ausgespielt. Du ziehst ' +
-        names[card.type] +
+
+        'Fisch-Duo ausgespielt. Du ziehst '
+
+        +
+
+        names[
+          card.type
+        ]
+
+        +
+
         ' vom Nachziehstapel.'
+
       );
+
     }
+
 
     render();
 
+
     finishYourTurn();
 
+
     return;
+
   }
 
+
+
   if(
-    typeA==='shark' &&
-    typeB==='swimmer'
+
+    typeA ===
+      'shark'
+
+    &&
+
+    typeB ===
+      'swimmer'
+
   ){
 
     if(
@@ -1385,24 +2385,40 @@ function playDuo(
 
       const randomIndex =
         Math.floor(
-          Math.random() *
+          Math.random()
+          *
           state.silasHand.length
         );
 
-      const stolen =
-        state.silasHand.splice(
-          randomIndex,
-          1
-        )[0];
 
-      state.hand.push(
-        stolen
-      );
+      const stolen =
+        state.silasHand
+          .splice(
+            randomIndex,
+            1
+          )[0];
+
+
+      state.hand
+        .push(
+          stolen
+        );
+
 
       setStatus(
-        'Hai + Schwimmer ausgespielt. Du stiehlst ' +
-        names[stolen.type] +
+
+        'Hai + Schwimmer ausgespielt. Du stiehlst '
+
+        +
+
+        names[
+          stolen.type
+        ]
+
+        +
+
         ' von Silas.'
+
       );
 
     }
@@ -1411,65 +2427,105 @@ function playDuo(
       setStatus(
         'Hai + Schwimmer ausgespielt. Silas hat keine Karte zum Stehlen.'
       );
+
     }
+
 
     render();
 
+
     finishYourTurn();
 
+
     return;
+
   }
 
-  if(typeA==='crab'){
+
+
+  if(
+    typeA ===
+    'crab'
+  ){
 
     chooseCrabPile();
+
   }
+
 }
+
+
 
 function chooseCrabPile(){
 
   showChoice(
+
     'Welchen Ablagestapel möchtest du mit Mr Krabs durchsuchen?',
+
     [
 
       {
+
         label:
           'Stapel A durchsuchen',
 
         onClick:
-          ()=>showCrabCards(0)
+          ()=>showCrabCards(
+            0
+          )
+
       },
 
+
       {
+
         label:
           'Stapel B durchsuchen',
 
         onClick:
-          ()=>showCrabCards(1)
+          ()=>showCrabCards(
+            1
+          )
+
       }
 
     ]
+
   );
+
 }
 
-function showCrabCards(index){
+
+
+function showCrabCards(
+  index
+){
 
   $('choiceTitle')
     .textContent =
-    'Wähle eine Karte aus Ablage ' +
-    (
-      index===0
-        ? 'A'
-        : 'B'
-    );
+
+      'Wähle eine Karte aus Ablage '
+
+      +
+
+      (
+        index===0
+          ? 'A'
+          : 'B'
+      );
+
+
 
   $('choiceGrid')
     .innerHTML =
     '';
 
+
+
   if(
-    state.piles[index]
-      .length===0
+    state.piles[
+      index
+    ].length === 0
   ){
 
     const button =
@@ -1477,234 +2533,455 @@ function showCrabCards(index){
         'button'
       );
 
+
     button.type =
       'button';
+
 
     button.className =
       'btn';
 
+
     button.textContent =
       'Stapel ist leer';
 
+
+
     button.addEventListener(
+
       'click',
+
       ()=>{
+
 
         closeChoice();
 
+
         finishYourTurn();
+
       }
+
     );
 
+
+
     $('choiceGrid')
-      .appendChild(button);
+      .appendChild(
+        button
+      );
+
 
     return;
+
   }
 
-  state.piles[index]
-    .slice()
-    .reverse()
-    .forEach(card=>{
+
+
+  state.piles[
+    index
+  ]
+  .slice()
+  .reverse()
+  .forEach(
+    card=>{
+
 
       const button =
         document.createElement(
           'button'
         );
 
+
       button.type =
         'button';
+
 
       button.className =
         'btn';
 
+
       button.innerHTML =
-        cardHTML(card);
+        cardHTML(
+          card
+        );
+
+
 
       button.addEventListener(
+
         'click',
+
         ()=>{
 
+
           const realIndex =
-            state.piles[index]
-              .findIndex(
-                item=>
-                  item.id===
-                  card.id
-              );
+            state.piles[
+              index
+            ]
+            .findIndex(
+              item =>
+                item.id ===
+                card.id
+            );
+
+
 
           const chosen =
-            state.piles[index]
-              .splice(
-                realIndex,
-                1
-              )[0];
+            state.piles[
+              index
+            ]
+            .splice(
+              realIndex,
+              1
+            )[0];
 
-          state.hand.push(
-            chosen
-          );
+
+
+          state.hand
+            .push(
+              chosen
+            );
+
+
 
           closeChoice();
 
+
+
           setStatus(
-            'Mr Krabs holt ' +
-            names[chosen.type] +
-            ' aus Ablage ' +
+
+            'Mr Krabs holt '
+
+            +
+
+            names[
+              chosen.type
+            ]
+
+            +
+
+            ' aus Ablage '
+
+            +
+
             (
               index===0
                 ? 'A'
                 : 'B'
-            ) +
+            )
+
+            +
+
             '.'
+
           );
 
+
+
           finishYourTurn();
+
         }
+
       );
 
+
+
       $('choiceGrid')
-        .appendChild(button);
-    });
+        .appendChild(
+          button
+        );
+
+    }
+  );
+
 }
+
+
 
 function finishYourTurn(){
 
-  if(state.extraTurn){
+  if(
+    state.extraTurn
+  ){
 
     state.extraTurn =
       false;
 
+
     state.turn =
       'you';
 
+
     state.busy =
       false;
+
 
     $('silasMove')
       .textContent =
       'wartet';
 
+
     setStatus(
       'Du hast einen Extra-Zug.'
     );
 
+
     render();
 
+
     return;
+
   }
+
+
 
   state.turn =
     'silas';
 
+
   state.busy =
     true;
+
+
 
   $('silasMove')
     .textContent =
     'ist dran …';
 
+
+
   setStatus(
     'Silas ist dran …'
   );
 
+
+
   render();
+
+
 
   setTimeout(
     silasTurn,
     700
   );
+
 }
 
-function silasCardValue(card){
 
-  let value = 0;
 
-  if(
-    card.type==='mermaid'
-  ){
-    value += 7;
-  }
+function silasCardValue(
+  card
+){
 
-  if(
-    card.type==='penguin' ||
-    card.type==='octopus' ||
-    card.type==='shell' ||
-    card.type==='sailor'
-  ){
-    value += 4;
-  }
+  let value =
+    0;
+
+
 
   if(
-    card.type==='lighthouse' ||
-    card.type==='shoal' ||
-    card.type==='colony' ||
-    card.type==='captain'
-  ){
-    value += 3;
-  }
-
-  if(
-    card.type==='crab' ||
-    card.type==='boat' ||
-    card.type==='fish'
+    card.type ===
+    'mermaid'
   ){
 
     value +=
+      7;
+
+  }
+
+
+
+  if(
+
+    card.type ===
+      'penguin'
+
+    ||
+
+    card.type ===
+      'octopus'
+
+    ||
+
+    card.type ===
+      'shell'
+
+    ||
+
+    card.type ===
+      'sailor'
+
+  ){
+
+    value +=
+      4;
+
+  }
+
+
+
+  if(
+
+    card.type ===
+      'lighthouse'
+
+    ||
+
+    card.type ===
+      'shoal'
+
+    ||
+
+    card.type ===
+      'colony'
+
+    ||
+
+    card.type ===
+      'captain'
+
+  ){
+
+    value +=
+      3;
+
+  }
+
+
+
+  if(
+
+    card.type ===
+      'crab'
+
+    ||
+
+    card.type ===
+      'boat'
+
+    ||
+
+    card.type ===
+      'fish'
+
+  ){
+
+    value +=
+
       countType(
         state.silasHand,
         card.type
       ) > 0
-        ? 5
-        : 1;
+
+      ? 5
+
+      : 1;
+
   }
 
+
+
   if(
-    card.type==='shark' &&
+
+    card.type ===
+      'shark'
+
+    &&
+
     countType(
       state.silasHand,
       'swimmer'
     ) > 0
+
   ){
-    value += 5;
+
+    value +=
+      5;
+
   }
 
+
+
   if(
-    card.type==='swimmer' &&
+
+    card.type ===
+      'swimmer'
+
+    &&
+
     countType(
       state.silasHand,
       'shark'
     ) > 0
+
   ){
-    value += 5;
+
+    value +=
+      5;
+
   }
 
+
+
   return value;
+
 }
+
+
 
 function silasTurn(){
 
   if(
-    !state.started ||
+
+    !state.started
+
+    ||
+
     state.roundOver
+
   ){
+
     return;
+
   }
 
+
+
   const a =
-    topCard(0);
+    topCard(
+      0
+    );
+
 
   const b =
-    topCard(1);
+    topCard(
+      1
+    );
+
+
 
   const valueA =
+
     a
-      ? silasCardValue(a)
-      : -1;
+
+    ? silasCardValue(
+        a
+      )
+
+    : -1;
+
+
 
   const valueB =
+
     b
-      ? silasCardValue(b)
-      : -1;
+
+    ? silasCardValue(
+        b
+      )
+
+    : -1;
+
+
 
   const bestOpen =
     Math.max(
@@ -1712,56 +2989,85 @@ function silasTurn(){
       valueB
     );
 
-  if(bestOpen>=4){
+
+
+  if(
+    bestOpen >= 4
+  ){
 
     const index =
-      valueA>=valueB
-        ? 0
-        : 1;
+
+      valueA >=
+      valueB
+
+      ? 0
+
+      : 1;
+
+
 
     const card =
-      state.piles[index]
-        .pop();
+      state.piles[
+        index
+      ]
+      .pop();
 
-    state.silasHand.push(
-      card
-    );
+
+
+    state.silasHand
+      .push(
+        card
+      );
+
+
 
     $('silasMove')
       .textContent =
       'nahm eine offene Karte';
 
   }
+
+
   else if(
-    state.deck.length>=2
+    state.deck.length >= 2
   ){
 
     const first =
       state.deck.pop();
 
+
     const second =
       state.deck.pop();
+
+
 
     const firstValue =
       silasCardValue(
         first
       );
 
+
     const secondValue =
       silasCardValue(
         second
       );
 
+
+
     let keep;
+
     let discard;
 
+
+
     if(
-      firstValue>=
+      firstValue >=
       secondValue
     ){
 
       keep =
         first;
+
 
       discard =
         second;
@@ -1772,99 +3078,250 @@ function silasTurn(){
       keep =
         second;
 
+
       discard =
         first;
+
     }
 
-    state.silasHand.push(
-      keep
-    );
+
+
+    state.silasHand
+      .push(
+        keep
+      );
+
+
 
     const pileIndex =
-      Math.random()<0.5
-        ? 0
-        : 1;
 
-    state.piles[pileIndex]
-      .push(
-        discard
-      );
+      Math.random()
+      <
+      0.5
+
+      ? 0
+
+      : 1;
+
+
+
+    state.piles[
+      pileIndex
+    ]
+    .push(
+      discard
+    );
+
+
 
     $('silasMove')
       .textContent =
       'zog zwei Karten';
 
   }
+
+
   else{
 
-    let index = -1;
+    let index =
+      -1;
 
-    if(a && b){
+
+
+    if(
+      a &&
+      b
+    ){
 
       index =
-        valueA>=valueB
-          ? 0
-          : 1;
+
+        valueA >=
+        valueB
+
+        ? 0
+
+        : 1;
 
     }
-    else if(a){
 
-      index=0;
+
+    else if(
+      a
+    ){
+
+      index =
+        0;
 
     }
-    else if(b){
 
-      index=1;
+
+    else if(
+      b
+    ){
+
+      index =
+        1;
+
     }
 
-    if(index>=0){
 
-      state.silasHand.push(
-        state.piles[index]
+
+    if(
+      index >= 0
+    ){
+
+      state.silasHand
+        .push(
+          state.piles[
+            index
+          ]
           .pop()
-      );
+        );
+
 
       $('silasMove')
         .textContent =
         'nahm eine offene Karte';
+
     }
+
   }
+
+
 
   state.busy =
     false;
 
+
   state.turn =
     'you';
+
+
 
   setStatus(
     'Silas ist fertig. Du bist dran.'
   );
 
+
+
   render();
+
 }
+
+
 
 function stopRound(){
 
   if(
-    state.roundOver ||
-    state.turn !== 'you' ||
+
+    state.roundOver
+
+    ||
+
+    state.turn !==
+      'you'
+
+    ||
+
     score() < 7
+
   ){
+
     return;
+
   }
+
+
 
   state.roundOver =
     true;
 
+
   state.busy =
     true;
 
+
+
+  const yourPoints =
+    scoreCards(
+      state.hand,
+      state.played
+    );
+
+
+
+  const silasPoints =
+    scoreCards(
+      state.silasHand,
+      []
+    );
+
+
+
+  $('resultText')
+    .innerHTML =
+
+      '<div class="resultLine"><strong>Du: '
+
+      +
+
+      yourPoints
+
+      +
+
+      ' Punkte</strong></div>'
+
+      +
+
+      '<div class="resultLine"><strong>Silas: '
+
+      +
+
+      silasPoints
+
+      +
+
+      ' Punkte</strong></div>';
+
+
+
+  $('silasReveal')
+    .innerHTML =
+
+      state.silasHand.length
+
+      ? state.silasHand
+          .map(
+            card =>
+              cardHTML(
+                card
+              )
+          )
+          .join('')
+
+      : '<span class="sub">Keine Karten.</span>';
+
+
+
+  $('roundResult')
+    .classList
+    .remove(
+      'hidden'
+    );
+
+
+
   setStatus(
-    'Stopp funktioniert. Runde beendet – Testversion 8a.'
+    'Stopp – Runde beendet. Silas deckt seine Hand auf.'
   );
 
+
+
   render();
+
 }
+
+
 
 $('newBtn')
   .addEventListener(
@@ -1872,23 +3329,31 @@ $('newBtn')
     newGame
   );
 
+
 $('drawBtn')
   .addEventListener(
     'click',
     drawTwo
   );
 
+
 $('pileA')
   .addEventListener(
     'click',
-    ()=>takePile(0)
+    ()=>takePile(
+      0
+    )
   );
+
 
 $('pileB')
   .addEventListener(
     'click',
-    ()=>takePile(1)
+    ()=>takePile(
+      1
+    )
   );
+
 
 $('stopBtn')
   .addEventListener(
@@ -1896,10 +3361,15 @@ $('stopBtn')
     stopRound
   );
 
+
+
 render();
 
+
 })();
+
 </script>
 
 </body>
+
 </html>
