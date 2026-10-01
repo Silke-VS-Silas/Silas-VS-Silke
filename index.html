@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Silke gegen Silas – Version 8c</title>
+<title>Silke gegen Silas – Version 8d</title>
 
 <style>
 :root{
@@ -265,7 +265,7 @@ button{
     <div>
       <h1>Silke gegen Silas</h1>
       <div class="sub">
-        Version 8c – Stopp + Letzte Chance
+        Version 8d – Duo-Funktionen komplett
       </div>
     </div>
 
@@ -279,7 +279,7 @@ button{
 
 
   <div id="status" class="status">
-    Version 8c aktiv. Tippe auf „Neue Partie“.
+    Version 8d aktiv. Tippe auf „Neue Partie“.
   </div>
 
 
@@ -306,6 +306,14 @@ button{
 
     <div id="silasCards"
          class="backRow">
+    </div>
+
+    <div style="margin-top:15px">
+      <strong>Silas ausgespielt</strong>
+    </div>
+
+    <div id="silasPlayed"
+         class="playedGrid">
     </div>
 
   </div>
@@ -430,7 +438,7 @@ button{
   <div class="playedBox">
 
     <strong>
-      Ausgespielte Duos
+      Deine ausgespielten Duos
     </strong>
 
     <div id="playedGrid"
@@ -791,6 +799,8 @@ const state = {
 
   played:[],
 
+  silasPlayed:[],
+
   started:false,
 
   busy:false,
@@ -799,7 +809,9 @@ const state = {
 
   turn:'none',
 
-  extraTurn:false
+  extraTurn:false,
+
+  silasExtra:false
 
 };
 
@@ -1237,6 +1249,24 @@ function renderSilas(){
           );
       }
     );
+
+
+  $('silasPlayed')
+    .innerHTML =
+
+      state.silasPlayed.length
+
+      ? state.silasPlayed
+          .map(
+            card =>
+              cardHTML(
+                card,
+                true
+              )
+          )
+          .join('')
+
+      : '<span class="sub">Noch nichts ausgespielt.</span>';
 }
 
 
@@ -1666,6 +1696,10 @@ function newGame(){
     [];
 
 
+  state.silasPlayed =
+    [];
+
+
   state.started =
     true;
 
@@ -1683,6 +1717,10 @@ function newGame(){
 
 
   state.extraTurn =
+    false;
+
+
+  state.silasExtra =
     false;
 
 
@@ -1980,18 +2018,18 @@ function takePile(
 }
 
 
-function removeCards(
+function removePairFrom(
+  hand,
   typeA,
   typeB
 ){
 
   const firstIndex =
-    state.hand
-      .findIndex(
-        card =>
-          card.type ===
-          typeA
-      );
+    hand.findIndex(
+      card =>
+        card.type ===
+        typeA
+    );
 
 
   if(
@@ -2003,30 +2041,27 @@ function removeCards(
 
 
   const first =
-    state.hand
-      .splice(
-        firstIndex,
-        1
-      )[0];
+    hand.splice(
+      firstIndex,
+      1
+    )[0];
 
 
   const secondIndex =
-    state.hand
-      .findIndex(
-        card =>
-          card.type ===
-          typeB
-      );
+    hand.findIndex(
+      card =>
+        card.type ===
+        typeB
+    );
 
 
   if(
     secondIndex < 0
   ){
 
-    state.hand
-      .push(
-        first
-      );
+    hand.push(
+      first
+    );
 
 
     return null;
@@ -2034,11 +2069,10 @@ function removeCards(
 
 
   const second =
-    state.hand
-      .splice(
-        secondIndex,
-        1
-      )[0];
+    hand.splice(
+      secondIndex,
+      1
+    )[0];
 
 
   return [
@@ -2065,7 +2099,8 @@ function playDuo(
 
 
   const pair =
-    removeCards(
+    removePairFrom(
+      state.hand,
       typeA,
       typeB
     );
@@ -2098,7 +2133,7 @@ function playDuo(
 
 
     setStatus(
-      'Boot-Duo ausgespielt. Du bekommst sofort einen Extra-Zug.'
+      'Boot-Duo: Du bekommst sofort einen Extra-Zug.'
     );
 
 
@@ -2130,7 +2165,7 @@ function playDuo(
 
       setStatus(
 
-        'Fisch-Duo ausgespielt. Du ziehst '
+        'Fisch-Duo: Du ziehst '
 
         +
 
@@ -2142,6 +2177,12 @@ function playDuo(
 
         ' vom Nachziehstapel.'
 
+      );
+    }
+    else{
+
+      setStatus(
+        'Fisch-Duo: Der Nachziehstapel ist leer.'
       );
     }
 
@@ -2194,7 +2235,7 @@ function playDuo(
 
       setStatus(
 
-        'Hai + Schwimmer ausgespielt. Du stiehlst '
+        'Hai + Schwimmer: Du stiehlst '
 
         +
 
@@ -2212,7 +2253,7 @@ function playDuo(
     else{
 
       setStatus(
-        'Hai + Schwimmer ausgespielt. Silas hat keine Karte zum Stehlen.'
+        'Hai + Schwimmer: Silas hat keine Karte zum Stehlen.'
       );
     }
 
@@ -2241,14 +2282,14 @@ function chooseCrabPile(){
 
   showChoice(
 
-    'Welchen Ablagestapel möchtest du mit Mr Krabs durchsuchen?',
+    'Mr Krabs: Welchen Ablagestapel möchtest du durchsuchen?',
 
     [
 
       {
 
         label:
-          'Stapel A durchsuchen',
+          'Stapel A wählen',
 
         onClick:
           ()=>showCrabCards(
@@ -2261,7 +2302,7 @@ function chooseCrabPile(){
       {
 
         label:
-          'Stapel B durchsuchen',
+          'Stapel B wählen',
 
         onClick:
           ()=>showCrabCards(
@@ -2283,7 +2324,7 @@ function showCrabCards(
   $('choiceTitle')
     .textContent =
 
-      'Wähle eine Karte aus Ablage '
+      'Mr Krabs – wähle eine Karte aus Stapel '
 
       +
 
@@ -2424,7 +2465,7 @@ function showCrabCards(
 
             +
 
-            ' aus Ablage '
+            ' aus Stapel '
 
             +
 
@@ -2481,7 +2522,7 @@ function finishYourTurn(){
 
 
     setStatus(
-      'Du hast einen Extra-Zug.'
+      'Boot-Duo: Du hast einen Extra-Zug.'
     );
 
 
@@ -2654,7 +2695,7 @@ function silasCardValue(
 }
 
 
-function silasTakeOneTurn(){
+function silasTakeOneCard(){
 
   const a =
     topCard(
@@ -2864,6 +2905,327 @@ function silasTakeOneTurn(){
 }
 
 
+function silasPlayDuos(
+  allowExtra=true
+){
+
+  let changed =
+    true;
+
+
+  while(
+    changed
+  ){
+
+    changed =
+      false;
+
+
+    if(
+      countType(
+        state.silasHand,
+        'boat'
+      ) >= 2
+    ){
+
+      const pair =
+        removePairFrom(
+          state.silasHand,
+          'boat',
+          'boat'
+        );
+
+
+      if(
+        pair
+      ){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        if(
+          allowExtra
+        ){
+
+          state.silasExtra =
+            true;
+        }
+
+
+        $('silasMove')
+          .textContent =
+          'spielte ein Boot-Duo';
+
+
+        changed =
+          true;
+
+
+        continue;
+      }
+    }
+
+
+    if(
+      countType(
+        state.silasHand,
+        'fish'
+      ) >= 2
+    ){
+
+      const pair =
+        removePairFrom(
+          state.silasHand,
+          'fish',
+          'fish'
+        );
+
+
+      if(
+        pair
+      ){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        if(
+          state.deck.length
+        ){
+
+          state.silasHand
+            .push(
+              state.deck.pop()
+            );
+        }
+
+
+        $('silasMove')
+          .textContent =
+          'spielte ein Fisch-Duo';
+
+
+        changed =
+          true;
+
+
+        continue;
+      }
+    }
+
+
+    if(
+      countType(
+        state.silasHand,
+        'shark'
+      ) >= 1
+
+      &&
+
+      countType(
+        state.silasHand,
+        'swimmer'
+      ) >= 1
+    ){
+
+      const pair =
+        removePairFrom(
+          state.silasHand,
+          'shark',
+          'swimmer'
+        );
+
+
+      if(
+        pair
+      ){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        if(
+          state.hand.length
+        ){
+
+          const randomIndex =
+            Math.floor(
+              Math.random()
+              *
+              state.hand.length
+            );
+
+
+          const stolen =
+            state.hand
+              .splice(
+                randomIndex,
+                1
+              )[0];
+
+
+          state.silasHand
+            .push(
+              stolen
+            );
+        }
+
+
+        $('silasMove')
+          .textContent =
+          'spielte Hai + Schwimmer';
+
+
+        changed =
+          true;
+
+
+        continue;
+      }
+    }
+
+
+    if(
+      countType(
+        state.silasHand,
+        'crab'
+      ) >= 2
+    ){
+
+      const pair =
+        removePairFrom(
+          state.silasHand,
+          'crab',
+          'crab'
+        );
+
+
+      if(
+        pair
+      ){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        const possible =
+          [];
+
+
+        if(
+          state.piles[0]
+            .length
+        ){
+
+          possible.push(
+            0
+          );
+        }
+
+
+        if(
+          state.piles[1]
+            .length
+        ){
+
+          possible.push(
+            1
+          );
+        }
+
+
+        if(
+          possible.length
+        ){
+
+          const chosenPile =
+            possible[
+              Math.floor(
+                Math.random()
+                *
+                possible.length
+              )
+            ];
+
+
+          let bestIndex =
+            0;
+
+
+          let bestValue =
+            -999;
+
+
+          state.piles[
+            chosenPile
+          ]
+          .forEach(
+            (card,index)=>{
+
+              const value =
+                silasCardValue(
+                  card
+                );
+
+
+              if(
+                value >
+                bestValue
+              ){
+
+                bestValue =
+                  value;
+
+
+                bestIndex =
+                  index;
+              }
+            }
+          );
+
+
+          const chosen =
+            state.piles[
+              chosenPile
+            ]
+            .splice(
+              bestIndex,
+              1
+            )[0];
+
+
+          state.silasHand
+            .push(
+              chosen
+            );
+        }
+
+
+        $('silasMove')
+          .textContent =
+          'spielte ein Mr-Krabs-Duo';
+
+
+        changed =
+          true;
+
+
+        continue;
+      }
+    }
+  }
+}
+
+
 function silasTurn(){
 
   if(
@@ -2875,7 +3237,38 @@ function silasTurn(){
   }
 
 
-  silasTakeOneTurn();
+  silasTakeOneCard();
+
+
+  silasPlayDuos(
+    true
+  );
+
+
+  render();
+
+
+  if(
+    state.silasExtra
+  ){
+
+    state.silasExtra =
+      false;
+
+
+    setStatus(
+      'Silas hat ein Boot-Duo gespielt und bekommt einen Extra-Zug.'
+    );
+
+
+    setTimeout(
+      silasTurn,
+      700
+    );
+
+
+    return;
+  }
 
 
   state.busy =
@@ -2897,12 +3290,18 @@ function silasTurn(){
 
 function revealSilas(){
 
+  const allSilas =
+    state.silasHand.concat(
+      state.silasPlayed
+    );
+
+
   $('silasReveal')
     .innerHTML =
 
-      state.silasHand.length
+      allSilas.length
 
-      ? state.silasHand
+      ? allSilas
           .map(
             card =>
               cardHTML(
@@ -2946,7 +3345,7 @@ function stopRound(){
   const silasPoints =
     scoreCards(
       state.silasHand,
-      []
+      state.silasPlayed
     );
 
 
@@ -3032,7 +3431,16 @@ function lastChance(){
   setTimeout(
     ()=>{
 
-      silasTakeOneTurn();
+      silasTakeOneCard();
+
+
+      silasPlayDuos(
+        false
+      );
+
+
+      state.silasExtra =
+        false;
 
 
       state.roundOver =
@@ -3053,7 +3461,7 @@ function lastChance(){
       const silasPoints =
         scoreCards(
           state.silasHand,
-          []
+          state.silasPlayed
         );
 
 
@@ -3067,7 +3475,7 @@ function lastChance(){
       const silasColor =
         colorBonus(
           state.silasHand,
-          []
+          state.silasPlayed
         );
 
 
@@ -3269,4 +3677,4 @@ render();
 </script>
 
 </body>
-      </html>
+</html>
