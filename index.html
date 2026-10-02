@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Silke gegen Silas – Version 9c</title>
+<title>Silke gegen Silas – Version 9d</title>
 
 <style>
 :root{
@@ -11,7 +11,6 @@
   --ink:#17202a;
   --muted:#6c7680;
   --line:#d7d1c6;
-  --accent:#2b7a78;
   --accent2:#fff4df;
   --red:#b3261e;
   --green:#2e7d32;
@@ -29,7 +28,7 @@ body{
 .app{
   max-width:760px;
   margin:auto;
-  padding:10px;
+  padding:7px;
 }
 
 .top,
@@ -42,9 +41,12 @@ body{
   flex-wrap:wrap;
 }
 
-.topActions{
+.topActions,
+.scoreBoard,
+.duoActions,
+.endActions{
   display:flex;
-  gap:8px;
+  gap:7px;
   flex-wrap:wrap;
 }
 
@@ -59,8 +61,6 @@ h1{
 }
 
 .scoreBoard{
-  display:flex;
-  gap:12px;
   font-size:17px;
   font-weight:800;
 }
@@ -153,8 +153,8 @@ button{
   background:#fff;
   border:1px solid var(--line);
   border-radius:14px;
-  padding:8px;
-  min-height:120px;
+  padding:6px;
+  min-height:104px;
 }
 
 .zone h2{
@@ -178,21 +178,21 @@ button{
 .card{
   border:1px solid rgba(0,0,0,.15);
   border-radius:10px;
-  padding:7px;
-  min-height:84px;
+  padding:6px;
+  min-height:78px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
 }
 
 .ico{
-  font-size:25px;
+  font-size:23px;
   line-height:1.1;
 }
 
 .name{
   font-weight:800;
-  font-size:13px;
+  font-size:12px;
   line-height:1.1;
 }
 
@@ -236,7 +236,7 @@ button{
 
 .handGrid{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:6px;
   margin-top:7px;
 }
@@ -251,14 +251,6 @@ button{
 .mini{
   width:70px;
   min-height:70px;
-}
-
-.duoActions,
-.endActions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-top:8px;
 }
 
 .pointsBox{
@@ -283,43 +275,6 @@ button{
 .moveLog div+div{
   margin-top:4px;
 }
-
-@media(max-width:620px){
-
-  .app{
-    padding:7px;
-  }
-
-  .board{
-    grid-template-columns:1fr 1fr 1fr;
-  }
-
-  .zone{
-    min-height:104px;
-    padding:6px;
-  }
-
-  .handGrid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  .card{
-    min-height:78px;
-    padding:6px;
-  }
-
-  .ico{
-    font-size:23px;
-  }
-
-  .name{
-    font-size:12px;
-  }
-
-  .top{
-    align-items:flex-start;
-  }
-}
 </style>
 </head>
 
@@ -332,7 +287,7 @@ button{
     <div>
       <h1>Silke gegen Silas</h1>
       <div class="sub">
-        Version 9c – kompakte Ansicht
+        Version 9d – Auto-Ablage & Autospeichern
       </div>
     </div>
 
@@ -370,7 +325,7 @@ button{
 
 
   <div id="status" class="status">
-    Version 9c aktiv. Tippe auf „Neues Spiel“.
+    Version 9d bereit.
   </div>
 
 
@@ -379,17 +334,13 @@ button{
     <div class="silasHead">
 
       <div>
-
-        <strong>
-          Silas
-        </strong>
+        <strong>Silas</strong>
 
         <div class="sub">
           Verdeckte Hand:
           <span id="silasCount">0</span>
           Karten
         </div>
-
       </div>
 
       <div id="silasMove" class="sub">
@@ -398,30 +349,19 @@ button{
 
     </div>
 
-
     <div id="silasCards" class="backRow"></div>
 
-
     <div style="margin-top:10px">
-      <strong>
-        Silas ausgespielt
-      </strong>
+      <strong>Silas ausgespielt</strong>
     </div>
 
     <div id="silasPlayed" class="playedGrid"></div>
 
-
     <div style="margin-top:10px">
-      <strong>
-        Silas – letzter Zug
-      </strong>
+      <strong>Silas – letzter Zug</strong>
     </div>
 
-    <div id="silasLog" class="moveLog">
-      <div class="sub">
-        Noch kein Zug.
-      </div>
-    </div>
+    <div id="silasLog" class="moveLog"></div>
 
   </div>
 
@@ -434,13 +374,9 @@ button{
       type="button"
       disabled>
 
-      <div class="wave">
-        🌊
-      </div>
+      <div class="wave">🌊</div>
 
-      <strong>
-        2 Karten ziehen
-      </strong>
+      <strong>2 Karten ziehen</strong>
 
       <div class="sub">
         <span id="deckCount">0</span>
@@ -456,9 +392,7 @@ button{
       type="button"
       disabled>
 
-      <h2>
-        Ablage A
-      </h2>
+      <h2>Ablage A</h2>
 
       <div id="pileAcard">
         leer
@@ -473,9 +407,7 @@ button{
       type="button"
       disabled>
 
-      <h2>
-        Ablage B
-      </h2>
+      <h2>Ablage B</h2>
 
       <div id="pileBcard">
         leer
@@ -506,9 +438,7 @@ button{
 
       <div>
 
-        <strong>
-          Deine Hand
-        </strong>
+        <strong>Deine Hand</strong>
 
         <div class="pointsBox">
           Punkte:
@@ -516,7 +446,6 @@ button{
         </div>
 
       </div>
-
 
       <div class="endActions">
 
@@ -548,12 +477,10 @@ button{
 
     </div>
 
-
     <div
       id="handGrid"
       class="handGrid">
     </div>
-
 
     <div
       id="duoActions"
@@ -591,19 +518,13 @@ button{
     </div>
 
     <div style="margin-top:12px">
-
-      <strong>
-        Silas deckt auf
-      </strong>
-
+      <strong>Silas deckt auf</strong>
     </div>
-
 
     <div
       id="silasReveal"
       class="handGrid">
     </div>
-
 
     <button
       id="nextRoundBtn"
@@ -623,10 +544,11 @@ button{
 
 'use strict';
 
-
 const $=
-  id=>
-    document.getElementById(id);
+  id=>document.getElementById(id);
+
+const SAVE_KEY=
+  'silke-vs-silas-v9d';
 
 
 const names={
@@ -723,7 +645,6 @@ function shuffle(arr){
   const a=
     arr.slice();
 
-
   for(
     let i=a.length-1;
     i>0;
@@ -736,7 +657,6 @@ function shuffle(arr){
         (i+1)
       );
 
-
     [
       a[i],
       a[j]
@@ -746,7 +666,6 @@ function shuffle(arr){
     ];
   }
 
-
   return a;
 }
 
@@ -755,7 +674,6 @@ function makeDeck(){
 
   const types=[];
   const colors=[];
-
 
   Object.entries(
     typeCounts
@@ -868,8 +786,99 @@ const state={
 
   phase:'draw',
 
-  silasExtra:false
+  silasExtra:false,
+
+  statusText:
+    'Version 9d bereit.',
+
+  silasLog:[],
+
+  resultTitle:
+    'Rundenergebnis',
+
+  resultHTML:''
 };
+
+
+function saveGame(){
+
+  try{
+
+    localStorage.setItem(
+      SAVE_KEY,
+      JSON.stringify({
+        uid:uid,
+        state:state
+      })
+    );
+
+  }
+  catch(e){}
+}
+
+
+function loadGame(){
+
+  try{
+
+    const raw=
+      localStorage.getItem(
+        SAVE_KEY
+      );
+
+
+    if(!raw){
+
+      return false;
+    }
+
+
+    const saved=
+      JSON.parse(raw);
+
+
+    if(
+      !saved ||
+      !saved.state
+    ){
+
+      return false;
+    }
+
+
+    Object.assign(
+      state,
+      saved.state
+    );
+
+
+    uid=
+      saved.uid||
+      uid;
+
+
+    state.busy=
+      false;
+
+
+    if(
+      !Array.isArray(
+        state.silasLog
+      )
+    ){
+
+      state.silasLog=[];
+    }
+
+
+    return true;
+
+  }
+  catch(e){
+
+    return false;
+  }
+}
 
 
 function countType(
@@ -1096,8 +1105,7 @@ function scoreCards(
     const vals=
       Object.values(f)
         .sort(
-          (a,b)=>
-            b-a
+          (a,b)=>b-a
         );
 
 
@@ -1177,6 +1185,8 @@ function hasFourMermaids(
 
 function setStatus(t){
 
+  state.statusText=t;
+
   $('status')
     .textContent=t;
 }
@@ -1184,27 +1194,36 @@ function setStatus(t){
 
 function clearSilasLog(){
 
-  $('silasLog')
-    .innerHTML='';
+  state.silasLog=[];
+
+  renderSilasLog();
 }
 
 
-function addSilasLog(text){
+function addSilasLog(t){
 
-  const line=
-    document.createElement(
-      'div'
-    );
+  state.silasLog
+    .push(t);
+
+  renderSilasLog();
+}
 
 
-  line.textContent=
-    text;
-
+function renderSilasLog(){
 
   $('silasLog')
-    .appendChild(
-      line
-    );
+    .innerHTML=
+
+    state.silasLog.length
+
+    ? state.silasLog
+        .map(
+          t=>
+            `<div>${t}</div>`
+        )
+        .join('')
+
+    : '<div class="sub">Noch kein Zug.</div>';
 }
 
 
@@ -1283,17 +1302,20 @@ function renderSilas(){
 
     state.silasPlayed.length
 
-      ? state.silasPlayed
-          .map(
-            c=>
-              cardHTML(
-                c,
-                true
-              )
-          )
-          .join('')
+    ? state.silasPlayed
+        .map(
+          c=>
+            cardHTML(
+              c,
+              true
+            )
+        )
+        .join('')
 
-      : '<span class="sub">Noch nichts ausgespielt.</span>';
+    : '<span class="sub">Noch nichts ausgespielt.</span>';
+
+
+  renderSilasLog();
 }
 
 
@@ -1412,7 +1434,85 @@ function renderDuos(){
 }
 
 
+function revealSilas(){
+
+  const all=
+    state.silasHand
+      .concat(
+        state.silasPlayed
+      );
+
+
+  $('silasReveal')
+    .innerHTML=
+
+    all.length
+
+    ? all
+        .map(
+          c=>
+            cardHTML(c)
+        )
+        .join('')
+
+    : '<span class="sub">Keine Karten.</span>';
+}
+
+
+function renderResult(){
+
+  if(
+    !state.roundOver ||
+    !state.resultHTML
+  ){
+
+    $('roundResult')
+      .classList
+      .add(
+        'hidden'
+      );
+
+    return;
+  }
+
+
+  $('roundResult')
+    .classList
+    .remove(
+      'hidden'
+    );
+
+
+  $('resultTitle')
+    .textContent=
+    state.resultTitle||
+    'Rundenergebnis';
+
+
+  $('resultText')
+    .innerHTML=
+    state.resultHTML;
+
+
+  revealSilas();
+
+
+  $('nextRoundBtn')
+    .classList
+    .toggle(
+      'hidden',
+      state.gameOver
+    );
+}
+
+
 function render(){
+
+  $('status')
+    .textContent=
+    state.statusText||
+    '';
+
 
   $('youTotal')
     .textContent=
@@ -1445,15 +1545,15 @@ function render(){
   $('pileAcard')
     .innerHTML=
     a
-      ? cardHTML(a)
-      : 'leer';
+    ? cardHTML(a)
+    : 'leer';
 
 
   $('pileBcard')
     .innerHTML=
     b
-      ? cardHTML(b)
-      : 'leer';
+    ? cardHTML(b)
+    : 'leer';
 
 
   $('handGrid')
@@ -1461,14 +1561,13 @@ function render(){
 
     state.hand.length
 
-      ? state.hand
-          .map(
-            c=>
-              cardHTML(c)
-          )
-          .join('')
+    ? state.hand
+        .map(
+          c=>cardHTML(c)
+        )
+        .join('')
 
-      : '<span class="sub">Noch keine Karten.</span>';
+    : '<span class="sub">Noch keine Karten.</span>';
 
 
   $('playedGrid')
@@ -1476,23 +1575,24 @@ function render(){
 
     state.played.length
 
-      ? state.played
-          .map(
-            c=>
-              cardHTML(
-                c,
-                true
-              )
-          )
-          .join('')
+    ? state.played
+        .map(
+          c=>
+            cardHTML(
+              c,
+              true
+            )
+        )
+        .join('')
 
-      : '<span class="sub">Noch nichts ausgespielt.</span>';
+    : '<span class="sub">Noch nichts ausgespielt.</span>';
 
 
   renderSilas();
 
-
   renderDuos();
+
+  renderResult();
 
 
   const yourTurn=
@@ -1686,32 +1786,33 @@ function startRound(){
 
   state.hand=[];
 
-
   state.silasHand=[];
 
-
   state.played=[];
-
 
   state.silasPlayed=[];
 
 
   state.started=true;
 
-
   state.busy=false;
-
 
   state.roundOver=false;
 
+  state.gameOver=false;
 
   state.turn='you';
 
-
   state.phase='draw';
 
-
   state.silasExtra=false;
+
+  state.resultTitle=
+    'Rundenergebnis';
+
+  state.resultHTML='';
+
+  state.silasLog=[];
 
 
   state.piles[0]
@@ -1726,59 +1827,27 @@ function startRound(){
     );
 
 
-  $('roundResult')
-    .classList
-    .add(
-      'hidden'
-    );
-
-
-  $('silasReveal')
-    .innerHTML='';
-
-
-  $('resultText')
-    .innerHTML='';
-
-
-  $('resultTitle')
-    .textContent=
-    'Rundenergebnis';
-
-
-  $('nextRoundBtn')
-    .classList
-    .remove(
-      'hidden'
-    );
-
-
-  $('silasMove')
-    .textContent=
-    'wartet';
-
-
-  $('silasLog')
-    .innerHTML=
-    '<div class="sub">Noch kein Zug.</div>';
-
-
   setStatus(
     'Neue Runde. Ziehe zwei Karten oder nimm eine offene Karte.'
   );
 
 
   render();
+
+  saveGame();
 }
 
 
 function newGame(){
 
+  localStorage.removeItem(
+    SAVE_KEY
+  );
+
+
   state.youTotal=0;
 
-
   state.silasTotal=0;
-
 
   state.gameOver=false;
 
@@ -1789,6 +1858,11 @@ function newGame(){
   setStatus(
     'Neues Spiel bis 40 Punkte gestartet. Du bist dran.'
   );
+
+
+  render();
+
+  saveGame();
 }
 
 
@@ -1799,13 +1873,14 @@ function enterActionPhase(message){
 
 
   setStatus(
-    message
-    ||
+    message||
     'Du kannst jetzt ein Duo spielen oder deinen Zug beenden.'
   );
 
 
   render();
+
+  saveGame();
 }
 
 
@@ -1867,10 +1942,67 @@ function chooseDiscard(
   discard
 ){
 
+  const emptyA=
+    state.piles[0].length===0;
+
+
+  const emptyB=
+    state.piles[1].length===0;
+
+
+  if(
+    emptyA ||
+    emptyB
+  ){
+
+    const idx=
+      emptyA
+      ? 0
+      : 1;
+
+
+    state.hand
+      .push(
+        keep
+      );
+
+
+    state.piles[idx]
+      .push(
+        discard
+      );
+
+
+    closeChoice();
+
+
+    afterYouGain(
+      'Du behältst '
+      +
+      names[keep.type]
+      +
+      '. '
+      +
+      names[discard.type]
+      +
+      ' wird automatisch auf den leeren Stapel '
+      +
+      (
+        idx===0
+        ? 'A'
+        : 'B'
+      )
+      +
+      ' gelegt. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
+    );
+
+
+    return;
+  }
+
+
   showChoice(
-    names[
-      discard.type
-    ]
+    names[discard.type]
     +
     ' ablegen auf …',
     [
@@ -1898,7 +2030,11 @@ function chooseDiscard(
 
 
             afterYouGain(
-              'Du behältst '+names[keep.type]+'. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
+              'Du behältst '
+              +
+              names[keep.type]
+              +
+              '. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
             );
           }
       },
@@ -1926,7 +2062,11 @@ function chooseDiscard(
 
 
             afterYouGain(
-              'Du behältst '+names[keep.type]+'. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
+              'Du behältst '
+              +
+              names[keep.type]
+              +
+              '. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
             );
           }
       }
@@ -1950,10 +2090,8 @@ function takePile(index){
 
 
   const c=
-    state.piles[
-      index
-    ]
-    .pop();
+    state.piles[index]
+      .pop();
 
 
   if(!c){
@@ -1967,7 +2105,19 @@ function takePile(index){
 
 
   afterYouGain(
-    'Du nimmst '+names[c.type]+' aus Ablage '+(index===0?'A':'B')+'. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
+    'Du nimmst '
+    +
+    names[c.type]
+    +
+    ' aus Ablage '
+    +
+    (
+      index===0
+      ? 'A'
+      : 'B'
+    )
+    +
+    '. Du kannst jetzt ein Duo spielen oder den Zug beenden.'
   );
 }
 
@@ -2031,21 +2181,19 @@ function removePairFrom(
 
     hand.push(c1);
 
-
     return null;
   }
 
 
-  const c2=
+  return [
+
+    c1,
+
     hand.splice(
       i2,
       1
-    )[0];
+    )[0]
 
-
-  return [
-    c1,
-    c2
   ];
 }
 
@@ -2101,6 +2249,7 @@ function playDuo(
 
     render();
 
+    saveGame();
 
     return;
   }
@@ -2139,7 +2288,11 @@ function playDuo(
 
 
       setStatus(
-        'Fisch-Duo: Du ziehst '+names[c.type]+' vom Nachziehstapel. Du darfst weitere Duos spielen oder den Zug beenden.'
+        'Fisch-Duo: Du ziehst '
+        +
+        names[c.type]
+        +
+        ' vom Nachziehstapel. Du darfst weitere Duos spielen oder den Zug beenden.'
       );
     }
     else{
@@ -2152,6 +2305,7 @@ function playDuo(
 
     render();
 
+    saveGame();
 
     return;
   }
@@ -2203,7 +2357,11 @@ function playDuo(
 
 
       setStatus(
-        'Hai + Schwimmer: Du stiehlst '+names[c.type]+' von Silas. Du darfst weitere Duos spielen oder den Zug beenden.'
+        'Hai + Schwimmer: Du stiehlst '
+        +
+        names[c.type]
+        +
+        ' von Silas. Du darfst weitere Duos spielen oder den Zug beenden.'
       );
     }
     else{
@@ -2216,6 +2374,7 @@ function playDuo(
 
     render();
 
+    saveGame();
 
     return;
   }
@@ -2279,9 +2438,8 @@ function showCrabCards(index){
 
 
   if(
-    !state.piles[
-      index
-    ].length
+    !state.piles[index]
+      .length
   ){
 
     const b=
@@ -2315,6 +2473,8 @@ function showCrabCards(index){
 
 
         render();
+
+        saveGame();
       }
     );
 
@@ -2327,94 +2487,102 @@ function showCrabCards(index){
   }
 
 
-  state.piles[
-    index
-  ]
-  .slice()
-  .reverse()
-  .forEach(
-    c=>{
+  state.piles[index]
+    .slice()
+    .reverse()
+    .forEach(
+      c=>{
 
-      const b=
-        document.createElement(
-          'button'
-        );
-
-
-      b.type=
-        'button';
-
-
-      b.className=
-        'btn';
-
-
-      b.innerHTML=
-        cardHTML(c);
-
-
-      b.addEventListener(
-        'click',
-        ()=>{
-
-          const ri=
-            state.piles[
-              index
-            ]
-            .findIndex(
-              x=>x.id===c.id
-            );
-
-
-          const chosen=
-            state.piles[
-              index
-            ]
-            .splice(
-              ri,
-              1
-            )[0];
-
-
-          state.hand
-            .push(
-              chosen
-            );
-
-
-          closeChoice();
-
-
-          if(
-            hasFourMermaids(
-              state.hand,
-              state.played
-            )
-          ){
-
-            instantWin(
-              'you'
-            );
-
-
-            return;
-          }
-
-
-          setStatus(
-            'Mr Krabs holt '+names[chosen.type]+' aus Stapel '+(index===0?'A':'B')+'. Du darfst weitere Duos spielen oder den Zug beenden.'
+        const b=
+          document.createElement(
+            'button'
           );
 
 
-          render();
-        }
-      );
+        b.type=
+          'button';
 
 
-      $('choiceGrid')
-        .appendChild(b);
-    }
-  );
+        b.className=
+          'btn';
+
+
+        b.innerHTML=
+          cardHTML(c);
+
+
+        b.addEventListener(
+          'click',
+          ()=>{
+
+            const ri=
+              state.piles[index]
+                .findIndex(
+                  x=>x.id===c.id
+                );
+
+
+            const chosen=
+              state.piles[index]
+                .splice(
+                  ri,
+                  1
+                )[0];
+
+
+            state.hand
+              .push(
+                chosen
+              );
+
+
+            closeChoice();
+
+
+            if(
+              hasFourMermaids(
+                state.hand,
+                state.played
+              )
+            ){
+
+              instantWin(
+                'you'
+              );
+
+
+              return;
+            }
+
+
+            setStatus(
+              'Mr Krabs holt '
+              +
+              names[chosen.type]
+              +
+              ' aus Stapel '
+              +
+              (
+                index===0
+                ? 'A'
+                : 'B'
+              )
+              +
+              '. Du darfst weitere Duos spielen oder den Zug beenden.'
+            );
+
+
+            render();
+
+            saveGame();
+          }
+        );
+
+
+        $('choiceGrid')
+          .appendChild(b);
+      }
+    );
 }
 
 
@@ -2595,10 +2763,8 @@ function silasTakeOneCard(){
 
 
     const chosen=
-      state.piles[
-        i
-      ]
-      .pop();
+      state.piles[i]
+        .pop();
 
 
     state.silasHand
@@ -2613,7 +2779,19 @@ function silasTakeOneCard(){
 
 
     addSilasLog(
-      'Silas nimmt '+names[chosen.type]+' von Ablage '+(i===0?'A':'B')+'.'
+      'Silas nimmt '
+      +
+      names[chosen.type]
+      +
+      ' von Ablage '
+      +
+      (
+        i===0
+        ? 'A'
+        : 'B'
+      )
+      +
+      '.'
     );
 
 
@@ -2653,18 +2831,38 @@ function silasTakeOneCard(){
       );
 
 
+    const emptyA=
+      state.piles[0].length===0;
+
+
+    const emptyB=
+      state.piles[1].length===0;
+
+
     const pileIndex=
-      Math.random()<.5
-      ? 0
-      : 1;
+
+      (
+        emptyA||
+        emptyB
+      )
+
+      ? (
+          emptyA
+          ? 0
+          : 1
+        )
+
+      : (
+          Math.random()<.5
+          ? 0
+          : 1
+        );
 
 
-    state.piles[
-      pileIndex
-    ]
-    .push(
-      disc
-    );
+    state.piles[pileIndex]
+      .push(
+        disc
+      );
 
 
     $('silasMove')
@@ -2673,7 +2871,24 @@ function silasTakeOneCard(){
 
 
     addSilasLog(
-      'Silas zieht 2 Karten vom Nachziehstapel und legt '+names[disc.type]+' auf Ablage '+(pileIndex===0?'A':'B')+'.'
+      'Silas zieht 2 Karten vom Nachziehstapel und legt '
+      +
+      names[disc.type]
+      +
+      ' auf Ablage '
+      +
+      (
+        pileIndex===0
+        ? 'A'
+        : 'B'
+      )
+      +
+      (
+        emptyA||
+        emptyB
+        ? ' (leerer Stapel).'
+        : '.'
+      )
     );
 
 
@@ -2708,10 +2923,8 @@ function silasTakeOneCard(){
   ){
 
     const chosen=
-      state.piles[
-        i
-      ]
-      .pop();
+      state.piles[i]
+        .pop();
 
 
     state.silasHand
@@ -2726,7 +2939,19 @@ function silasTakeOneCard(){
 
 
     addSilasLog(
-      'Silas nimmt '+names[chosen.type]+' von Ablage '+(i===0?'A':'B')+'.'
+      'Silas nimmt '
+      +
+      names[chosen.type]
+      +
+      ' von Ablage '
+      +
+      (
+        i===0
+        ? 'A'
+        : 'B'
+      )
+      +
+      '.'
     );
   }
 }
@@ -2736,12 +2961,14 @@ function silasPlayDuos(
   allowBoatExtra=true
 ){
 
-  let changed=true;
+  let changed=
+    true;
 
 
   while(changed){
 
-    changed=false;
+    changed=
+      false;
 
 
     if(
@@ -2787,7 +3014,6 @@ function silasPlayDuos(
 
 
         changed=true;
-
 
         continue;
       }
@@ -2845,7 +3071,6 @@ function silasPlayDuos(
 
 
         changed=true;
-
 
         continue;
       }
@@ -2906,7 +3131,11 @@ function silasPlayDuos(
 
 
           addSilasLog(
-            'Silas spielt Hai + Schwimmer und stiehlt '+names[stolen.type]+' aus deiner Hand.'
+            'Silas spielt Hai + Schwimmer und stiehlt '
+            +
+            names[stolen.type]
+            +
+            ' aus deiner Hand.'
           );
         }
         else{
@@ -2923,7 +3152,6 @@ function silasPlayDuos(
 
 
         changed=true;
-
 
         continue;
       }
@@ -2961,9 +3189,7 @@ function silasPlayDuos(
             .length
         ){
 
-          possible.push(
-            0
-          );
+          possible.push(0);
         }
 
 
@@ -2972,9 +3198,7 @@ function silasPlayDuos(
             .length
         ){
 
-          possible.push(
-            1
-          );
+          possible.push(1);
         }
 
 
@@ -2995,37 +3219,32 @@ function silasPlayDuos(
           let bv=-999;
 
 
-          state.piles[
-            pi
-          ]
-          .forEach(
-            (c,i)=>{
+          state.piles[pi]
+            .forEach(
+              (c,i)=>{
 
-              const v=
-                silasCardValue(c);
+                const v=
+                  silasCardValue(c);
 
 
-              if(
-                v>bv
-              ){
+                if(
+                  v>bv
+                ){
 
-                bv=v;
+                  bv=v;
 
-
-                best=i;
+                  best=i;
+                }
               }
-            }
-          );
+            );
 
 
           const chosen=
-            state.piles[
-              pi
-            ]
-            .splice(
-              best,
-              1
-            )[0];
+            state.piles[pi]
+              .splice(
+                best,
+                1
+              )[0];
 
 
           state.silasHand
@@ -3035,7 +3254,19 @@ function silasPlayDuos(
 
 
           addSilasLog(
-            'Silas spielt ein Mr-Krabs-Duo, durchsucht Ablage '+(pi===0?'A':'B')+' und nimmt '+names[chosen.type]+'.'
+            'Silas spielt ein Mr-Krabs-Duo, durchsucht Ablage '
+            +
+            (
+              pi===0
+              ? 'A'
+              : 'B'
+            )
+            +
+            ' und nimmt '
+            +
+            names[chosen.type]
+            +
+            '.'
           );
         }
         else{
@@ -3052,7 +3283,6 @@ function silasPlayDuos(
 
 
         changed=true;
-
 
         continue;
       }
@@ -3165,30 +3395,8 @@ function silasTurn(){
 
 
   render();
-}
 
-
-function revealSilas(){
-
-  const all=
-    state.silasHand
-      .concat(
-        state.silasPlayed
-      );
-
-
-  $('silasReveal')
-    .innerHTML=
-
-    all.length
-
-    ? all.map(
-        c=>
-          cardHTML(c)
-      )
-      .join('')
-
-    : '<span class="sub">Keine Karten.</span>';
+  saveGame();
 }
 
 
@@ -3206,7 +3414,6 @@ function finishRound(
 
 
   state.roundOver=true;
-
 
   state.busy=true;
 
@@ -3240,7 +3447,9 @@ function finishRound(
 
 
   let ya=0;
+
   let sa=0;
+
   let explain='';
 
 
@@ -3249,7 +3458,6 @@ function finishRound(
   ){
 
     ya=yp;
-
 
     sa=sp;
 
@@ -3263,71 +3471,68 @@ function finishRound(
       +
       ' hat Stopp gesagt. Beide erhalten ihre Kartenpunkte.';
   }
-  else{
+  else if(
+    caller==='you'
+  ){
 
     if(
-      caller==='you'
+      yp>=sp
     ){
 
-      if(
-        yp>=sp
-      ){
-
-        ya=
-          yp+yb;
+      ya=
+        yp+yb;
 
 
-        sa=
-          sb;
+      sa=
+        sb;
 
 
-        explain=
-          'Letzte Chance gewonnen: Du erhältst Kartenpunkte plus Farbbonus. Silas erhält nur seinen Farbbonus.';
-      }
-      else{
-
-        ya=
-          yb;
-
-
-        sa=
-          sp;
-
-
-        explain=
-          'Letzte Chance verloren: Du erhältst nur deinen Farbbonus. Silas erhält seine Kartenpunkte.';
-      }
+      explain=
+        'Letzte Chance gewonnen: Du erhältst Kartenpunkte plus Farbbonus. Silas erhält nur seinen Farbbonus.';
     }
     else{
 
-      if(
-        sp>=yp
-      ){
-
-        sa=
-          sp+sb;
+      ya=
+        yb;
 
 
-        ya=
-          yb;
+      sa=
+        sp;
 
 
-        explain=
-          'Silas gewinnt seine Letzte Chance. Silas erhält Kartenpunkte plus Farbbonus, du nur deinen Farbbonus.';
-      }
-      else{
+      explain=
+        'Letzte Chance verloren: Du erhältst nur deinen Farbbonus. Silas erhält seine Kartenpunkte.';
+    }
+  }
+  else{
 
-        sa=
-          sb;
+    if(
+      sp>=yp
+    ){
+
+      sa=
+        sp+sb;
 
 
-        ya=
-          yp;
+      ya=
+        yb;
 
 
-        explain=
-          'Silas verliert seine Letzte Chance. Silas erhält nur seinen Farbbonus, du deine Kartenpunkte.';
-      }
+      explain=
+        'Silas gewinnt seine Letzte Chance. Silas erhält Kartenpunkte plus Farbbonus, du nur deinen Farbbonus.';
+    }
+    else{
+
+      sa=
+        sb;
+
+
+      ya=
+        yp;
+
+
+      explain=
+        'Silas verliert seine Letzte Chance. Silas erhält nur seinen Farbbonus, du deine Kartenpunkte.';
     }
   }
 
@@ -3340,20 +3545,11 @@ function finishRound(
     sa;
 
 
-  $('roundResult')
-    .classList
-    .remove(
-      'hidden'
-    );
-
-
-  $('resultTitle')
-    .textContent=
+  state.resultTitle=
     'Rundenergebnis';
 
 
-  $('resultText')
-    .innerHTML=
+  state.resultHTML=
 
     `<div class="resultLine">
       <strong>
@@ -3386,12 +3582,6 @@ function finishRound(
     </div>`;
 
 
-  revealSilas();
-
-
-  render();
-
-
   if(
     state.youTotal>=40
     ||
@@ -3401,20 +3591,12 @@ function finishRound(
     state.gameOver=true;
 
 
-    $('nextRoundBtn')
-      .classList
-      .add(
-        'hidden'
-      );
-
-
     if(
       state.youTotal>
       state.silasTotal
     ){
 
-      $('resultTitle')
-        .textContent=
+      state.resultTitle=
         '🎉 Silke gewinnt die Partie!';
 
 
@@ -3435,8 +3617,7 @@ function finishRound(
       state.youTotal
     ){
 
-      $('resultTitle')
-        .textContent=
+      state.resultTitle=
         'Silas gewinnt die Partie.';
 
 
@@ -3454,8 +3635,7 @@ function finishRound(
     }
     else{
 
-      $('resultTitle')
-        .textContent=
+      state.resultTitle=
         'Unentschieden.';
 
 
@@ -3474,13 +3654,6 @@ function finishRound(
   }
   else{
 
-    $('nextRoundBtn')
-      .classList
-      .remove(
-        'hidden'
-      );
-
-
     setStatus(
       'Runde beendet. Gesamtstand: Silke '
       +
@@ -3493,6 +3666,11 @@ function finishRound(
       ' Silas.'
     );
   }
+
+
+  render();
+
+  saveGame();
 }
 
 
@@ -3530,7 +3708,6 @@ function lastChance(){
 
 
   state.busy=true;
-
 
   state.turn=
     'silas';
@@ -3597,41 +3774,20 @@ function instantWin(player){
 
   state.roundOver=true;
 
-
   state.gameOver=true;
 
-
   state.busy=true;
-
-
-  $('roundResult')
-    .classList
-    .remove(
-      'hidden'
-    );
-
-
-  $('nextRoundBtn')
-    .classList
-    .add(
-      'hidden'
-    );
-
-
-  revealSilas();
 
 
   if(
     player==='you'
   ){
 
-    $('resultTitle')
-      .textContent=
+    state.resultTitle=
       '🧜‍♀️🧜‍♀️🧜‍♀️🧜‍♀️ Sofortsieg!';
 
 
-    $('resultText')
-      .innerHTML=
+    state.resultHTML=
       '<div class="resultLine"><strong>Du hast alle vier Meerjungfrauen und gewinnst die gesamte Partie sofort.</strong></div>';
 
 
@@ -3641,13 +3797,11 @@ function instantWin(player){
   }
   else{
 
-    $('resultTitle')
-      .textContent=
+    state.resultTitle=
       'Silas gewinnt mit vier Meerjungfrauen.';
 
 
-    $('resultText')
-      .innerHTML=
+    state.resultHTML=
       '<div class="resultLine"><strong>Silas hat alle vier Meerjungfrauen und gewinnt die gesamte Partie sofort.</strong></div>';
 
 
@@ -3658,6 +3812,8 @@ function instantWin(player){
 
 
   render();
+
+  saveGame();
 }
 
 
@@ -3728,7 +3884,20 @@ $('nextRoundBtn')
   );
 
 
-render();
+const restored=
+  loadGame();
+
+
+if(
+  restored
+){
+
+  render();
+}
+else{
+
+  render();
+}
 
 })();
 </script>
