@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Silke gegen Silas – Version 9d</title>
+<title>Silke gegen Silas – Version 9f</title>
 
 <style>
 :root{
@@ -97,7 +97,7 @@ button{
 }
 
 .btn:disabled{
-  opacity:.4;
+  opacity:.35;
 }
 
 .status{
@@ -287,11 +287,12 @@ button{
     <div>
       <h1>Silke gegen Silas</h1>
       <div class="sub">
-        Version 9d – Auto-Ablage & Autospeichern
+        Version 9f – wechselnder Startspieler
       </div>
     </div>
 
     <div class="scoreBoard">
+
       <span>
         Silke:
         <span id="youTotal">0</span>
@@ -301,6 +302,7 @@ button{
         Silas:
         <span id="silasTotal">0</span>
       </span>
+
     </div>
 
     <div class="topActions">
@@ -325,7 +327,7 @@ button{
 
 
   <div id="status" class="status">
-    Version 9d bereit.
+    Version 9f bereit.
   </div>
 
 
@@ -334,13 +336,17 @@ button{
     <div class="silasHead">
 
       <div>
-        <strong>Silas</strong>
+
+        <strong>
+          Silas
+        </strong>
 
         <div class="sub">
           Verdeckte Hand:
           <span id="silasCount">0</span>
           Karten
         </div>
+
       </div>
 
       <div id="silasMove" class="sub">
@@ -349,16 +355,23 @@ button{
 
     </div>
 
+
     <div id="silasCards" class="backRow"></div>
 
+
     <div style="margin-top:10px">
-      <strong>Silas ausgespielt</strong>
+      <strong>
+        Silas ausgespielt
+      </strong>
     </div>
 
     <div id="silasPlayed" class="playedGrid"></div>
 
+
     <div style="margin-top:10px">
-      <strong>Silas – letzter Zug</strong>
+      <strong>
+        Silas – letzter Zug
+      </strong>
     </div>
 
     <div id="silasLog" class="moveLog"></div>
@@ -376,7 +389,9 @@ button{
 
       <div class="wave">🌊</div>
 
-      <strong>2 Karten ziehen</strong>
+      <strong>
+        2 Karten ziehen
+      </strong>
 
       <div class="sub">
         <span id="deckCount">0</span>
@@ -438,7 +453,9 @@ button{
 
       <div>
 
-        <strong>Deine Hand</strong>
+        <strong>
+          Deine Hand
+        </strong>
 
         <div class="pointsBox">
           Punkte:
@@ -446,6 +463,7 @@ button{
         </div>
 
       </div>
+
 
       <div class="endActions">
 
@@ -477,10 +495,12 @@ button{
 
     </div>
 
+
     <div
       id="handGrid"
       class="handGrid">
     </div>
+
 
     <div
       id="duoActions"
@@ -517,14 +537,19 @@ button{
       style="margin-top:8px">
     </div>
 
+
     <div style="margin-top:12px">
-      <strong>Silas deckt auf</strong>
+      <strong>
+        Silas deckt auf
+      </strong>
     </div>
+
 
     <div
       id="silasReveal"
       class="handGrid">
     </div>
+
 
     <button
       id="nextRoundBtn"
@@ -544,11 +569,13 @@ button{
 
 'use strict';
 
+
 const $=
   id=>document.getElementById(id);
 
+
 const SAVE_KEY=
-  'silke-vs-silas-v9d';
+  'silke-vs-silas-v9f';
 
 
 const names={
@@ -645,6 +672,7 @@ function shuffle(arr){
   const a=
     arr.slice();
 
+
   for(
     let i=a.length-1;
     i>0;
@@ -657,6 +685,7 @@ function shuffle(arr){
         (i+1)
       );
 
+
     [
       a[i],
       a[j]
@@ -666,6 +695,7 @@ function shuffle(arr){
     ];
   }
 
+
   return a;
 }
 
@@ -674,6 +704,7 @@ function makeDeck(){
 
   const types=[];
   const colors=[];
+
 
   Object.entries(
     typeCounts
@@ -788,8 +819,12 @@ const state={
 
   silasExtra:false,
 
+  nextStarter:'you',
+
+  currentStarter:'you',
+
   statusText:
-    'Version 9d bereit.',
+    'Version 9f bereit.',
 
   silasLog:[],
 
@@ -862,6 +897,24 @@ function loadGame(){
 
 
     if(
+      !state.nextStarter
+    ){
+
+      state.nextStarter=
+        'you';
+    }
+
+
+    if(
+      !state.currentStarter
+    ){
+
+      state.currentStarter=
+        'you';
+    }
+
+
+    if(
       !Array.isArray(
         state.silasLog
       )
@@ -898,7 +951,9 @@ function scoreCards(
 ){
 
   const cards=
-    hand.concat(played);
+    hand.concat(
+      played
+    );
 
 
   let p=0;
@@ -1105,7 +1160,8 @@ function scoreCards(
     const vals=
       Object.values(f)
         .sort(
-          (a,b)=>b-a
+          (a,b)=>
+            b-a
         );
 
 
@@ -1187,6 +1243,7 @@ function setStatus(t){
 
   state.statusText=t;
 
+
   $('status')
     .textContent=t;
 }
@@ -1196,6 +1253,7 @@ function clearSilasLog(){
 
   state.silasLog=[];
 
+
   renderSilasLog();
 }
 
@@ -1204,6 +1262,7 @@ function addSilasLog(t){
 
   state.silasLog
     .push(t);
+
 
   renderSilasLog();
 }
@@ -1246,17 +1305,23 @@ function cardHTML(
 
   return `
     <div class="card ${c.color}${mini?' mini':''}">
+
       <div>
+
         <div class="ico">
           ${icons[c.type]}
         </div>
+
         <div class="name">
           ${names[c.type]}
         </div>
+
       </div>
+
       <div class="meta">
         ${colorNames[c.color]}
       </div>
+
     </div>
   `;
 }
@@ -1332,6 +1397,7 @@ function renderDuos(){
     !state.started ||
     state.busy ||
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='action'
   ){
@@ -1472,6 +1538,7 @@ function renderResult(){
         'hidden'
       );
 
+
     return;
   }
 
@@ -1609,6 +1676,10 @@ function render(){
 
     &&
 
+    !state.gameOver
+
+    &&
+
     state.turn==='you';
 
 
@@ -1687,6 +1758,16 @@ function render(){
     ||
 
     !enough;
+
+
+  $('newRoundTopBtn')
+    .disabled=
+
+    !state.started
+
+    ||
+
+    state.gameOver;
 }
 
 
@@ -1774,6 +1855,37 @@ function showChoice(
 
 function startRound(){
 
+  if(
+    state.gameOver
+  ){
+
+    setStatus(
+      'Die Partie ist beendet. Bitte starte mit „Neues Spiel“ eine neue Partie.'
+    );
+
+
+    render();
+
+
+    return;
+  }
+
+
+  const starter=
+    state.nextStarter||
+    'you';
+
+
+  state.currentStarter=
+    starter;
+
+
+  state.nextStarter=
+    starter==='you'
+    ? 'silas'
+    : 'you';
+
+
   state.deck=
     makeDeck();
 
@@ -1795,13 +1907,7 @@ function startRound(){
 
   state.started=true;
 
-  state.busy=false;
-
   state.roundOver=false;
-
-  state.gameOver=false;
-
-  state.turn='you';
 
   state.phase='draw';
 
@@ -1827,22 +1933,75 @@ function startRound(){
     );
 
 
-  setStatus(
-    'Neue Runde. Ziehe zwei Karten oder nimm eine offene Karte.'
-  );
+  if(
+    starter==='you'
+  ){
+
+    state.turn=
+      'you';
 
 
-  render();
+    state.busy=
+      false;
 
-  saveGame();
+
+    $('silasMove')
+      .textContent=
+      'wartet';
+
+
+    setStatus(
+      'Silke beginnt diese Runde. Ziehe zwei Karten oder nimm eine offene Karte.'
+    );
+
+
+    render();
+
+    saveGame();
+  }
+  else{
+
+    state.turn=
+      'silas';
+
+
+    state.busy=
+      true;
+
+
+    $('silasMove')
+      .textContent=
+      'beginnt die Runde …';
+
+
+    setStatus(
+      'Silas beginnt diese Runde.'
+    );
+
+
+    render();
+
+    saveGame();
+
+
+    setTimeout(
+      silasTurn,
+      700
+    );
+  }
 }
 
 
 function newGame(){
 
-  localStorage.removeItem(
-    SAVE_KEY
-  );
+  try{
+
+    localStorage.removeItem(
+      SAVE_KEY
+    );
+
+  }
+  catch(e){}
 
 
   state.youTotal=0;
@@ -1851,16 +2010,15 @@ function newGame(){
 
   state.gameOver=false;
 
+  state.started=false;
+
+  state.nextStarter='you';
+
+  state.currentStarter='you';
+
 
   startRound();
 
-
-  setStatus(
-    'Neues Spiel bis 40 Punkte gestartet. Du bist dran.'
-  );
-
-
-  render();
 
   saveGame();
 }
@@ -1890,6 +2048,7 @@ function drawTwo(){
     state.deck.length<2 ||
     state.busy ||
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='draw'
   ){
@@ -1951,7 +2110,7 @@ function chooseDiscard(
 
 
   if(
-    emptyA ||
+    emptyA||
     emptyB
   ){
 
@@ -2081,6 +2240,7 @@ function takePile(index){
   if(
     state.busy ||
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='draw'
   ){
@@ -2206,6 +2366,7 @@ function playDuo(
   if(
     state.busy ||
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='action'
   ){
@@ -2591,6 +2752,7 @@ function endYourTurn(){
   if(
     state.busy ||
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='action'
   ){
@@ -2859,10 +3021,12 @@ function silasTakeOneCard(){
         );
 
 
-    state.piles[pileIndex]
-      .push(
-        disc
-      );
+    state.piles[
+      pileIndex
+    ]
+    .push(
+      disc
+    );
 
 
     $('silasMove')
@@ -2961,14 +3125,12 @@ function silasPlayDuos(
   allowBoatExtra=true
 ){
 
-  let changed=
-    true;
+  let changed=true;
 
 
   while(changed){
 
-    changed=
-      false;
+    changed=false;
 
 
     if(
@@ -2998,8 +3160,7 @@ function silasPlayDuos(
           allowBoatExtra
         ){
 
-          state.silasExtra=
-            true;
+          state.silasExtra=true;
         }
 
 
@@ -3219,32 +3380,36 @@ function silasPlayDuos(
           let bv=-999;
 
 
-          state.piles[pi]
-            .forEach(
-              (c,i)=>{
+          state.piles[
+            pi
+          ]
+          .forEach(
+            (c,i)=>{
 
-                const v=
-                  silasCardValue(c);
+              const v=
+                silasCardValue(c);
 
 
-                if(
-                  v>bv
-                ){
+              if(
+                v>bv
+              ){
 
-                  bv=v;
+                bv=v;
 
-                  best=i;
-                }
+                best=i;
               }
-            );
+            }
+          );
 
 
           const chosen=
-            state.piles[pi]
-              .splice(
-                best,
-                1
-              )[0];
+            state.piles[
+              pi
+            ]
+            .splice(
+              best,
+              1
+            )[0];
 
 
           state.silasHand
@@ -3591,6 +3756,14 @@ function finishRound(
     state.gameOver=true;
 
 
+    state.turn=
+      'none';
+
+
+    state.phase=
+      'done';
+
+
     if(
       state.youTotal>
       state.silasTotal
@@ -3609,7 +3782,7 @@ function finishRound(
         +
         state.silasTotal
         +
-        '.'
+        '. Für eine weitere Partie bitte „Neues Spiel“ drücken.'
       );
     }
     else if(
@@ -3630,7 +3803,7 @@ function finishRound(
         +
         state.youTotal
         +
-        '.'
+        '. Für eine weitere Partie bitte „Neues Spiel“ drücken.'
       );
     }
     else{
@@ -3648,11 +3821,17 @@ function finishRound(
         +
         state.silasTotal
         +
-        '.'
+        '. Für eine weitere Partie bitte „Neues Spiel“ drücken.'
       );
     }
   }
   else{
+
+    const nextName=
+      state.nextStarter==='you'
+      ? 'Silke'
+      : 'Silas';
+
 
     setStatus(
       'Runde beendet. Gesamtstand: Silke '
@@ -3663,7 +3842,11 @@ function finishRound(
       +
       state.silasTotal
       +
-      ' Silas.'
+      ' Silas. Die nächste Runde beginnt '
+      +
+      nextName
+      +
+      '.'
     );
   }
 
@@ -3678,6 +3861,7 @@ function stopRound(){
 
   if(
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='action' ||
     score()<7
@@ -3698,6 +3882,7 @@ function lastChance(){
 
   if(
     state.roundOver ||
+    state.gameOver ||
     state.turn!=='you' ||
     state.phase!=='action' ||
     score()<7
@@ -3778,6 +3963,10 @@ function instantWin(player){
 
   state.busy=true;
 
+  state.turn='none';
+
+  state.phase='done';
+
 
   if(
     player==='you'
@@ -3792,7 +3981,7 @@ function instantWin(player){
 
 
     setStatus(
-      'Vier Meerjungfrauen – du gewinnst die Partie sofort!'
+      'Vier Meerjungfrauen – du gewinnst die Partie sofort! Für eine weitere Partie bitte „Neues Spiel“ drücken.'
     );
   }
   else{
@@ -3806,7 +3995,7 @@ function instantWin(player){
 
 
     setStatus(
-      'Silas gewinnt die Partie sofort durch vier Meerjungfrauen.'
+      'Silas gewinnt die Partie sofort durch vier Meerjungfrauen. Für eine weitere Partie bitte „Neues Spiel“ drücken.'
     );
   }
 
@@ -3884,20 +4073,9 @@ $('nextRoundBtn')
   );
 
 
-const restored=
-  loadGame();
+loadGame();
 
-
-if(
-  restored
-){
-
-  render();
-}
-else{
-
-  render();
-}
+render();
 
 })();
 </script>
