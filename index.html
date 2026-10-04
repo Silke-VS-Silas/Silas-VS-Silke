@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Silke gegen Silas – Version 9f</title>
+<title>Silke gegen Silas – Version 9g</title>
 
 <style>
 :root{
@@ -179,7 +179,7 @@ button{
   border:1px solid rgba(0,0,0,.15);
   border-radius:10px;
   padding:6px;
-  min-height:78px;
+  min-height:96px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
@@ -196,10 +196,18 @@ button{
   line-height:1.1;
 }
 
+.rule{
+  font-size:10px;
+  line-height:1.18;
+  font-weight:700;
+  margin-top:5px;
+  color:#26323c;
+}
+
 .meta{
   font-size:10px;
   color:#4e5963;
-  margin-top:4px;
+  margin-top:5px;
 }
 
 .darkblue{background:#cfe1f8}
@@ -249,8 +257,8 @@ button{
 }
 
 .mini{
-  width:70px;
-  min-height:70px;
+  width:82px;
+  min-height:90px;
 }
 
 .pointsBox{
@@ -287,7 +295,7 @@ button{
     <div>
       <h1>Silke gegen Silas</h1>
       <div class="sub">
-        Version 9f – wechselnder Startspieler
+        Version 9g – Kartentexte
       </div>
     </div>
 
@@ -327,7 +335,7 @@ button{
 
 
   <div id="status" class="status">
-    Version 9f bereit.
+    Version 9g bereit.
   </div>
 
 
@@ -574,6 +582,11 @@ const $=
   id=>document.getElementById(id);
 
 
+/*
+  Absichtlich weiterhin derselbe Speicherschlüssel
+  wie in Version 9f, damit eine laufende Partie
+  nach dem Update erhalten bleibt.
+*/
 const SAVE_KEY=
   'silke-vs-silas-v9f';
 
@@ -587,7 +600,7 @@ const names={
   shell:'Muschel',
   octopus:'Oktopus',
   penguin:'Pinguin',
-  sailor:'Seemann',
+  sailor:'Anker',
   mermaid:'Meerjungfrau',
   lighthouse:'eine pro Boot',
   shoal:'ein pro Fisch',
@@ -611,6 +624,57 @@ const icons={
   shoal:'🐟',
   colony:'🐧',
   captain:'🧭'
+};
+
+
+/*
+  NEU in Version 9g:
+  Die kurzen Wertungs- und Aktionshinweise,
+  die direkt auf jeder Karte angezeigt werden.
+*/
+const cardRules={
+
+  crab:
+    '2 = 1 Pkt · Ablage durchsuchen',
+
+  boat:
+    '2 = 1 Pkt · Extra-Zug',
+
+  fish:
+    '2 = 1 Pkt · 1 Karte ziehen',
+
+  shark:
+    'Hai + Schwimmer = 1 Pkt · Karte stehlen',
+
+  swimmer:
+    'Hai + Schwimmer = 1 Pkt · Karte stehlen',
+
+  shell:
+    '2=2 · 3=4 · 4=6 · 5=8 · 6=10',
+
+  octopus:
+    '2=3 · 3=6 · 4=9 · 5=12',
+
+  penguin:
+    '1=1 · 2=3 · 3=5',
+
+  sailor:
+    '2 = 5 Punkte',
+
+  lighthouse:
+    '+1 je Boot',
+
+  shoal:
+    '+1 je Fisch',
+
+  colony:
+    '+2 je Pinguin',
+
+  captain:
+    '+3 je Anker',
+
+  mermaid:
+    'Wertet häufigste Farbe · 4 = Sofortsieg'
 };
 
 
@@ -824,7 +888,7 @@ const state={
   currentStarter:'you',
 
   statusText:
-    'Version 9f bereit.',
+    'Version 9g bereit.',
 
   silasLog:[],
 
@@ -1303,6 +1367,11 @@ function cardHTML(
   mini=false
 ){
 
+  const rule=
+    cardRules[c.type]||
+    '';
+
+
   return `
     <div class="card ${c.color}${mini?' mini':''}">
 
@@ -1314,6 +1383,10 @@ function cardHTML(
 
         <div class="name">
           ${names[c.type]}
+        </div>
+
+        <div class="rule">
+          ${rule}
         </div>
 
       </div>
@@ -4081,4 +4154,4 @@ render();
 </script>
 
 </body>
-</html>
+  </html>
