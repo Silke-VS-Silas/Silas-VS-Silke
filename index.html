@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Sea Salt & Paper – Version 9j</title>
+<title>Sea Salt & Paper – Version 9k</title>
 
 <style>
 :root{
@@ -345,7 +345,7 @@ button{
     <div>
       <h1>Sea Salt & Paper</h1>
       <div class="sub">
-        Version 9j
+        Version 9k
       </div>
     </div>
 
@@ -1069,6 +1069,8 @@ const state={
 
   currentStarter:'you',
 
+  waitingForSilasStart:false,
+
   playerName:null,
 
   lastMovePlayer:'',
@@ -1202,9 +1204,15 @@ function loadGame(){
     }
 
 
-    /*
-      Übernahme eines alten 9i-Spielstands.
-    */
+    if(
+      typeof state.waitingForSilasStart!=='boolean'
+    ){
+
+      state.waitingForSilasStart=
+        false;
+    }
+
+
     if(
       !Array.isArray(
         state.lastMoveActions
@@ -1267,15 +1275,6 @@ function playerName(){
 }
 
 
-/*
-  NEU in 9j:
-
-  Wenn derselbe Spieler mehrere Aktionen macht,
-  werden sie angehängt.
-
-  Sobald der andere Spieler eine Aktion macht,
-  beginnt automatisch ein neuer Block.
-*/
 function setLastMove(
   who,
   text
@@ -2320,6 +2319,61 @@ function showChoice(
 
 
 /* =========================
+   SILAS-START BESTÄTIGEN
+========================= */
+
+function showSilasStartConfirmation(){
+
+  state.waitingForSilasStart=
+    true;
+
+
+  showChoice(
+    'Silas beginnt diese Runde. Schau dir Ablage A und B in Ruhe an.',
+    [
+      {
+        label:
+          'OK – Silas ist dran',
+
+        onClick:
+          confirmSilasStart
+      }
+    ]
+  );
+
+
+  saveGame();
+}
+
+
+function confirmSilasStart(){
+
+  state.waitingForSilasStart=
+    false;
+
+
+  closeChoice();
+
+
+  state.busy=
+    true;
+
+
+  hideSpecialStatus();
+
+  render();
+
+  saveGame();
+
+
+  setTimeout(
+    silasTurn,
+    400
+  );
+}
+
+
+/* =========================
    RUNDE / SPIEL
 ========================= */
 
@@ -2381,6 +2435,8 @@ function startRound(){
   state.phase='draw';
 
   state.silasExtra=false;
+
+  state.waitingForSilasStart=false;
 
   state.resultTitle=
     'Rundenergebnis';
@@ -2446,10 +2502,7 @@ function startRound(){
     saveGame();
 
 
-    setTimeout(
-      silasTurn,
-      700
-    );
+    showSilasStartConfirmation();
   }
 }
 
@@ -2471,6 +2524,9 @@ function newGame(){
 
   state.currentStarter=
     'you';
+
+  state.waitingForSilasStart=
+    false;
 
   state.specialStatus='';
 
@@ -3466,6 +3522,11 @@ function silasCardValue(card){
   }
 
 
+  /*
+    GEÄNDERT IN 9k:
+    Schon der erste Pinguin ist attraktiv genug,
+    um offen genommen zu werden.
+  */
   if(
     card.type==='penguin'
   ){
@@ -3483,8 +3544,8 @@ function silasCardValue(card){
     ){
 
       return multiplier
-        ? 5
-        : 3.2;
+        ? 6
+        : 4.3;
     }
 
 
@@ -3493,14 +3554,14 @@ function silasCardValue(card){
     ){
 
       return multiplier
-        ? 6.5
-        : 4.6;
+        ? 7
+        : 5.3;
     }
 
 
     return multiplier
-      ? 7
-      : 4.8;
+      ? 8
+      : 5.8;
   }
 
 
@@ -4282,14 +4343,15 @@ function silasPlayDuos(
             );
 
 
+          /*
+            GEÄNDERT IN 9k:
+            Die gezogene Karte wird dem Gegenspieler
+            nicht mehr verraten.
+          */
           setLastMove(
             'Silas',
 
-            'spielt ein Mr-Krabs-Duo und holt '
-            +
-            names[chosen.type]
-            +
-            ' aus Ablage '
+            'spielt ein Mr-Krabs-Duo und nimmt eine Karte aus Ablage '
             +
             (
               pile===0
@@ -4328,7 +4390,8 @@ function silasTurn(){
   if(
     !state.started ||
     state.roundOver ||
-    state.gameOver
+    state.gameOver ||
+    state.waitingForSilasStart
   ){
 
     return;
@@ -4365,11 +4428,6 @@ function silasTurn(){
   render();
 
 
-  /*
-    Wichtig:
-    Boot-Extra-Zug bleibt derselbe
-    Aktionsblock von Silas.
-  */
   if(
     state.silasExtra
   ){
@@ -5063,6 +5121,8 @@ if(
 else if(
   restored
   &&
+  state.waitingForSilasStart
+  &&
   state.turn==='silas'
   &&
   !state.roundOver
@@ -5070,6 +5130,26 @@ else if(
   !state.gameOver
 ){
 
+  /*
+    Browser wurde geschlossen,
+    während Silas noch auf das OK wartete.
+  */
+  showSilasStartConfirmation();
+}
+else if(
+  restored
+  &&
+  state.turn==='silas'
+  &&
+  !state.roundOver
+  &&
+  !state.gameOver
+){
+
+  /*
+    Browser wurde während eines normalen
+    Silas-Zuges geschlossen.
+  */
   state.busy=true;
 
   render();
