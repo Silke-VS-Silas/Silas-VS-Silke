@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Sea Salt & Paper – Version 9i</title>
+<title>Sea Salt & Paper – Version 9j</title>
 
 <style>
 :root{
@@ -140,11 +140,18 @@ button{
 
 .lastMovePlayer{
   font-weight:800;
+  margin-bottom:5px;
 }
 
-.lastMoveText{
+.lastMoveList{
+  margin:0;
+  padding-left:20px;
   font-size:14px;
-  line-height:1.35;
+  line-height:1.4;
+}
+
+.lastMoveList li+li{
+  margin-top:3px;
 }
 
 .backRow{
@@ -293,8 +300,6 @@ button{
   margin-top:6px;
 }
 
-/* Namensauswahl */
-
 .nameOverlay{
   position:fixed;
   inset:0;
@@ -339,12 +344,10 @@ button{
 
     <div>
       <h1>Sea Salt & Paper</h1>
-
       <div class="sub">
-        Version 9i
+        Version 9j
       </div>
     </div>
-
 
     <div class="scoreBoard">
 
@@ -359,7 +362,6 @@ button{
       </span>
 
     </div>
-
 
     <div class="topActions">
 
@@ -421,13 +423,10 @@ button{
 
 
     <div style="margin-top:10px">
-
       <strong>
         Silas ausgespielt
       </strong>
-
     </div>
-
 
     <div
       id="silasPlayed"
@@ -443,7 +442,7 @@ button{
       Letzter Zug
     </div>
 
-    <div id="lastMove" class="lastMoveText">
+    <div id="lastMove">
       Noch kein Zug.
     </div>
 
@@ -480,9 +479,7 @@ button{
       type="button"
       disabled>
 
-      <h2>
-        Ablage A
-      </h2>
+      <h2>Ablage A</h2>
 
       <div id="pileAcard">
         leer
@@ -497,9 +494,7 @@ button{
       type="button"
       disabled>
 
-      <h2>
-        Ablage B
-      </h2>
+      <h2>Ablage B</h2>
 
       <div id="pileBcard">
         leer
@@ -616,11 +611,9 @@ button{
 
 
     <div style="margin-top:12px">
-
       <strong>
         Silas deckt auf
       </strong>
-
     </div>
 
 
@@ -699,15 +692,10 @@ button{
 
 'use strict';
 
-
 const $=
   id=>document.getElementById(id);
 
 
-/*
-  Gleicher Speicher wie 9f/9g/9h.
-  Dadurch bleibt eine bestehende Partie erhalten.
-*/
 const SAVE_KEY=
   'silke-vs-silas-v9f';
 
@@ -1085,7 +1073,7 @@ const state={
 
   lastMovePlayer:'',
 
-  lastMoveText:'Noch kein Zug.',
+  lastMoveActions:[],
 
   specialStatus:'',
 
@@ -1183,10 +1171,6 @@ function loadGame(){
       uid;
 
 
-    /*
-      Alte Versionen hatten noch keinen Spielernamen.
-      Auf Silkes bestehendem Gerät wird dann Silke übernommen.
-    */
     if(
       !state.playerName
     ){
@@ -1218,12 +1202,28 @@ function loadGame(){
     }
 
 
+    /*
+      Übernahme eines alten 9i-Spielstands.
+    */
     if(
-      !state.lastMoveText
+      !Array.isArray(
+        state.lastMoveActions
+      )
     ){
 
-      state.lastMoveText=
-        'Noch kein Zug.';
+      state.lastMoveActions=[];
+
+
+      if(
+        state.lastMoveText
+        &&
+        state.lastMoveText!=='Noch kein Zug.'
+      ){
+
+        state.lastMoveActions.push(
+          state.lastMoveText
+        );
+      }
     }
 
 
@@ -1243,11 +1243,6 @@ function loadGame(){
     }
 
 
-    /*
-      Falls genau während Silas' Animation
-      geschlossen wurde, setzen wir den Zustand
-      zunächst sauber zurück.
-    */
     state.busy=false;
 
 
@@ -1262,7 +1257,7 @@ function loadGame(){
 
 
 /* =========================
-   TEXTE
+   TEXTE / LETZTER ZUG
 ========================= */
 
 function playerName(){
@@ -1272,16 +1267,36 @@ function playerName(){
 }
 
 
+/*
+  NEU in 9j:
+
+  Wenn derselbe Spieler mehrere Aktionen macht,
+  werden sie angehängt.
+
+  Sobald der andere Spieler eine Aktion macht,
+  beginnt automatisch ein neuer Block.
+*/
 function setLastMove(
   who,
   text
 ){
 
-  state.lastMovePlayer=
-    who;
+  if(
+    state.lastMovePlayer!==who
+  ){
 
-  state.lastMoveText=
-    text;
+    state.lastMovePlayer=
+      who;
+
+
+    state.lastMoveActions=[];
+  }
+
+
+  state.lastMoveActions
+    .push(
+      text
+    );
 
 
   renderLastMove();
@@ -1290,16 +1305,28 @@ function setLastMove(
 }
 
 
+function clearLastMove(){
+
+  state.lastMovePlayer='';
+
+  state.lastMoveActions=[];
+
+  renderLastMove();
+}
+
+
 function renderLastMove(){
 
   if(
     !state.lastMovePlayer
+    ||
+    !state.lastMoveActions.length
   ){
 
     $('lastMove')
       .textContent=
-      state.lastMoveText||
       'Noch kein Zug.';
+
 
     return;
   }
@@ -1308,11 +1335,18 @@ function renderLastMove(){
   $('lastMove')
     .innerHTML=
 
-    `<span class="lastMovePlayer">${state.lastMovePlayer}:</span> `
+    `<div class="lastMovePlayer">${state.lastMovePlayer}:</div>`
 
     +
 
-    state.lastMoveText;
+    `<ul class="lastMoveList">${
+      state.lastMoveActions
+        .map(
+          action=>
+            `<li>${action}</li>`
+        )
+        .join('')
+    }</ul>`;
 }
 
 
@@ -2354,10 +2388,7 @@ function startRound(){
   state.resultHTML='';
 
 
-  state.lastMovePlayer='';
-
-  state.lastMoveText=
-    'Noch kein Zug.';
+  clearLastMove();
 
 
   state.piles[0]
@@ -2441,12 +2472,10 @@ function newGame(){
   state.currentStarter=
     'you';
 
-  state.lastMovePlayer='';
-
-  state.lastMoveText=
-    'Noch kein Zug.';
-
   state.specialStatus='';
+
+
+  clearLastMove();
 
 
   startRound();
@@ -2499,10 +2528,6 @@ function selectPlayer(name){
   hideNameSelection();
 
 
-  /*
-    Spielerwechsel bedeutet bewusst:
-    komplett neue Partie.
-  */
   newGame();
 }
 
@@ -2929,8 +2954,6 @@ function playDuo(
     );
 
 
-  /* Boot */
-
   if(
     a==='boat'
   ){
@@ -2955,8 +2978,6 @@ function playDuo(
     return;
   }
 
-
-  /* Fisch */
 
   if(
     a==='fish'
@@ -3020,8 +3041,6 @@ function playDuo(
   }
 
 
-  /* Hai + Schwimmer */
-
   if(
     a==='shark'
     &&
@@ -3053,11 +3072,6 @@ function playDuo(
         );
 
 
-      /*
-        Wichtig:
-        Hier wird ausdrücklich angezeigt,
-        WAS gestohlen wurde.
-      */
       setLastMove(
         playerName(),
 
@@ -3101,8 +3115,6 @@ function playDuo(
     return;
   }
 
-
-  /* Mr Krabs */
 
   if(
     a==='crab'
@@ -3406,8 +3418,6 @@ function silasCardValue(card){
       );
 
 
-  /* Meerjungfrau */
-
   if(
     card.type==='mermaid'
   ){
@@ -3415,8 +3425,6 @@ function silasCardValue(card){
     return 8;
   }
 
-
-  /* Muschel */
 
   if(
     card.type==='shell'
@@ -3426,10 +3434,6 @@ function silasCardValue(card){
       n('shell');
 
 
-    /*
-      Erste Muschel:
-      möglichst meiden.
-    */
     if(
       shells===0
     ){
@@ -3441,8 +3445,6 @@ function silasCardValue(card){
     return 4.5;
   }
 
-
-  /* Oktopus */
 
   if(
     card.type==='octopus'
@@ -3463,8 +3465,6 @@ function silasCardValue(card){
     return 5.2;
   }
 
-
-  /* Pinguin */
 
   if(
     card.type==='penguin'
@@ -3504,8 +3504,6 @@ function silasCardValue(card){
   }
 
 
-  /* Anker */
-
   if(
     card.type==='sailor'
   ){
@@ -3534,8 +3532,6 @@ function silasCardValue(card){
   }
 
 
-  /* drei pro Anker */
-
   if(
     card.type==='captain'
   ){
@@ -3563,8 +3559,6 @@ function silasCardValue(card){
     return 8;
   }
 
-
-  /* eine pro Boot */
 
   if(
     card.type==='lighthouse'
@@ -3603,8 +3597,6 @@ function silasCardValue(card){
   }
 
 
-  /* ein pro Fisch */
-
   if(
     card.type==='shoal'
   ){
@@ -3642,8 +3634,6 @@ function silasCardValue(card){
   }
 
 
-  /* zwei pro Pinguin */
-
   if(
     card.type==='colony'
   ){
@@ -3680,8 +3670,6 @@ function silasCardValue(card){
   }
 
 
-  /* Mr Krabs */
-
   if(
     card.type==='crab'
   ){
@@ -3691,8 +3679,6 @@ function silasCardValue(card){
       : 1.4;
   }
 
-
-  /* Boot */
 
   if(
     card.type==='boat'
@@ -3716,8 +3702,6 @@ function silasCardValue(card){
   }
 
 
-  /* Fisch */
-
   if(
     card.type==='fish'
   ){
@@ -3740,8 +3724,6 @@ function silasCardValue(card){
   }
 
 
-  /* Hai */
-
   if(
     card.type==='shark'
   ){
@@ -3751,8 +3733,6 @@ function silasCardValue(card){
       : 1.2;
   }
 
-
-  /* Schwimmer */
 
   if(
     card.type==='swimmer'
@@ -3790,10 +3770,6 @@ function silasTakeOneCard(){
     : -1;
 
 
-  /*
-    Offene Karte nur,
-    wenn sie attraktiv genug ist.
-  */
   if(
     Math.max(
       va,
@@ -4006,8 +3982,6 @@ function silasPlayDuos(
     changed=false;
 
 
-    /* Boot */
-
     if(
       countType(
         state.silasHand,
@@ -4054,8 +4028,6 @@ function silasPlayDuos(
     }
 
 
-    /* Fisch */
-
     if(
       countType(
         state.silasHand,
@@ -4083,13 +4055,9 @@ function silasPlayDuos(
           state.deck.length
         ){
 
-          const drawn=
-            state.deck.pop();
-
-
           state.silasHand
             .push(
-              drawn
+              state.deck.pop()
             );
 
 
@@ -4115,8 +4083,6 @@ function silasPlayDuos(
       }
     }
 
-
-    /* Hai + Schwimmer */
 
     if(
       countType(
@@ -4171,10 +4137,6 @@ function silasPlayDuos(
             );
 
 
-          /*
-            Auch bei Silas wird die
-            gestohlene Karte ausdrücklich genannt.
-          */
           setLastMove(
             'Silas',
 
@@ -4209,8 +4171,6 @@ function silasPlayDuos(
       }
     }
 
-
-    /* Mr Krabs */
 
     if(
       countType(
@@ -4405,6 +4365,11 @@ function silasTurn(){
   render();
 
 
+  /*
+    Wichtig:
+    Boot-Extra-Zug bleibt derselbe
+    Aktionsblock von Silas.
+  */
   if(
     state.silasExtra
   ){
@@ -5105,10 +5070,6 @@ else if(
   !state.gameOver
 ){
 
-  /*
-    Falls der Browser genau während
-    Silas' Zug geschlossen wurde.
-  */
   state.busy=true;
 
   render();
@@ -5124,4 +5085,4 @@ else if(
 </script>
 
 </body>
-  </html>
+</html>
