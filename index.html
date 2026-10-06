@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Sea Salt & Paper – Version 9k</title>
+<title>Sea Salt & Paper – Version 9l</title>
 
 <style>
 :root{
@@ -17,9 +17,7 @@
   --green:#2e7d32;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -68,9 +66,7 @@ h1{
   font-weight:800;
 }
 
-button{
-  font:inherit;
-}
+button{font:inherit}
 
 .btn{
   border:1px solid var(--line);
@@ -99,9 +95,7 @@ button{
   border-color:#e3bd7f;
 }
 
-.btn:disabled{
-  opacity:.35;
-}
+.btn:disabled{opacity:.35}
 
 .status{
   margin:10px 0;
@@ -113,9 +107,7 @@ button{
   font-size:14px;
 }
 
-.hidden{
-  display:none!important;
-}
+.hidden{display:none!important}
 
 .silasBox,
 .hand,
@@ -133,11 +125,7 @@ button{
   background:#f7f8f9;
 }
 
-.lastMoveTitle{
-  font-weight:800;
-  margin-bottom:5px;
-}
-
+.lastMoveTitle,
 .lastMovePlayer{
   font-weight:800;
   margin-bottom:5px;
@@ -345,7 +333,7 @@ button{
     <div>
       <h1>Sea Salt & Paper</h1>
       <div class="sub">
-        Version 9k
+        Version 9l – Extra Salt
       </div>
     </div>
 
@@ -415,17 +403,13 @@ button{
 
     </div>
 
-
     <div
       id="silasCards"
       class="backRow">
     </div>
 
-
     <div style="margin-top:10px">
-      <strong>
-        Silas ausgespielt
-      </strong>
+      <strong>Silas ausgespielt</strong>
     </div>
 
     <div
@@ -457,11 +441,9 @@ button{
       type="button"
       disabled>
 
-      <div class="wave">
-        🌊
-      </div>
+      <div class="wave">🌊</div>
 
-      <strong>
+      <strong id="drawLabel">
         2 Karten ziehen
       </strong>
 
@@ -480,10 +462,7 @@ button{
       disabled>
 
       <h2>Ablage A</h2>
-
-      <div id="pileAcard">
-        leer
-      </div>
+      <div id="pileAcard">leer</div>
 
     </button>
 
@@ -495,10 +474,7 @@ button{
       disabled>
 
       <h2>Ablage B</h2>
-
-      <div id="pileBcard">
-        leer
-      </div>
+      <div id="pileBcard">leer</div>
 
     </button>
 
@@ -525,9 +501,7 @@ button{
 
       <div>
 
-        <strong>
-          Deine Hand
-        </strong>
+        <strong>Deine Hand</strong>
 
         <div class="pointsBox">
           Punkte:
@@ -535,7 +509,6 @@ button{
         </div>
 
       </div>
-
 
       <div class="endActions">
 
@@ -567,12 +540,10 @@ button{
 
     </div>
 
-
     <div
       id="handGrid"
       class="handGrid">
     </div>
-
 
     <div
       id="duoActions"
@@ -585,7 +556,7 @@ button{
   <div class="playedBox">
 
     <strong>
-      Deine ausgespielten Duos
+      Deine ausgespielten Duos / Trios
     </strong>
 
     <div
@@ -609,19 +580,14 @@ button{
       style="margin-top:8px">
     </div>
 
-
     <div style="margin-top:12px">
-      <strong>
-        Silas deckt auf
-      </strong>
+      <strong>Silas deckt auf</strong>
     </div>
-
 
     <div
       id="silasReveal"
       class="handGrid">
     </div>
-
 
     <button
       id="nextRoundBtn"
@@ -696,9 +662,21 @@ const $=
   id=>document.getElementById(id);
 
 
+/*
+  Wenn wir Extra Salt später wieder herausnehmen
+  möchten, einfach true in false ändern.
+*/
+const EXTRA_SALT=true;
+
+
+/*
+  Derselbe Speicher wie bisher:
+  ein laufendes 9k-Spiel bleibt erhalten.
+  Extra Salt erscheint spätestens ab der nächsten
+  neu gestarteten Runde.
+*/
 const SAVE_KEY=
   'silke-vs-silas-v9f';
-
 
 const PLAYER_KEY=
   'sea-salt-player-name';
@@ -707,64 +685,56 @@ const PLAYER_KEY=
 const names={
 
   crab:'Mr Krabs',
-
   boat:'Boot',
-
   fish:'Fisch',
-
   shark:'Hai',
-
   swimmer:'Schwimmer',
 
   shell:'Muschel',
-
   octopus:'Oktopus',
-
   penguin:'Pinguin',
-
   sailor:'Anker',
 
   mermaid:'Meerjungfrau',
 
   lighthouse:'eine pro Boot',
-
   shoal:'ein pro Fisch',
-
   colony:'zwei pro Pinguin',
+  captain:'drei pro Anker',
 
-  captain:'drei pro Anker'
+  jellyfish:'Qualle',
+  lobster:'Hummer',
+  crabBasket:'eine pro Mr Krabs',
+  starfish:'Seestern',
+  seahorse:'Seepferdchen'
 };
 
 
 const icons={
 
   crab:'🦀',
-
   boat:'⛵',
-
   fish:'🐟',
-
   shark:'🦈',
-
   swimmer:'🏊',
 
   shell:'🐚',
-
   octopus:'🐙',
-
   penguin:'🐧',
-
   sailor:'⚓',
 
   mermaid:'🧜‍♀️',
 
   lighthouse:'🗼',
-
   shoal:'🐟',
-
   colony:'🐧',
+  captain:'🧭',
 
-  captain:'🧭'
+  jellyfish:'🪼',
+  lobster:'🦞',
+  crabBasket:'🧺',
+  starfish:'⭐',
+  seahorse:'🐴'
 };
 
 
@@ -783,7 +753,7 @@ const cardRules={
     'Hai + Schwimmer = 1 Pkt · Karte stehlen',
 
   swimmer:
-    'Hai + Schwimmer = 1 Pkt · Karte stehlen',
+    'Hai/Qualle + Schwimmer = 1 Pkt',
 
   shell:
     '2=2 · 3=4 · 4=6 · 5=8 · 6=10',
@@ -810,106 +780,129 @@ const cardRules={
     '+3 je Anker',
 
   mermaid:
-    'Wertet häufigste Farbe · 4 = Sofortsieg'
+    'Wertet häufigste Farbe · 4 = Sofortsieg',
+
+  jellyfish:
+    'Qualle + Schwimmer = 1 Pkt · Gegner nur 1 Karte',
+
+  lobster:
+    'Hummer + Mr Krabs = 1 Pkt · Top 5, 1 wählen',
+
+  crabBasket:
+    '+1 je Mr Krabs',
+
+  starfish:
+    'Duo + Seestern = 3 Pkt · Effekt entfällt',
+
+  seahorse:
+    'ersetzt 1 Sammelkarte · mind. 1 echte'
 };
 
 
 const colorNames={
 
   darkblue:'Dunkelblau',
-
   turquoise:'Türkis',
-
   yellow:'Gelb',
-
   black:'Schwarz',
-
   green:'Grün',
-
   gray:'Grau',
-
   lavender:'Lila',
-
   pink:'Rosa',
-
-  peach:'Pfirsich',
-
+  peach:'Hellorange',
   orange:'Orange',
+  white:'Weiß',
 
-  tan:'Beige',
-
-  white:'Weiß'
+  /*
+    Nur zur Kompatibilität mit alten
+    gespeicherten Runden.
+  */
+  tan:'Beige'
 };
 
 
-const typeCounts={
+const baseTypeCounts={
 
   crab:9,
-
   boat:8,
-
   fish:7,
 
   shark:5,
-
   swimmer:5,
 
   shell:6,
-
   octopus:5,
-
   penguin:3,
-
   sailor:2,
 
   lighthouse:1,
-
   shoal:1,
-
   colony:1,
-
   captain:1,
 
   mermaid:4
 };
 
 
-const colorCounts={
+const extraTypeCounts={
+
+  jellyfish:2,
+  lobster:1,
+  crabBasket:1,
+  starfish:3,
+  seahorse:1
+};
+
+
+/*
+  Grundspiel = 58 Karten.
+*/
+const baseColorCounts={
 
   darkblue:9,
-
   turquoise:9,
-
   yellow:8,
-
   black:8,
-
   green:6,
-
   gray:4,
-
   lavender:4,
-
   pink:2,
-
-  peach:2,
-
+  peach:3,
   orange:1,
-
-  tan:1,
-
   white:4
+};
+
+
+/*
+  Grundspiel + Extra Salt = 66 Karten.
+*/
+const extraColorCounts={
+
+  darkblue:10,
+  turquoise:10,
+  yellow:9,
+  black:9,
+  green:7,
+  gray:4,
+  lavender:5,
+  pink:3,
+  peach:3,
+  orange:1,
+  white:5
 };
 
 
 let uid=1;
 
 
+/* =========================
+   STAPEL
+========================= */
+
 function shuffle(arr){
 
   const a=
     arr.slice();
-
 
   for(
     let i=a.length-1;
@@ -923,7 +916,6 @@ function shuffle(arr){
         (i+1)
       );
 
-
     [
       a[i],
       a[j]
@@ -933,65 +925,120 @@ function shuffle(arr){
     ];
   }
 
-
   return a;
 }
 
 
 function makeDeck(){
 
+  const typeCounts={
+    ...baseTypeCounts
+  };
+
+
+  if(
+    EXTRA_SALT
+  ){
+
+    Object.entries(
+      extraTypeCounts
+    )
+    .forEach(
+      ([type,n])=>{
+
+        typeCounts[type]=n;
+
+      }
+    );
+  }
+
+
+  const colorCounts=
+
+    EXTRA_SALT
+
+    ? extraColorCounts
+
+    : baseColorCounts;
+
+
   const types=[];
-  const colors=[];
 
 
   Object.entries(
     typeCounts
   )
   .forEach(
-    ([t,n])=>{
+    ([type,n])=>{
 
       if(
-        t!=='mermaid'
+        type==='mermaid'
       ){
 
-        for(
-          let i=0;
-          i<n;
-          i++
-        ){
+        return;
+      }
 
-          types.push(t);
-        }
+
+      for(
+        let i=0;
+        i<n;
+        i++
+      ){
+
+        types.push(
+          type
+        );
       }
     }
   );
+
+
+  const colors=[];
 
 
   Object.entries(
     colorCounts
   )
   .forEach(
-    ([c,n])=>{
+    ([color,n])=>{
 
-      if(
-        c!=='white'
+      /*
+        Vier weiße Karten sind die
+        vier Meerjungfrauen.
+
+        Mit Extra Salt gibt es zusätzlich
+        eine weitere weiße Karte.
+      */
+      const amount=
+
+        color==='white'
+
+        ? Math.max(
+            0,
+            n-4
+          )
+
+        : n;
+
+
+      for(
+        let i=0;
+        i<amount;
+        i++
       ){
 
-        for(
-          let i=0;
-          i<n;
-          i++
-        ){
-
-          colors.push(c);
-        }
+        colors.push(
+          color
+        );
       }
     }
   );
 
 
-  const cs=
-    shuffle(colors);
+  const shuffledColors=
+    shuffle(
+      colors
+    );
 
 
   const cards=
@@ -1002,7 +1049,7 @@ function makeDeck(){
 
         type:type,
 
-        color:cs[i]
+        color:shuffledColors[i]
 
       })
     );
@@ -1026,9 +1073,15 @@ function makeDeck(){
   }
 
 
-  return shuffle(cards);
+  return shuffle(
+    cards
+  );
 }
 
+
+/* =========================
+   STATUS
+========================= */
 
 const state={
 
@@ -1081,7 +1134,15 @@ const state={
 
   resultTitle:'Rundenergebnis',
 
-  resultHTML:''
+  resultHTML:'',
+
+  /*
+    Qualle-Sperren für genau
+    den nächsten Zug.
+  */
+  youJellyBlocked:false,
+
+  silasJellyBlocked:false
 };
 
 
@@ -1150,7 +1211,9 @@ function loadGame(){
 
 
     const saved=
-      JSON.parse(raw);
+      JSON.parse(
+        raw
+      );
 
 
     if(
@@ -1178,10 +1241,13 @@ function loadGame(){
     ){
 
       state.playerName=
+
         localStorage.getItem(
           PLAYER_KEY
         )
+
         ||
+
         'Silke';
     }
 
@@ -1205,10 +1271,31 @@ function loadGame(){
 
 
     if(
-      typeof state.waitingForSilasStart!=='boolean'
+      typeof state.waitingForSilasStart!==
+      'boolean'
     ){
 
       state.waitingForSilasStart=
+        false;
+    }
+
+
+    if(
+      typeof state.youJellyBlocked!==
+      'boolean'
+    ){
+
+      state.youJellyBlocked=
+        false;
+    }
+
+
+    if(
+      typeof state.silasJellyBlocked!==
+      'boolean'
+    ){
+
+      state.silasJellyBlocked=
         false;
     }
 
@@ -1225,12 +1312,14 @@ function loadGame(){
       if(
         state.lastMoveText
         &&
-        state.lastMoveText!=='Noch kein Zug.'
+        state.lastMoveText!==
+        'Noch kein Zug.'
       ){
 
-        state.lastMoveActions.push(
-          state.lastMoveText
-        );
+        state.lastMoveActions
+          .push(
+            state.lastMoveText
+          );
       }
     }
 
@@ -1244,7 +1333,8 @@ function loadGame(){
 
 
     if(
-      typeof state.specialStatus!=='string'
+      typeof state.specialStatus!==
+      'string'
     ){
 
       state.specialStatus='';
@@ -1265,7 +1355,7 @@ function loadGame(){
 
 
 /* =========================
-   TEXTE / LETZTER ZUG
+   LETZTER ZUG
 ========================= */
 
 function playerName(){
@@ -1281,7 +1371,8 @@ function setLastMove(
 ){
 
   if(
-    state.lastMovePlayer!==who
+    state.lastMovePlayer!==
+    who
   ){
 
     state.lastMovePlayer=
@@ -1349,7 +1440,9 @@ function renderLastMove(){
 }
 
 
-function showSpecialStatus(text){
+function showSpecialStatus(
+  text
+){
 
   state.specialStatus=
     text;
@@ -1396,6 +1489,213 @@ function countType(
 }
 
 
+function collectorScore(
+  type,
+  n
+){
+
+  const values={
+
+    shell:
+      [0,0,2,4,6,8,10],
+
+    octopus:
+      [0,0,3,6,9,12],
+
+    penguin:
+      [0,1,3,5],
+
+    sailor:
+      [0,0,5]
+
+  };
+
+
+  const table=
+    values[type];
+
+
+  return table[
+    Math.min(
+      n,
+      table.length-1
+    )
+  ]||0;
+}
+
+
+/*
+  Seepferdchen:
+  Es wird automatisch für die Sammlung
+  verwendet, bei der es den größten
+  zusätzlichen Punktgewinn bringt.
+*/
+function bestSeahorseGain(
+  cards
+){
+
+  let best=0;
+
+
+  const maxCounts={
+
+    shell:6,
+    octopus:5,
+    penguin:3,
+    sailor:2
+
+  };
+
+
+  [
+    'shell',
+    'octopus',
+    'penguin',
+    'sailor'
+  ]
+  .forEach(
+    type=>{
+
+      const n=
+        countType(
+          cards,
+          type
+        );
+
+
+      if(
+        n>=1
+        &&
+        n<
+        maxCounts[type]
+      ){
+
+        const gain=
+
+          collectorScore(
+            type,
+            n+1
+          )
+
+          -
+
+          collectorScore(
+            type,
+            n
+          );
+
+
+        best=
+          Math.max(
+            best,
+            gain
+          );
+      }
+    }
+  );
+
+
+  return best;
+}
+
+
+/*
+  Duo-Punkte einschließlich Extra Salt.
+
+  Ein Mr Krabs kann entweder mit
+  Mr Krabs oder mit Hummer gepaart werden.
+
+  Ein Schwimmer kann entweder mit
+  Hai oder mit Qualle gepaart werden.
+*/
+function duoPointScore(
+  cards
+){
+
+  const crabs=
+    countType(
+      cards,
+      'crab'
+    );
+
+
+  const lobsters=
+    countType(
+      cards,
+      'lobster'
+    );
+
+
+  const crabDuos=
+
+    Math.floor(
+      crabs/2
+    )
+
+    +
+
+    (
+      lobsters>0
+      &&
+      crabs%2===1
+      ? 1
+      : 0
+    );
+
+
+  const swimmers=
+    countType(
+      cards,
+      'swimmer'
+    );
+
+
+  const swimmerPartners=
+
+    countType(
+      cards,
+      'shark'
+    )
+
+    +
+
+    countType(
+      cards,
+      'jellyfish'
+    );
+
+
+  return
+
+    crabDuos
+
+    +
+
+    Math.floor(
+      countType(
+        cards,
+        'boat'
+      )/2
+    )
+
+    +
+
+    Math.floor(
+      countType(
+        cards,
+        'fish'
+      )/2
+    )
+
+    +
+
+    Math.min(
+      swimmers,
+      swimmerPartners
+    );
+}
+
+
 function scoreCards(
   hand,
   played
@@ -1407,118 +1707,68 @@ function scoreCards(
     );
 
 
-  let p=0;
-
-
-  p+=
-    Math.floor(
-      countType(
-        cards,
-        'crab'
-      )/2
+  let points=
+    duoPointScore(
+      cards
     );
 
 
-  p+=
-    Math.floor(
+  points+=
+    collectorScore(
+      'shell',
       countType(
         cards,
-        'boat'
-      )/2
+        'shell'
+      )
     );
 
 
-  p+=
-    Math.floor(
+  points+=
+    collectorScore(
+      'octopus',
       countType(
         cards,
-        'fish'
-      )/2
+        'octopus'
+      )
     );
 
 
-  p+=
-    Math.min(
-
+  points+=
+    collectorScore(
+      'penguin',
       countType(
         cards,
-        'shark'
-      ),
-
-      countType(
-        cards,
-        'swimmer'
+        'penguin'
       )
-
     );
 
 
-  const sh=[
-    0,0,2,4,6,8,10
-  ];
-
-
-  const oc=[
-    0,0,3,6,9,12
-  ];
-
-
-  const pe=[
-    0,1,3,5
-  ];
-
-
-  const sa=[
-    0,0,5
-  ];
-
-
-  p+=
-    sh[
-      Math.min(
-        countType(
-          cards,
-          'shell'
-        ),
-        6
+  points+=
+    collectorScore(
+      'sailor',
+      countType(
+        cards,
+        'sailor'
       )
-    ]||0;
+    );
 
 
-  p+=
-    oc[
-      Math.min(
-        countType(
-          cards,
-          'octopus'
-        ),
-        5
-      )
-    ]||0;
+  /*
+    Genau ein Seepferdchen ist
+    in Extra Salt enthalten.
+  */
+  if(
+    countType(
+      cards,
+      'seahorse'
+    )>0
+  ){
 
-
-  p+=
-    pe[
-      Math.min(
-        countType(
-          cards,
-          'penguin'
-        ),
-        3
-      )
-    ]||0;
-
-
-  p+=
-    sa[
-      Math.min(
-        countType(
-          cards,
-          'sailor'
-        ),
-        2
-      )
-    ]||0;
+    points+=
+      bestSeahorseGain(
+        cards
+      );
+  }
 
 
   if(
@@ -1528,7 +1778,7 @@ function scoreCards(
     )
   ){
 
-    p+=
+    points+=
       countType(
         cards,
         'boat'
@@ -1543,7 +1793,7 @@ function scoreCards(
     )
   ){
 
-    p+=
+    points+=
       countType(
         cards,
         'fish'
@@ -1558,7 +1808,7 @@ function scoreCards(
     )
   ){
 
-    p+=
+    points+=
       2*
       countType(
         cards,
@@ -1574,7 +1824,7 @@ function scoreCards(
     )
   ){
 
-    p+=
+    points+=
       3*
       countType(
         cards,
@@ -1583,24 +1833,52 @@ function scoreCards(
   }
 
 
-  const m=
+  if(
+    countType(
+      cards,
+      'crabBasket'
+    )
+  ){
+
+    points+=
+      countType(
+        cards,
+        'crab'
+      );
+  }
+
+
+  /*
+    Ein ausgespielter Seestern
+    ergänzt das Duo um +2 Punkte.
+    Duo 1 + Seestern 2 = Trio 3.
+  */
+  points+=
+    2*
+    countType(
+      played,
+      'starfish'
+    );
+
+
+  const mermaids=
     countType(
       cards,
       'mermaid'
     );
 
 
-  if(m){
+  if(mermaids){
 
-    const f={};
+    const colors={};
 
 
     cards.forEach(
-      c=>{
+      card=>{
 
-        f[c.color]=
+        colors[card.color]=
           (
-            f[c.color]||
+            colors[card.color]||
             0
           )
           +1;
@@ -1608,27 +1886,29 @@ function scoreCards(
     );
 
 
-    const vals=
-      Object.values(f)
-        .sort(
-          (a,b)=>b-a
-        );
+    const values=
+      Object.values(
+        colors
+      )
+      .sort(
+        (a,b)=>b-a
+      );
 
 
     for(
       let i=0;
-      i<m;
+      i<mermaids;
       i++
     ){
 
-      p+=
-        vals[i]||
+      points+=
+        values[i]||
         0;
     }
   }
 
 
-  return p;
+  return points;
 }
 
 
@@ -1637,18 +1917,18 @@ function colorBonus(
   played
 ){
 
-  const f={};
+  const colors={};
 
 
   hand.concat(
     played
   )
   .forEach(
-    c=>{
+    card=>{
 
-      f[c.color]=
+      colors[card.color]=
         (
-          f[c.color]||
+          colors[card.color]||
           0
         )
         +1;
@@ -1656,12 +1936,16 @@ function colorBonus(
   );
 
 
-  const vals=
-    Object.values(f);
+  const values=
+    Object.values(
+      colors
+    );
 
 
-  return vals.length
-    ? Math.max(...vals)
+  return values.length
+    ? Math.max(
+        ...values
+      )
     : 0;
 }
 
@@ -1690,7 +1974,7 @@ function hasFourMermaids(
 
 
 /* =========================
-   KARTEN
+   KARTENANZEIGE
 ========================= */
 
 function topCard(index){
@@ -1710,37 +1994,117 @@ function cardHTML(
   mini=false
 ){
 
-  const rule=
-    cardRules[
-      card.type
-    ]||'';
-
-
   return `
     <div class="card ${card.color}${mini?' mini':''}">
 
       <div>
 
         <div class="ico">
-          ${icons[card.type]}
+          ${icons[card.type]||'🃏'}
         </div>
 
         <div class="name">
-          ${names[card.type]}
+          ${names[card.type]||card.type}
         </div>
 
         <div class="rule">
-          ${rule}
+          ${cardRules[card.type]||''}
         </div>
 
       </div>
 
       <div class="meta">
-        ${colorNames[card.color]}
+        ${colorNames[card.color]||card.color}
       </div>
 
     </div>
   `;
+}
+
+
+/* =========================
+   MÖGLICHE DUOS
+========================= */
+
+function duoDefsFor(
+  hand
+){
+
+  const defs=[
+
+    {
+      key:'crab',
+      label:'Mr-Krabs-Duo',
+      a:'crab',
+      b:'crab'
+    },
+
+    {
+      key:'boat',
+      label:'Boot-Duo',
+      a:'boat',
+      b:'boat'
+    },
+
+    {
+      key:'fish',
+      label:'Fisch-Duo',
+      a:'fish',
+      b:'fish'
+    },
+
+    {
+      key:'shark',
+      label:'Hai + Schwimmer',
+      a:'shark',
+      b:'swimmer'
+    },
+
+    {
+      key:'jellyfish',
+      label:'Qualle + Schwimmer',
+      a:'jellyfish',
+      b:'swimmer'
+    },
+
+    {
+      key:'lobster',
+      label:'Hummer + Mr Krabs',
+      a:'lobster',
+      b:'crab'
+    }
+
+  ];
+
+
+  return defs.filter(
+    def=>
+
+      def.a===def.b
+
+      ?
+
+      countType(
+        hand,
+        def.a
+      )>=2
+
+      :
+
+      (
+        countType(
+          hand,
+          def.a
+        )>=1
+
+        &&
+
+        countType(
+          hand,
+          def.b
+        )>=1
+      )
+  );
 }
 
 
@@ -1792,9 +2156,9 @@ function renderSilas(){
 
     ? state.silasPlayed
         .map(
-          c=>
+          card=>
             cardHTML(
-              c,
+              card,
               true
             )
         )
@@ -1814,122 +2178,123 @@ function renderDuos(){
 
 
   if(
-    !state.started ||
-    state.busy ||
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
+    !state.started
+    ||
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
     state.phase!=='action'
+    ||
+    state.youJellyBlocked
   ){
 
     return;
   }
 
 
-  const defs=[
-
-    [
-      'Mr-Krabs-Duo ausspielen',
-
-      countType(
-        state.hand,
-        'crab'
-      )>=2,
-
-      ()=>playDuo(
-        'crab',
-        'crab'
-      )
-    ],
-
-    [
-      'Boot-Duo ausspielen',
-
-      countType(
-        state.hand,
-        'boat'
-      )>=2,
-
-      ()=>playDuo(
-        'boat',
-        'boat'
-      )
-    ],
-
-    [
-      'Fisch-Duo ausspielen',
-
-      countType(
-        state.hand,
-        'fish'
-      )>=2,
-
-      ()=>playDuo(
-        'fish',
-        'fish'
-      )
-    ],
-
-    [
-      'Hai + Schwimmer ausspielen',
-
-      countType(
-        state.hand,
-        'shark'
-      )>=1
-      &&
-      countType(
-        state.hand,
-        'swimmer'
-      )>=1,
-
-      ()=>playDuo(
-        'shark',
-        'swimmer'
-      )
-    ]
-
-  ];
+  const defs=
+    duoDefsFor(
+      state.hand
+    );
 
 
   defs.forEach(
-    ([label,ok,fn])=>{
+    def=>{
 
-      if(!ok){
-
-        return;
-      }
-
-
-      const b=
+      const button=
         document.createElement(
           'button'
         );
 
 
-      b.type=
+      button.type=
         'button';
 
 
-      b.className=
+      button.className=
         'btn duoBtn';
 
 
-      b.textContent=
-        label;
+      button.textContent=
+        def.label+
+        ' ausspielen';
 
 
-      b.addEventListener(
+      button.addEventListener(
         'click',
-        fn
+        ()=>playDuo(
+          def
+        )
       );
 
 
       box.appendChild(
-        b
+        button
       );
     }
   );
+
+
+  /*
+    Seestern kann mit jedem vorhandenen
+    Duo als Trio gespielt werden.
+  */
+  if(
+    countType(
+      state.hand,
+      'starfish'
+    )>0
+  ){
+
+    defs.forEach(
+      def=>{
+
+        const button=
+          document.createElement(
+            'button'
+          );
+
+
+        button.type=
+          'button';
+
+
+        button.className=
+          'btn duoBtn';
+
+
+        button.textContent=
+
+          'Seestern + '
+
+          +
+
+          def.label
+
+          +
+
+          ' = 3 Pkt';
+
+
+        button.addEventListener(
+          'click',
+          ()=>playStarTrio(
+            def
+          )
+        );
+
+
+        box.appendChild(
+          button
+        );
+      }
+    );
+  }
 }
 
 
@@ -1949,7 +2314,10 @@ function revealSilas(){
 
     ? all
         .map(
-          c=>cardHTML(c)
+          card=>
+            cardHTML(
+              card
+            )
         )
         .join('')
 
@@ -1960,7 +2328,8 @@ function revealSilas(){
 function renderResult(){
 
   if(
-    !state.roundOver ||
+    !state.roundOver
+    ||
     !state.resultHTML
   ){
 
@@ -2089,7 +2458,10 @@ function render(){
 
     ? state.hand
         .map(
-          c=>cardHTML(c)
+          card=>
+            cardHTML(
+              card
+            )
         )
         .join('')
 
@@ -2103,9 +2475,9 @@ function render(){
 
     ? state.played
         .map(
-          c=>
+          card=>
             cardHTML(
-              c,
+              card,
               true
             )
         )
@@ -2160,6 +2532,25 @@ function render(){
     state.phase==='action';
 
 
+  const blocked=
+
+    canDraw
+
+    &&
+
+    state.youJellyBlocked;
+
+
+  $('drawLabel')
+    .textContent=
+
+    blocked
+
+    ? '1 Karte ziehen'
+
+    : '2 Karten ziehen';
+
+
   $('drawBtn')
     .disabled=
 
@@ -2167,13 +2558,22 @@ function render(){
 
     ||
 
-    state.deck.length<2;
+    state.deck.length<
+    (
+      blocked
+      ? 1
+      : 2
+    );
 
 
   $('pileA')
     .disabled=
 
     !canDraw
+
+    ||
+
+    blocked
 
     ||
 
@@ -2187,12 +2587,21 @@ function render(){
 
     ||
 
+    blocked
+
+    ||
+
     !b;
 
 
   $('endTurnBtn')
     .disabled=
-    !canAct;
+
+    !canAct
+
+    ||
+
+    state.youJellyBlocked;
 
 
   const enough=
@@ -2206,7 +2615,11 @@ function render(){
 
     ||
 
-    !enough;
+    !enough
+
+    ||
+
+    state.youJellyBlocked;
 
 
   $('chanceBtn')
@@ -2216,7 +2629,11 @@ function render(){
 
     ||
 
-    !enough;
+    !enough
+
+    ||
+
+    state.youJellyBlocked;
 
 
   $('newRoundTopBtn')
@@ -2281,26 +2698,26 @@ function showChoice(
   options.forEach(
     option=>{
 
-      const b=
+      const button=
         document.createElement(
           'button'
         );
 
 
-      b.type=
+      button.type=
         'button';
 
 
-      b.className=
+      button.className=
         'btn';
 
 
-      b.innerHTML=
+      button.innerHTML=
         option.html||
         option.label;
 
 
-      b.addEventListener(
+      button.addEventListener(
         'click',
         option.onClick
       );
@@ -2308,7 +2725,7 @@ function showChoice(
 
       $('choiceGrid')
         .appendChild(
-          b
+          button
         );
     }
   );
@@ -2319,7 +2736,7 @@ function showChoice(
 
 
 /* =========================
-   SILAS-START BESTÄTIGEN
+   SILAS BEGINNT
 ========================= */
 
 function showSilasStartConfirmation(){
@@ -2355,8 +2772,7 @@ function confirmSilasStart(){
   closeChoice();
 
 
-  state.busy=
-    true;
+  state.busy=true;
 
 
   hideSpecialStatus();
@@ -2404,8 +2820,11 @@ function startRound(){
 
 
   state.nextStarter=
+
     starter==='you'
+
     ? 'silas'
+
     : 'you';
 
 
@@ -2438,6 +2857,10 @@ function startRound(){
 
   state.waitingForSilasStart=false;
 
+  state.youJellyBlocked=false;
+
+  state.silasJellyBlocked=false;
+
   state.resultTitle=
     'Rundenergebnis';
 
@@ -2463,12 +2886,9 @@ function startRound(){
     starter==='you'
   ){
 
-    state.turn=
-      'you';
+    state.turn='you';
 
-
-    state.busy=
-      false;
+    state.busy=false;
 
 
     showSpecialStatus(
@@ -2484,12 +2904,9 @@ function startRound(){
   }
   else{
 
-    state.turn=
-      'silas';
+    state.turn='silas';
 
-
-    state.busy=
-      true;
+    state.busy=true;
 
 
     showSpecialStatus(
@@ -2519,14 +2936,15 @@ function newGame(){
 
   state.roundOver=true;
 
-  state.nextStarter=
-    'you';
+  state.nextStarter='you';
 
-  state.currentStarter=
-    'you';
+  state.currentStarter='you';
 
-  state.waitingForSilasStart=
-    false;
+  state.waitingForSilasStart=false;
+
+  state.youJellyBlocked=false;
+
+  state.silasJellyBlocked=false;
 
   state.specialStatus='';
 
@@ -2564,7 +2982,9 @@ function hideNameSelection(){
 }
 
 
-function selectPlayer(name){
+function selectPlayer(
+  name
+){
 
   state.playerName=
     name;
@@ -2583,7 +3003,6 @@ function selectPlayer(name){
 
   hideNameSelection();
 
-
   newGame();
 }
 
@@ -2593,12 +3012,12 @@ document
     '.nameBtn'
   )
   .forEach(
-    b=>{
+    button=>{
 
-      b.addEventListener(
+      button.addEventListener(
         'click',
         ()=>selectPlayer(
-          b.dataset.name
+          button.dataset.name
         )
       );
     }
@@ -2623,14 +3042,34 @@ function enterActionPhase(){
 }
 
 
+function handleDraw(){
+
+  if(
+    state.youJellyBlocked
+  ){
+
+    drawBlockedCard();
+  }
+  else{
+
+    drawTwo();
+  }
+}
+
+
 function drawTwo(){
 
   if(
-    state.deck.length<2 ||
-    state.busy ||
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
+    state.deck.length<2
+    ||
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
     state.phase!=='draw'
   ){
 
@@ -2652,7 +3091,9 @@ function drawTwo(){
 
       {
         html:
-          cardHTML(first),
+          cardHTML(
+            first
+          ),
 
         onClick:
           ()=>chooseDiscard(
@@ -2663,7 +3104,9 @@ function drawTwo(){
 
       {
         html:
-          cardHTML(second),
+          cardHTML(
+            second
+          ),
 
         onClick:
           ()=>chooseDiscard(
@@ -2695,7 +3138,7 @@ function chooseDiscard(
     emptyB
   ){
 
-    const idx=
+    const index=
       emptyA
       ? 0
       : 1;
@@ -2707,7 +3150,7 @@ function chooseDiscard(
       );
 
 
-    state.piles[idx]
+    state.piles[index]
       .push(
         discard
       );
@@ -2730,7 +3173,7 @@ function chooseDiscard(
       ' wird automatisch auf Ablage '
       +
       (
-        idx===0
+        index===0
         ? 'A'
         : 'B'
       )
@@ -2838,14 +3281,22 @@ function chooseDiscard(
 }
 
 
-function takePile(index){
+function takePile(
+  index
+){
 
   if(
-    state.busy ||
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
     state.phase!=='draw'
+    ||
+    state.youJellyBlocked
   ){
 
     return;
@@ -2915,7 +3366,105 @@ function afterYouGain(){
 
 
 /* =========================
-   DUOS
+   QUALLE – SPIELER BLOCKIERT
+========================= */
+
+function drawBlockedCard(){
+
+  if(
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
+    state.phase!=='draw'
+    ||
+    !state.youJellyBlocked
+  ){
+
+    return;
+  }
+
+
+  state.youJellyBlocked=
+    false;
+
+
+  if(
+    state.deck.length
+  ){
+
+    const card=
+      state.deck.pop();
+
+
+    state.hand
+      .push(
+        card
+      );
+
+
+    setLastMove(
+      playerName(),
+
+      'ist durch die Qualle blockiert und zieht 1 Karte vom Nachziehstapel.'
+    );
+
+
+    if(
+      hasFourMermaids(
+        state.hand,
+        state.played
+      )
+    ){
+
+      instantWin(
+        'you'
+      );
+
+
+      return;
+    }
+  }
+  else{
+
+    setLastMove(
+      playerName(),
+
+      'ist durch die Qualle blockiert, aber der Nachziehstapel ist leer.'
+    );
+  }
+
+
+  /*
+    Keine Duos, kein Stopp,
+    keine Letzte Chance.
+    Der Zug endet direkt.
+  */
+  state.turn='silas';
+
+  state.phase='draw';
+
+  state.busy=true;
+
+
+  render();
+
+  saveGame();
+
+
+  setTimeout(
+    silasTurn,
+    700
+  );
+}
+
+
+/* =========================
+   PAARE / TRIOS
 ========================= */
 
 function removePairFrom(
@@ -2926,7 +3475,7 @@ function removePairFrom(
 
   const first=
     hand.findIndex(
-      c=>c.type===a
+      card=>card.type===a
     );
 
 
@@ -2945,7 +3494,7 @@ function removePairFrom(
 
   const second=
     hand.findIndex(
-      c=>c.type===b
+      card=>card.type===b
     );
 
 
@@ -2973,16 +3522,128 @@ function removePairFrom(
 }
 
 
-function playDuo(
-  a,
-  b
+function removeSingleFrom(
+  hand,
+  type
+){
+
+  const index=
+    hand.findIndex(
+      card=>card.type===type
+    );
+
+
+  if(index<0){
+
+    return null;
+  }
+
+
+  return hand.splice(
+    index,
+    1
+  )[0];
+}
+
+
+/* =========================
+   SEESTERN
+========================= */
+
+function playStarTrio(
+  def
 ){
 
   if(
-    state.busy ||
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
+    state.phase!=='action'
+  ){
+
+    return;
+  }
+
+
+  const star=
+    removeSingleFrom(
+      state.hand,
+      'starfish'
+    );
+
+
+  if(!star){
+
+    return;
+  }
+
+
+  const pair=
+    removePairFrom(
+      state.hand,
+      def.a,
+      def.b
+    );
+
+
+  if(!pair){
+
+    state.hand
+      .push(
+        star
+      );
+
+
+    return;
+  }
+
+
+  state.played
+    .push(
+      ...pair,
+      star
+    );
+
+
+  setLastMove(
+    playerName(),
+
+    'spielt '
+    +
+    def.label
+    +
+    ' + Seestern als Trio: 3 Punkte, der Duo-Effekt entfällt.'
+  );
+
+
+  render();
+
+  saveGame();
+}
+
+
+/* =========================
+   NORMALE DUOS
+========================= */
+
+function playDuo(
+  def
+){
+
+  if(
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
     state.phase!=='action'
   ){
 
@@ -2993,8 +3654,8 @@ function playDuo(
   const pair=
     removePairFrom(
       state.hand,
-      a,
-      b
+      def.a,
+      def.b
     );
 
 
@@ -3010,12 +3671,13 @@ function playDuo(
     );
 
 
+  /* Boot */
+
   if(
-    a==='boat'
+    def.key==='boat'
   ){
 
-    state.phase=
-      'draw';
+    state.phase='draw';
 
 
     setLastMove(
@@ -3035,8 +3697,10 @@ function playDuo(
   }
 
 
+  /* Fisch */
+
   if(
-    a==='fish'
+    def.key==='fish'
   ){
 
     if(
@@ -3097,17 +3761,17 @@ function playDuo(
   }
 
 
+  /* Hai + Schwimmer */
+
   if(
-    a==='shark'
-    &&
-    b==='swimmer'
+    def.key==='shark'
   ){
 
     if(
       state.silasHand.length
     ){
 
-      const i=
+      const index=
         Math.floor(
           Math.random()*
           state.silasHand.length
@@ -3117,7 +3781,7 @@ function playDuo(
       const stolen=
         state.silasHand
           .splice(
-            i,
+            index,
             1
           )[0];
 
@@ -3172,14 +3836,195 @@ function playDuo(
   }
 
 
+  /* Qualle + Schwimmer */
+
   if(
-    a==='crab'
+    def.key==='jellyfish'
+  ){
+
+    state.silasJellyBlocked=
+      true;
+
+
+    setLastMove(
+      playerName(),
+
+      'spielt Qualle + Schwimmer. Silas darf in seinem nächsten Zug nur 1 Karte vom Nachziehstapel ziehen.'
+    );
+
+
+    render();
+
+    saveGame();
+
+    return;
+  }
+
+
+  /* Hummer + Mr Krabs */
+
+  if(
+    def.key==='lobster'
+  ){
+
+    lobsterEffectYou();
+
+    return;
+  }
+
+
+  /* Mr Krabs + Mr Krabs */
+
+  if(
+    def.key==='crab'
   ){
 
     chooseCrabPile();
+
+    return;
   }
 }
 
+
+/* =========================
+   HUMMER
+========================= */
+
+function lobsterEffectYou(){
+
+  const number=
+    Math.min(
+      5,
+      state.deck.length
+    );
+
+
+  if(
+    number===0
+  ){
+
+    setLastMove(
+      playerName(),
+
+      'spielt Hummer + Mr Krabs, aber der Nachziehstapel ist leer.'
+    );
+
+
+    render();
+
+    saveGame();
+
+    return;
+  }
+
+
+  const seen=[];
+
+
+  for(
+    let i=0;
+    i<number;
+    i++
+  ){
+
+    seen.push(
+      state.deck.pop()
+    );
+  }
+
+
+  showChoice(
+
+    'Hummer + Mr Krabs: Wähle 1 Karte aus den obersten '
+    +
+    number
+    +
+    ' Karten.',
+
+    seen.map(
+      card=>({
+
+        html:
+          cardHTML(
+            card
+          ),
+
+        onClick:
+          ()=>{
+
+            const rest=
+              seen.filter(
+                c=>c.id!==card.id
+              );
+
+
+            state.hand
+              .push(
+                card
+              );
+
+
+            /*
+              Die übrigen Karten kommen
+              zurück und der Stapel
+              wird gemischt.
+            */
+            state.deck=
+              shuffle(
+                state.deck.concat(
+                  rest
+                )
+              );
+
+
+            closeChoice();
+
+
+            setLastMove(
+              playerName(),
+
+              'spielt Hummer + Mr Krabs und wählt '
+              +
+              names[card.type]
+              +
+              ' aus den obersten '
+              +
+              number
+              +
+              ' Karten.'
+            );
+
+
+            if(
+              hasFourMermaids(
+                state.hand,
+                state.played
+              )
+            ){
+
+              instantWin(
+                'you'
+              );
+
+
+              return;
+            }
+
+
+            render();
+
+            saveGame();
+          }
+
+      })
+    )
+  );
+}
+
+
+/* =========================
+   MR KRABS
+========================= */
 
 function chooseCrabPile(){
 
@@ -3212,7 +4057,9 @@ function chooseCrabPile(){
 }
 
 
-function showCrabCards(index){
+function showCrabCards(
+  index
+){
 
   $('choiceTitle')
     .textContent=
@@ -3237,25 +4084,21 @@ function showCrabCards(index){
       .length
   ){
 
-    const b=
+    const button=
       document.createElement(
         'button'
       );
 
 
-    b.type=
-      'button';
+    button.type='button';
 
+    button.className='btn';
 
-    b.className=
-      'btn';
-
-
-    b.textContent=
+    button.textContent=
       'Stapel ist leer';
 
 
-    b.addEventListener(
+    button.addEventListener(
       'click',
       ()=>{
 
@@ -3286,7 +4129,7 @@ function showCrabCards(index){
 
     $('choiceGrid')
       .appendChild(
-        b
+        button
       );
 
 
@@ -3300,31 +4143,27 @@ function showCrabCards(index){
     .forEach(
       card=>{
 
-        const b=
+        const button=
           document.createElement(
             'button'
           );
 
 
-        b.type=
-          'button';
+        button.type='button';
 
+        button.className='btn';
 
-        b.className=
-          'btn';
-
-
-        b.innerHTML=
+        button.innerHTML=
           cardHTML(
             card
           );
 
 
-        b.addEventListener(
+        button.addEventListener(
           'click',
           ()=>{
 
-            const ri=
+            const cardIndex=
               state.piles[index]
                 .findIndex(
                   c=>c.id===card.id
@@ -3334,7 +4173,7 @@ function showCrabCards(index){
             const chosen=
               state.piles[index]
                 .splice(
-                  ri,
+                  cardIndex,
                   1
                 )[0];
 
@@ -3392,7 +4231,7 @@ function showCrabCards(index){
 
         $('choiceGrid')
           .appendChild(
-            b
+            button
           );
       }
     );
@@ -3406,27 +4245,28 @@ function showCrabCards(index){
 function endYourTurn(){
 
   if(
-    state.busy ||
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
+    state.busy
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
     state.phase!=='action'
+    ||
+    state.youJellyBlocked
   ){
 
     return;
   }
 
 
-  state.turn=
-    'silas';
+  state.turn='silas';
 
+  state.phase='draw';
 
-  state.phase=
-    'draw';
-
-
-  state.busy=
-    true;
+  state.busy=true;
 
 
   hideSpecialStatus();
@@ -3445,17 +4285,18 @@ function endYourTurn(){
    SILAS KI
 ========================= */
 
-function silasCardValue(card){
+function silasCardValue(
+  card
+){
 
   const hand=
     state.silasHand;
 
 
   const all=
-    state.silasHand
-      .concat(
-        state.silasPlayed
-      );
+    state.silasHand.concat(
+      state.silasPlayed
+    );
 
 
   const n=
@@ -3486,19 +4327,9 @@ function silasCardValue(card){
     card.type==='shell'
   ){
 
-    const shells=
-      n('shell');
-
-
-    if(
-      shells===0
-    ){
-
-      return .2;
-    }
-
-
-    return 4.5;
+    return n('shell')===0
+      ? .2
+      : 4.5;
   }
 
 
@@ -3506,27 +4337,12 @@ function silasCardValue(card){
     card.type==='octopus'
   ){
 
-    const octos=
-      n('octopus');
-
-
-    if(
-      octos===0
-    ){
-
-      return 1.5;
-    }
-
-
-    return 5.2;
+    return n('octopus')===0
+      ? 1.5
+      : 5.2;
   }
 
 
-  /*
-    GEÄNDERT IN 9k:
-    Schon der erste Pinguin ist attraktiv genug,
-    um offen genommen zu werden.
-  */
   if(
     card.type==='penguin'
   ){
@@ -3573,7 +4389,7 @@ function silasCardValue(card){
       n('sailor');
 
 
-    const hasMultiplier=
+    const multiplier=
       total('captain')>0;
 
 
@@ -3581,13 +4397,13 @@ function silasCardValue(card){
       anchors===0
     ){
 
-      return hasMultiplier
+      return multiplier
         ? 4.8
         : .5;
     }
 
 
-    return hasMultiplier
+    return multiplier
       ? 8
       : 6.5;
   }
@@ -3601,23 +4417,11 @@ function silasCardValue(card){
       total('sailor');
 
 
-    if(
-      anchors===0
-    ){
-
-      return 1;
-    }
-
-
-    if(
-      anchors===1
-    ){
-
-      return 4.8;
-    }
-
-
-    return 8;
+    return anchors===0
+      ? 1
+      : anchors===1
+        ? 4.8
+        : 8;
   }
 
 
@@ -3629,32 +4433,13 @@ function silasCardValue(card){
       total('boat');
 
 
-    if(
-      boats===0
-    ){
-
-      return .8;
-    }
-
-
-    if(
-      boats===1
-    ){
-
-      return 2.5;
-    }
-
-
-    if(
-      boats===2
-    ){
-
-      return 3.8;
-    }
-
-
-    return 5+
-      boats*.3;
+    return boats===0
+      ? .8
+      : boats===1
+        ? 2.5
+        : boats===2
+          ? 3.8
+          : 5+boats*.3;
   }
 
 
@@ -3666,32 +4451,13 @@ function silasCardValue(card){
       total('fish');
 
 
-    if(
-      fish===0
-    ){
-
-      return .8;
-    }
-
-
-    if(
-      fish===1
-    ){
-
-      return 2.5;
-    }
-
-
-    if(
-      fish===2
-    ){
-
-      return 3.8;
-    }
-
-
-    return 5+
-      fish*.3;
+    return fish===0
+      ? .8
+      : fish===1
+        ? 2.5
+        : fish===2
+          ? 3.8
+          : 5+fish*.3;
   }
 
 
@@ -3703,31 +4469,92 @@ function silasCardValue(card){
       total('penguin');
 
 
-    if(
-      penguins===0
-    ){
-
-      return 1;
-    }
-
-
-    if(
-      penguins===1
-    ){
-
-      return 4;
-    }
+    return penguins===0
+      ? 1
+      : penguins===1
+        ? 4
+        : penguins===2
+          ? 6
+          : 8;
+  }
 
 
-    if(
-      penguins===2
-    ){
+  /*
+    Extra Salt – eine pro Mr Krabs
+  */
+  if(
+    card.type==='crabBasket'
+  ){
 
-      return 6;
-    }
+    const crabs=
+      total('crab');
 
 
-    return 8;
+    return crabs===0
+      ? .8
+      : 2.5+crabs;
+  }
+
+
+  /*
+    Extra Salt – Seepferdchen
+  */
+  if(
+    card.type==='seahorse'
+  ){
+
+    const gain=
+      bestSeahorseGain(
+        all
+      );
+
+
+    return gain>0
+      ? 3.5+gain
+      : .5;
+  }
+
+
+  /*
+    Extra Salt – Seestern
+  */
+  if(
+    card.type==='starfish'
+  ){
+
+    return duoDefsFor(
+      hand
+    ).length
+
+      ? 5
+
+      : .7;
+  }
+
+
+  /*
+    Extra Salt – Hummer
+  */
+  if(
+    card.type==='lobster'
+  ){
+
+    return n('crab')>0
+      ? 5.8
+      : 1;
+  }
+
+
+  /*
+    Extra Salt – Qualle
+  */
+  if(
+    card.type==='jellyfish'
+  ){
+
+    return n('swimmer')>0
+      ? 6
+      : 1.2;
   }
 
 
@@ -3735,8 +4562,16 @@ function silasCardValue(card){
     card.type==='crab'
   ){
 
-    return n('crab')>0
+    return
+
+      n('crab')>0
+
+      ||
+
+      n('lobster')>0
+
       ? 5.5
+
       : 1.4;
   }
 
@@ -3746,8 +4581,11 @@ function silasCardValue(card){
   ){
 
     let value=
+
       n('boat')>0
+
       ? 6
+
       : 1.8;
 
 
@@ -3768,8 +4606,11 @@ function silasCardValue(card){
   ){
 
     let value=
+
       n('fish')>0
+
       ? 5.7
+
       : 1.8;
 
 
@@ -3799,8 +4640,18 @@ function silasCardValue(card){
     card.type==='swimmer'
   ){
 
-    return n('shark')>0
+    return
+
+      (
+        n('shark')>0
+
+        ||
+
+        n('jellyfish')>0
+      )
+
       ? 6
+
       : 1.2;
   }
 
@@ -3808,6 +4659,10 @@ function silasCardValue(card){
   return 1;
 }
 
+
+/* =========================
+   SILAS ZIEHT
+========================= */
 
 function silasTakeOneCard(){
 
@@ -3819,13 +4674,13 @@ function silasTakeOneCard(){
     topCard(1);
 
 
-  const va=
+  const valueA=
     a
     ? silasCardValue(a)
     : -1;
 
 
-  const vb=
+  const valueB=
     b
     ? silasCardValue(b)
     : -1;
@@ -3833,19 +4688,19 @@ function silasTakeOneCard(){
 
   if(
     Math.max(
-      va,
-      vb
+      valueA,
+      valueB
     )>=4
   ){
 
-    const i=
-      va>=vb
+    const index=
+      valueA>=valueB
       ? 0
       : 1;
 
 
     const chosen=
-      state.piles[i]
+      state.piles[index]
         .pop();
 
 
@@ -3865,7 +4720,7 @@ function silasTakeOneCard(){
       ' von Ablage '
       +
       (
-        i===0
+        index===0
         ? 'A'
         : 'B'
       )
@@ -3882,26 +4737,32 @@ function silasTakeOneCard(){
     state.deck.length>=2
   ){
 
-    const x=
+    const first=
       state.deck.pop();
 
 
-    const y=
+    const second=
       state.deck.pop();
 
 
     const keep=
-      silasCardValue(x)
+
+      silasCardValue(first)
       >=
-      silasCardValue(y)
-      ? x
-      : y;
+      silasCardValue(second)
+
+      ? first
+
+      : second;
 
 
     const discard=
-      keep===x
-      ? y
-      : x;
+
+      keep===first
+
+      ? second
+
+      : first;
 
 
     state.silasHand
@@ -3925,25 +4786,27 @@ function silasTakeOneCard(){
         emptyB
       )
 
-      ? (
-          emptyA
-          ? 0
-          : 1
-        )
+      ?
 
-      : (
-          Math.random()<.5
-          ? 0
-          : 1
-        );
+      (
+        emptyA
+        ? 0
+        : 1
+      )
+
+      :
+
+      (
+        Math.random()<.5
+        ? 0
+        : 1
+      );
 
 
-    state.piles[
-      pileIndex
-    ]
-    .push(
-      discard
-    );
+    state.piles[pileIndex]
+      .push(
+        discard
+      );
 
 
     setLastMove(
@@ -3977,7 +4840,7 @@ function silasTakeOneCard(){
   ){
 
     index=
-      va>=vb
+      valueA>=valueB
       ? 0
       : 1;
   }
@@ -4028,6 +4891,319 @@ function silasTakeOneCard(){
 
 
 /* =========================
+   SILAS HUMMER
+========================= */
+
+function silasLobsterEffect(){
+
+  const number=
+    Math.min(
+      5,
+      state.deck.length
+    );
+
+
+  if(
+    number===0
+  ){
+
+    setLastMove(
+      'Silas',
+
+      'spielt Hummer + Mr Krabs, aber der Nachziehstapel ist leer.'
+    );
+
+
+    return;
+  }
+
+
+  const seen=[];
+
+
+  for(
+    let i=0;
+    i<number;
+    i++
+  ){
+
+    seen.push(
+      state.deck.pop()
+    );
+  }
+
+
+  let bestIndex=0;
+
+  let bestValue=-999;
+
+
+  seen.forEach(
+    (card,index)=>{
+
+      const value=
+        silasCardValue(
+          card
+        );
+
+
+      if(
+        value>
+        bestValue
+      ){
+
+        bestValue=
+          value;
+
+
+        bestIndex=
+          index;
+      }
+    }
+  );
+
+
+  const chosen=
+    seen.splice(
+      bestIndex,
+      1
+    )[0];
+
+
+  state.silasHand
+    .push(
+      chosen
+    );
+
+
+  state.deck=
+    shuffle(
+      state.deck.concat(
+        seen
+      )
+    );
+
+
+  /*
+    Die ausgewählte Karte bleibt
+    vor dem Gegner geheim.
+  */
+  setLastMove(
+    'Silas',
+
+    'spielt Hummer + Mr Krabs, sieht die obersten '
+    +
+    number
+    +
+    ' Karten an und behält eine davon.'
+  );
+}
+
+
+/* =========================
+   SILAS SEESTERN
+========================= */
+
+function silasPlayStarTrioIfUseful(){
+
+  if(
+    countType(
+      state.silasHand,
+      'starfish'
+    )<1
+  ){
+
+    return false;
+  }
+
+
+  const defs=
+    duoDefsFor(
+      state.silasHand
+    );
+
+
+  if(
+    !defs.length
+  ){
+
+    return false;
+  }
+
+
+  let chosen=null;
+
+
+  /*
+    Wenn ein Duo-Effekt momentan
+    praktisch nutzlos wäre, nimmt
+    Silas lieber die 3 Punkte.
+  */
+  for(
+    const def of defs
+  ){
+
+    if(
+      def.key==='crab'
+      &&
+      !state.piles[0].length
+      &&
+      !state.piles[1].length
+    ){
+
+      chosen=def;
+      break;
+    }
+
+
+    if(
+      def.key==='fish'
+      &&
+      !state.deck.length
+    ){
+
+      chosen=def;
+      break;
+    }
+
+
+    if(
+      def.key==='shark'
+      &&
+      !state.hand.length
+    ){
+
+      chosen=def;
+      break;
+    }
+
+
+    if(
+      def.key==='jellyfish'
+      &&
+      state.youJellyBlocked
+    ){
+
+      chosen=def;
+      break;
+    }
+
+
+    if(
+      def.key==='lobster'
+      &&
+      !state.deck.length
+    ){
+
+      chosen=def;
+      break;
+    }
+  }
+
+
+  /*
+    Kurz vor Silas' Stopp-Schwelle
+    sind die sicheren +2 Zusatzpunkte
+    ebenfalls attraktiv.
+  */
+  if(
+    !chosen
+    &&
+    scoreCards(
+      state.silasHand,
+      state.silasPlayed
+    )>=10
+  ){
+
+    const order=[
+      'crab',
+      'fish',
+      'shark',
+      'jellyfish',
+      'lobster',
+      'boat'
+    ];
+
+
+    chosen=
+      order
+        .map(
+          key=>
+            defs.find(
+              def=>def.key===key
+            )
+        )
+        .find(
+          Boolean
+        )
+      ||
+      null;
+  }
+
+
+  if(!chosen){
+
+    return false;
+  }
+
+
+  const star=
+    removeSingleFrom(
+      state.silasHand,
+      'starfish'
+    );
+
+
+  const pair=
+    removePairFrom(
+      state.silasHand,
+      chosen.a,
+      chosen.b
+    );
+
+
+  if(
+    !star
+    ||
+    !pair
+  ){
+
+    if(star){
+
+      state.silasHand
+        .push(
+          star
+        );
+    }
+
+
+    return false;
+  }
+
+
+  state.silasPlayed
+    .push(
+      ...pair,
+      star
+    );
+
+
+  setLastMove(
+    'Silas',
+
+    'spielt '
+    +
+    chosen.label
+    +
+    ' + Seestern als Trio: 3 Punkte, der Duo-Effekt entfällt.'
+  );
+
+
+  return true;
+}
+
+
+/* =========================
    SILAS DUOS
 ========================= */
 
@@ -4042,6 +5218,56 @@ function silasPlayDuos(
 
     changed=false;
 
+
+    if(
+      silasPlayStarTrioIfUseful()
+    ){
+
+      changed=true;
+      continue;
+    }
+
+
+    /* Hummer + Mr Krabs */
+
+    if(
+      countType(
+        state.silasHand,
+        'lobster'
+      )>=1
+      &&
+      countType(
+        state.silasHand,
+        'crab'
+      )>=1
+    ){
+
+      const pair=
+        removePairFrom(
+          state.silasHand,
+          'lobster',
+          'crab'
+        );
+
+
+      if(pair){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        silasLobsterEffect();
+
+
+        changed=true;
+        continue;
+      }
+    }
+
+
+    /* Boot */
 
     if(
       countType(
@@ -4083,11 +5309,12 @@ function silasPlayDuos(
 
 
         changed=true;
-
         continue;
       }
     }
 
+
+    /* Fisch */
 
     if(
       countType(
@@ -4139,11 +5366,140 @@ function silasPlayDuos(
 
 
         changed=true;
-
         continue;
       }
     }
 
+
+    /*
+      Hai hat Priorität, wenn bei
+      Spieler tatsächlich etwas
+      gestohlen werden kann.
+    */
+    if(
+      countType(
+        state.silasHand,
+        'shark'
+      )>=1
+      &&
+      countType(
+        state.silasHand,
+        'swimmer'
+      )>=1
+      &&
+      state.hand.length
+    ){
+
+      const pair=
+        removePairFrom(
+          state.silasHand,
+          'shark',
+          'swimmer'
+        );
+
+
+      if(pair){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        const index=
+          Math.floor(
+            Math.random()*
+            state.hand.length
+          );
+
+
+        const stolen=
+          state.hand
+            .splice(
+              index,
+              1
+            )[0];
+
+
+        state.silasHand
+          .push(
+            stolen
+          );
+
+
+        setLastMove(
+          'Silas',
+
+          'spielt Hai + Schwimmer und stiehlt '
+          +
+          playerName()
+          +
+          ' '
+          +
+          names[stolen.type]
+          +
+          '.'
+        );
+
+
+        changed=true;
+        continue;
+      }
+    }
+
+
+    /* Qualle + Schwimmer */
+
+    if(
+      countType(
+        state.silasHand,
+        'jellyfish'
+      )>=1
+      &&
+      countType(
+        state.silasHand,
+        'swimmer'
+      )>=1
+    ){
+
+      const pair=
+        removePairFrom(
+          state.silasHand,
+          'jellyfish',
+          'swimmer'
+        );
+
+
+      if(pair){
+
+        state.silasPlayed
+          .push(
+            ...pair
+          );
+
+
+        state.youJellyBlocked=
+          true;
+
+
+        setLastMove(
+          'Silas',
+
+          'spielt Qualle + Schwimmer. '
+          +
+          playerName()
+          +
+          ' darf im nächsten Zug nur 1 Karte vom Nachziehstapel ziehen.'
+        );
+
+
+        changed=true;
+        continue;
+      }
+    }
+
+
+    /* Hai ohne mögliche Beute */
 
     if(
       countType(
@@ -4173,65 +5529,24 @@ function silasPlayDuos(
           );
 
 
-        if(
-          state.hand.length
-        ){
+        setLastMove(
+          'Silas',
 
-          const i=
-            Math.floor(
-              Math.random()*
-              state.hand.length
-            );
-
-
-          const stolen=
-            state.hand
-              .splice(
-                i,
-                1
-              )[0];
-
-
-          state.silasHand
-            .push(
-              stolen
-            );
-
-
-          setLastMove(
-            'Silas',
-
-            'spielt Hai + Schwimmer und stiehlt '
-            +
-            playerName()
-            +
-            ' '
-            +
-            names[stolen.type]
-            +
-            '.'
-          );
-        }
-        else{
-
-          setLastMove(
-            'Silas',
-
-            'spielt Hai + Schwimmer, aber '
-            +
-            playerName()
-            +
-            ' hat keine Karte zum Stehlen.'
-          );
-        }
+          'spielt Hai + Schwimmer, aber '
+          +
+          playerName()
+          +
+          ' hat keine Karte zum Stehlen.'
+        );
 
 
         changed=true;
-
         continue;
       }
     }
 
+
+    /* Mr Krabs */
 
     if(
       countType(
@@ -4260,8 +5575,7 @@ function silasPlayDuos(
 
 
         if(
-          state.piles[0]
-            .length
+          state.piles[0].length
         ){
 
           possible.push(
@@ -4271,8 +5585,7 @@ function silasPlayDuos(
 
 
         if(
-          state.piles[1]
-            .length
+          state.piles[1].length
         ){
 
           possible.push(
@@ -4299,42 +5612,38 @@ function silasPlayDuos(
           let bestValue=-999;
 
 
-          state.piles[
-            pile
-          ]
-          .forEach(
-            (card,i)=>{
+          state.piles[pile]
+            .forEach(
+              (card,index)=>{
 
-              const value=
-                silasCardValue(
-                  card
-                );
+                const value=
+                  silasCardValue(
+                    card
+                  );
 
 
-              if(
-                value>
-                bestValue
-              ){
+                if(
+                  value>
+                  bestValue
+                ){
 
-                bestValue=
-                  value;
+                  bestValue=
+                    value;
 
 
-                bestIndex=
-                  i;
+                  bestIndex=
+                    index;
+                }
               }
-            }
-          );
+            );
 
 
           const chosen=
-            state.piles[
-              pile
-            ]
-            .splice(
-              bestIndex,
-              1
-            )[0];
+            state.piles[pile]
+              .splice(
+                bestIndex,
+                1
+              )[0];
 
 
           state.silasHand
@@ -4344,9 +5653,9 @@ function silasPlayDuos(
 
 
           /*
-            GEÄNDERT IN 9k:
-            Die gezogene Karte wird dem Gegenspieler
-            nicht mehr verraten.
+            Wie in 9k:
+            Welche Karte Silas genommen hat,
+            bleibt geheim.
           */
           setLastMove(
             'Silas',
@@ -4373,7 +5682,6 @@ function silasPlayDuos(
 
 
         changed=true;
-
         continue;
       }
     }
@@ -4382,15 +5690,96 @@ function silasPlayDuos(
 
 
 /* =========================
-   SILAS ZUG
+   QUALLE – SILAS BLOCKIERT
+========================= */
+
+function finishSilasTurnToYou(){
+
+  state.busy=false;
+
+  state.turn='you';
+
+  state.phase='draw';
+
+
+  hideSpecialStatus();
+
+  render();
+
+  saveGame();
+}
+
+
+function silasBlockedTurn(){
+
+  state.silasJellyBlocked=
+    false;
+
+
+  if(
+    state.deck.length
+  ){
+
+    state.silasHand
+      .push(
+        state.deck.pop()
+      );
+
+
+    setLastMove(
+      'Silas',
+
+      'ist durch die Qualle blockiert und zieht 1 Karte vom Nachziehstapel.'
+    );
+
+
+    if(
+      hasFourMermaids(
+        state.silasHand,
+        state.silasPlayed
+      )
+    ){
+
+      instantWin(
+        'silas'
+      );
+
+
+      return;
+    }
+  }
+  else{
+
+    setLastMove(
+      'Silas',
+
+      'ist durch die Qualle blockiert, aber der Nachziehstapel ist leer.'
+    );
+  }
+
+
+  /*
+    Silas darf in diesem Zug
+    weder Duo spielen noch
+    die Runde beenden.
+  */
+  finishSilasTurnToYou();
+}
+
+
+/* =========================
+   SILAS-ZUG
 ========================= */
 
 function silasTurn(){
 
   if(
-    !state.started ||
-    state.roundOver ||
-    state.gameOver ||
+    !state.started
+    ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
     state.waitingForSilasStart
   ){
 
@@ -4399,6 +5788,16 @@ function silasTurn(){
 
 
   hideSpecialStatus();
+
+
+  if(
+    state.silasJellyBlocked
+  ){
+
+    silasBlockedTurn();
+
+    return;
+  }
 
 
   silasTakeOneCard();
@@ -4449,7 +5848,7 @@ function silasTurn(){
   }
 
 
-  const sp=
+  const points=
     scoreCards(
       state.silasHand,
       state.silasPlayed
@@ -4457,7 +5856,7 @@ function silasTurn(){
 
 
   if(
-    sp>=12
+    points>=12
   ){
 
     setLastMove(
@@ -4477,20 +5876,7 @@ function silasTurn(){
   }
 
 
-  state.busy=false;
-
-  state.turn=
-    'you';
-
-  state.phase=
-    'draw';
-
-
-  hideSpecialStatus();
-
-  render();
-
-  saveGame();
+  finishSilasTurnToYou();
 }
 
 
@@ -4516,37 +5902,37 @@ function finishRound(
   state.busy=true;
 
 
-  const yp=
+  const yourPoints=
     scoreCards(
       state.hand,
       state.played
     );
 
 
-  const sp=
+  const silasPoints=
     scoreCards(
       state.silasHand,
       state.silasPlayed
     );
 
 
-  const yb=
+  const yourBonus=
     colorBonus(
       state.hand,
       state.played
     );
 
 
-  const sb=
+  const silasBonus=
     colorBonus(
       state.silasHand,
       state.silasPlayed
     );
 
 
-  let ya=0;
+  let yourAward=0;
 
-  let sa=0;
+  let silasAward=0;
 
   let explain='';
 
@@ -4555,9 +5941,12 @@ function finishRound(
     mode==='stop'
   ){
 
-    ya=yp;
+    yourAward=
+      yourPoints;
 
-    sa=sp;
+
+    silasAward=
+      silasPoints;
 
 
     explain=
@@ -4577,15 +5966,17 @@ function finishRound(
   ){
 
     if(
-      yp>=sp
+      yourPoints>=
+      silasPoints
     ){
 
-      ya=
-        yp+yb;
+      yourAward=
+        yourPoints+
+        yourBonus;
 
 
-      sa=
-        sb;
+      silasAward=
+        silasBonus;
 
 
       explain=
@@ -4596,12 +5987,12 @@ function finishRound(
     }
     else{
 
-      ya=
-        yb;
+      yourAward=
+        yourBonus;
 
 
-      sa=
-        sp;
+      silasAward=
+        silasPoints;
 
 
       explain=
@@ -4614,15 +6005,17 @@ function finishRound(
   else{
 
     if(
-      sp>=yp
+      silasPoints>=
+      yourPoints
     ){
 
-      sa=
-        sp+sb;
+      silasAward=
+        silasPoints+
+        silasBonus;
 
 
-      ya=
-        yb;
+      yourAward=
+        yourBonus;
 
 
       explain=
@@ -4635,12 +6028,12 @@ function finishRound(
     }
     else{
 
-      sa=
-        sb;
+      silasAward=
+        silasBonus;
 
 
-      ya=
-        yp;
+      yourAward=
+        yourPoints;
 
 
       explain=
@@ -4655,11 +6048,11 @@ function finishRound(
 
 
   state.youTotal+=
-    ya;
+    yourAward;
 
 
   state.silasTotal+=
-    sa;
+    silasAward;
 
 
   state.resultTitle=
@@ -4669,33 +6062,27 @@ function finishRound(
   state.resultHTML=
 
     `<div class="resultLine">
-
       <strong>
-        ${playerName()}: ${yp} Kartenpunkte${mode==='last'?` · Farbbonus ${yb}`:''}
+        ${playerName()}: ${yourPoints} Kartenpunkte${mode==='last'?` · Farbbonus ${yourBonus}`:''}
       </strong>
-
     </div>`
 
     +
 
     `<div class="resultLine">
-
       <strong>
-        Silas: ${sp} Kartenpunkte${mode==='last'?` · Farbbonus ${sb}`:''}
+        Silas: ${silasPoints} Kartenpunkte${mode==='last'?` · Farbbonus ${silasBonus}`:''}
       </strong>
-
     </div>`
 
     +
 
     `<div class="resultLine">
-
       <strong>
         Für diese Runde:
-        ${playerName()} +${ya} ·
-        Silas +${sa}
+        ${playerName()} +${yourAward} ·
+        Silas +${silasAward}
       </strong>
-
     </div>`
 
     +
@@ -4724,10 +6111,15 @@ function finishRound(
     ){
 
       state.resultTitle=
+
         '🎉 '
+
         +
+
         playerName()
+
         +
+
         ' gewinnt die Partie!';
 
 
@@ -4837,11 +6229,17 @@ function finishRound(
 function stopRound(){
 
   if(
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
-    state.phase!=='action' ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
+    state.phase!=='action'
+    ||
     score()<7
+    ||
+    state.youJellyBlocked
   ){
 
     return;
@@ -4869,11 +6267,17 @@ function stopRound(){
 function lastChance(){
 
   if(
-    state.roundOver ||
-    state.gameOver ||
-    state.turn!=='you' ||
-    state.phase!=='action' ||
+    state.roundOver
+    ||
+    state.gameOver
+    ||
+    state.turn!=='you'
+    ||
+    state.phase!=='action'
+    ||
     score()<7
+    ||
+    state.youJellyBlocked
   ){
 
     return;
@@ -4882,8 +6286,7 @@ function lastChance(){
 
   state.busy=true;
 
-  state.turn=
-    'silas';
+  state.turn='silas';
 
 
   setLastMove(
@@ -4909,6 +6312,64 @@ function lastChance(){
 
   setTimeout(
     ()=>{
+
+      /*
+        Falls Silas vorher durch
+        Qualle + Schwimmer blockiert wurde,
+        besteht auch sein letzter Zug nur
+        aus genau einer Karte.
+      */
+      if(
+        state.silasJellyBlocked
+      ){
+
+        state.silasJellyBlocked=
+          false;
+
+
+        if(
+          state.deck.length
+        ){
+
+          state.silasHand
+            .push(
+              state.deck.pop()
+            );
+
+
+          setLastMove(
+            'Silas',
+
+            'ist durch die Qualle blockiert und zieht in seinem letzten Zug nur 1 Karte vom Nachziehstapel.'
+          );
+
+
+          if(
+            hasFourMermaids(
+              state.silasHand,
+              state.silasPlayed
+            )
+          ){
+
+            instantWin(
+              'silas'
+            );
+
+
+            return;
+          }
+        }
+
+
+        finishRound(
+          'last',
+          'you'
+        );
+
+
+        return;
+      }
+
 
       silasTakeOneCard();
 
@@ -4953,7 +6414,9 @@ function lastChance(){
    4 MEERJUNGFRAUEN
 ========================= */
 
-function instantWin(player){
+function instantWin(
+  player
+){
 
   state.roundOver=true;
 
@@ -5051,7 +6514,7 @@ $('changePlayerBtn')
 $('drawBtn')
   .addEventListener(
     'click',
-    drawTwo
+    handleDraw
   );
 
 
@@ -5130,10 +6593,6 @@ else if(
   !state.gameOver
 ){
 
-  /*
-    Browser wurde geschlossen,
-    während Silas noch auf das OK wartete.
-  */
   showSilasStartConfirmation();
 }
 else if(
@@ -5146,11 +6605,8 @@ else if(
   !state.gameOver
 ){
 
-  /*
-    Browser wurde während eines normalen
-    Silas-Zuges geschlossen.
-  */
   state.busy=true;
+
 
   render();
 
