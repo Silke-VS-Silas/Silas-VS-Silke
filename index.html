@@ -3,36 +3,111 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sea Salt & Paper – Version 9r</title>
+<title>Sea Salt & Paper – Version 9s</title>
 <style>
 :root{--bg:#f4efe6;--ink:#17212b;--muted:#68737d;--line:#d9d0c3;--red:#a82520;--green:#2f7d43;--cream:#fffdf8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(#f7f3ec,#eee7dc);color:var(--ink);font-family:Arial,sans-serif}.app{max-width:780px;margin:auto;padding:8px}.top,.head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.actions,.scores,.duos{display:flex;gap:7px;flex-wrap:wrap}h1{font-size:24px;margin:0}.sub{font-size:12px;color:var(--muted)}.scores{font-size:17px;font-weight:800}.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;min-height:42px;font-weight:700}.btn:disabled{opacity:.35}.red{background:var(--red);border-color:var(--red);color:#fff}.green{background:var(--green);border-color:var(--green);color:#fff}.duo{background:#fff1d8;border-color:#dfbd80}.box,.status,.choice{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:9px}.status{background:#edf7f2;border-color:#c7ded2;font-weight:700}.hidden{display:none!important}.backrow,.played{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.back{width:26px;height:37px;border-radius:6px;background:#28506b;color:#fff;display:flex;align-items:center;justify-content:center}.board{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:9px}.zone{border:1px solid var(--line);border-radius:14px;background:#fff;padding:6px;min-height:112px}.zone h2{font-size:13px;color:var(--muted);margin:0 0 5px}.deck{text-align:center}.wave{font-size:34px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:7px}.choicegrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}.card{--c:#ddd;position:relative;overflow:hidden;border:1px solid color-mix(in srgb,var(--c) 55%,#b9b6af);border-radius:12px;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 22%,white) 0%,color-mix(in srgb,var(--c) 10%,white) 100%);height:116px;min-height:116px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.08)}.card:before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--c)}.card:after{content:"";position:absolute;inset:8px 0 auto 0;height:28px;background:linear-gradient(120deg,transparent 0 62%,rgba(255,255,255,.34) 62% 74%,transparent 74%);pointer-events:none}.chead{display:flex;align-items:center;gap:5px;margin-top:4px;position:relative;z-index:2}.mark{width:12px;height:12px;border-radius:50%;background:var(--c);border:1px solid #777;flex:0 0 auto}.name{font-size:12px;font-weight:900;line-height:1.05}.art{display:flex;align-items:center;justify-content:center;height:34px;min-height:34px;position:relative;z-index:1}.ico{font-size:31px;filter:drop-shadow(0 1px 0 rgba(255,255,255,.65))}.sea{width:29px;height:36px;object-fit:contain;display:block}.rule{font-size:9px;line-height:1.15;font-weight:700}.foot{display:flex;justify-content:space-between;font-size:9px;color:#56616a;position:relative;z-index:2}.special{background:linear-gradient(145deg,color-mix(in srgb,var(--c) 36%,white) 0%,color-mix(in srgb,var(--c) 20%,white) 100%);border:2px solid color-mix(in srgb,var(--c) 72%,#5d6670);padding-top:8px}.special:before{height:100%;opacity:.11;background:var(--c)}.special:after{inset:0;background:linear-gradient(135deg,rgba(255,255,255,.42) 0 24%,transparent 24% 57%,rgba(255,255,255,.20) 57% 70%,transparent 70%);height:100%}.special .chead{padding-right:39px}.special .name{color:#173b63;font-size:12.5px;letter-spacing:.01em}.special .rule{color:#173b63;font-size:9.5px;font-weight:900}.special .art{height:34px;min-height:34px}.specialBadge{position:absolute;right:6px;top:6px;z-index:4;width:37px;height:37px;border-radius:7px;background:rgba(255,255,255,.93);border:1px solid rgba(23,59,99,.24);box-shadow:0 1px 2px rgba(0,0,0,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#173b63;line-height:1}.specialBadge .mult{font-size:10px;font-weight:900}.specialBadge .target{font-size:16px;margin-top:1px}.mini{width:86px;height:94px;min-height:94px;padding:6px}.mini .ico{font-size:25px}.mini .sea{width:24px;height:30px}.mini.special .name{font-size:10.5px}.mini .specialBadge{width:31px;height:31px;right:4px;top:4px}.mini .specialBadge .target{font-size:13px}.mini .specialBadge .mult{font-size:8px}.last ul{margin:5px 0 0;padding-left:20px}.points{font-weight:800}.overlay{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:999}.dialog{width:min(420px,100%);background:#fff;border-radius:18px;padding:18px}.names{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
 </style>
 </head>
 <body>
+
 <div class="app">
   <div class="top">
-    <div><h1>Sea Salt & Paper</h1><div class="sub">Version 9r · farbige Karten · einheitliche Höhe</div></div>
-    <div class="scores"><span><span id="pname">Spieler</span>: <span id="ys">0</span></span><span>Silas: <span id="ss">0</span></span></div>
-    <div class="actions"><button id="new" class="btn red" type="button">Neues Spiel</button><button id="round" class="btn green" type="button">Neue Runde</button><button id="change" class="btn" type="button">Spieler wechseln</button></div>
+    <div>
+      <h1>Sea Salt & Paper</h1>
+      <div class="sub">Version 9s · Seepferdchen korrigiert</div>
+    </div>
+
+    <div class="scores">
+      <span><span id="pname">Spieler</span>: <span id="ys">0</span></span>
+      <span>Silas: <span id="ss">0</span></span>
+    </div>
+
+    <div class="actions">
+      <button id="new" class="btn red" type="button">Neues Spiel</button>
+      <button id="round" class="btn green" type="button">Neue Runde</button>
+      <button id="change" class="btn" type="button">Spieler wechseln</button>
+    </div>
   </div>
+
   <div id="status" class="status hidden"></div>
-  <div class="box"><div class="head"><div><strong>Silas</strong><div class="sub">Verdeckte Hand: <span id="sc">0</span> Karten</div></div></div><div id="sback" class="backrow"></div><div style="margin-top:9px"><strong>Silas ausgespielt</strong></div><div id="splayed" class="played"></div></div>
-  <div class="box last"><strong>Letzter Zug</strong><div id="last">Noch kein Zug.</div></div>
-  <div class="board">
-    <button id="draw" class="zone deck" type="button" disabled><div class="wave">🌊</div><strong id="drawlabel">2 Karten ziehen</strong><div class="sub"><span id="dc">0</span> übrig</div></button>
-    <button id="pa" class="zone" type="button" disabled><h2>Ablage A</h2><div id="pac">leer</div></button>
-    <button id="pb" class="zone" type="button" disabled><h2>Ablage B</h2><div id="pbc">leer</div></button>
+
+  <div class="box">
+    <div class="head">
+      <div>
+        <strong>Silas</strong>
+        <div class="sub">Verdeckte Hand: <span id="sc">0</span> Karten</div>
+      </div>
+    </div>
+    <div id="sback" class="backrow"></div>
+    <div style="margin-top:9px"><strong>Silas ausgespielt</strong></div>
+    <div id="splayed" class="played"></div>
   </div>
-  <div id="choice" class="choice hidden"><strong id="ct"></strong><div id="cg" class="choicegrid"></div></div>
-  <div class="box"><div class="head"><div><strong>Deine Hand</strong><div class="points">Punkte: <span id="yp">0</span></div></div><div class="actions"><button id="end" class="btn green" type="button" disabled>Zug beenden</button><button id="stop" class="btn" type="button" disabled>Stopp</button><button id="chance" class="btn duo" type="button" disabled>Letzte Chance</button></div></div><div id="hand" class="grid"></div><div id="duos" class="duos"></div></div>
-  <div class="box"><strong>Deine ausgespielten Duos / Trios</strong><div id="played" class="played"></div></div>
-  <div id="result" class="box hidden"><strong id="rt">Rundenergebnis</strong><div id="rtext"></div><div style="margin-top:10px"><strong>Silas deckt auf</strong></div><div id="reveal" class="grid"></div><button id="next" class="btn green" type="button" style="margin-top:10px">Nächste Runde</button></div>
+
+  <div class="box last">
+    <strong>Letzter Zug</strong>
+    <div id="last">Noch kein Zug.</div>
+  </div>
+
+  <div class="board">
+    <button id="draw" class="zone deck" type="button" disabled>
+      <div class="wave">🌊</div>
+      <strong id="drawlabel">2 Karten ziehen</strong>
+      <div class="sub"><span id="dc">0</span> übrig</div>
+    </button>
+
+    <button id="pa" class="zone" type="button" disabled>
+      <h2>Ablage A</h2>
+      <div id="pac">leer</div>
+    </button>
+
+    <button id="pb" class="zone" type="button" disabled>
+      <h2>Ablage B</h2>
+      <div id="pbc">leer</div>
+    </button>
+  </div>
+
+  <div id="choice" class="choice hidden">
+    <strong id="ct"></strong>
+    <div id="cg" class="choicegrid"></div>
+  </div>
+
+  <div class="box">
+    <div class="head">
+      <div>
+        <strong>Deine Hand</strong>
+        <div class="points">Punkte: <span id="yp">0</span></div>
+      </div>
+
+      <div class="actions">
+        <button id="end" class="btn green" type="button" disabled>Zug beenden</button>
+        <button id="stop" class="btn" type="button" disabled>Stopp</button>
+        <button id="chance" class="btn duo" type="button" disabled>Letzte Chance</button>
+      </div>
+    </div>
+
+    <div id="hand" class="grid"></div>
+    <div id="duos" class="duos"></div>
+  </div>
+
+  <div class="box">
+    <strong>Deine ausgespielten Duos / Trios</strong>
+    <div id="played" class="played"></div>
+  </div>
+
+  <div id="result" class="box hidden">
+    <strong id="rt">Rundenergebnis</strong>
+    <div id="rtext"></div>
+    <div style="margin-top:10px"><strong>Silas deckt auf</strong></div>
+    <div id="reveal" class="grid"></div>
+    <button id="next" class="btn green" type="button" style="margin-top:10px">Nächste Runde</button>
+  </div>
 </div>
 
 <div id="overlay" class="overlay hidden">
   <div class="dialog">
     <h2>Wer spielt gegen Silas?</h2>
     <div class="sub">Wähle deinen Spielernamen.</div>
+
     <div class="names">
       <button class="btn nbtn" data-n="Silke" type="button">Silke</button>
       <button class="btn nbtn" data-n="Karin" type="button">Karin</button>
@@ -45,21 +120,126 @@
 <script>
 (()=>{'use strict';
 
-const $=id=>document.getElementById(id),SAVE='ssap-v9p',PKEY='sea-salt-player-name';
+const $=id=>document.getElementById(id);
+const SAVE='ssap-v9p';
+const PKEY='sea-salt-player-name';
 
-const SEA='data:image/webp;base64,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';
+const SEA="data:image/svg+xml;utf8,%3Csvg%20viewBox='0%200%2080%20120'%20xmlns='http://www.w3.org/2000/svg'%20aria-hidden='true'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20stop-color='#77c7ff'/%3E%3Cstop%20offset='1'%20stop-color='#135fa8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20fill='url(#g)'%20d='M49%207c-11%200-20%208-20%2018%200%207%204%2013%2010%2016-9%205-14%2014-14%2024%200%2016%2012%2027%2024%2029%207%201%2012-2%2012-8%200-6-5-9-10-8-4%201-6%205-5%209-9-3-14-11-14-21%200-11%206-19%2016-23%2011-4%2018-12%2018-22C66%2013%2059%207%2049%207Z'/%3E%3Ccircle%20cx='54'%20cy='20'%20r='3.7'%20fill='#0b2d50'/%3E%3Cpath%20fill='#2d83c6'%20d='M39%2040c-10%204-16%2012-17%2022%209-5%2016-4%2021%203%200-11%204-18%2012-23-5-3-10-4-16-2Z'/%3E%3Cpath%20fill='#6bb8ea'%20d='M31%2026c-8%200-14%205-14%2011%207-2%2013%200%2018%205%201-7-1-12-4-16Z'/%3E%3Cpath%20fill='#1f6cae'%20d='M28%2091c-6%206-7%2015-2%2021%204%205%2011%205%2016%201%204-3%205-9%202-13-2-4-7-5-11-3%202-4%200-7-5-6Z'/%3E%3Cpath%20fill='#9bd7ff'%20d='M48%2033c6%201%2010-2%2012-7-6%203-11%203-16%200%200%204%201%206%204%207Z'/%3E%3C/svg%3E";
 
-const N={crab:'Mr Krabs',boat:'Boot',fish:'Fisch',shark:'Hai',swimmer:'Schwimmer',shell:'Muschel',octopus:'Oktopus',penguin:'Pinguin',sailor:'Anker',mermaid:'Meerjungfrau',lighthouse:'eine pro Boot',shoal:'ein pro Fisch',colony:'zwei pro Pinguin',captain:'drei pro Anker',jellyfish:'Qualle',lobster:'Hummer',crabBasket:'eine pro Mr Krabs',starfish:'Seestern',seahorse:'Seepferdchen'};
+const N={
+crab:'Mr Krabs',
+boat:'Boot',
+fish:'Fisch',
+shark:'Hai',
+swimmer:'Schwimmer',
+shell:'Muschel',
+octopus:'Oktopus',
+penguin:'Pinguin',
+sailor:'Anker',
+mermaid:'Meerjungfrau',
+lighthouse:'eine pro Boot',
+shoal:'ein pro Fisch',
+colony:'zwei pro Pinguin',
+captain:'drei pro Anker',
+jellyfish:'Qualle',
+lobster:'Hummer',
+crabBasket:'eine pro Mr Krabs',
+starfish:'Seestern',
+seahorse:'Seepferdchen'
+};
 
-const I={crab:'🦀',boat:'⛵',fish:'🐟',shark:'🦈',swimmer:'🏊',shell:'🐚',octopus:'🐙',penguin:'🐧',sailor:'⚓',mermaid:'🧜‍♀️',lighthouse:'🗼',shoal:'🐟',colony:'🐧',captain:'🧭',jellyfish:'🪼',lobster:'🦞',crabBasket:'🧺',starfish:'⭐'};
+const I={
+crab:'🦀',
+boat:'⛵',
+fish:'🐟',
+shark:'🦈',
+swimmer:'🏊',
+shell:'🐚',
+octopus:'🐙',
+penguin:'🐧',
+sailor:'⚓',
+mermaid:'🧜‍♀️',
+lighthouse:'🗼',
+shoal:'🐟',
+colony:'🐧',
+captain:'🧭',
+jellyfish:'🪼',
+lobster:'🦞',
+crabBasket:'🧺',
+starfish:'⭐'
+};
 
-const R={crab:'2 = 1 Pkt · Ablage durchsuchen',boat:'2 = 1 Pkt · Extra-Zug',fish:'2 = 1 Pkt · 1 Karte ziehen',shark:'Hai + Schwimmer = 1 Pkt · Karte stehlen',swimmer:'Hai/Qualle + Schwimmer = 1 Pkt',shell:'2=2 · 3=4 · 4=6 · 5=8 · 6=10',octopus:'2=3 · 3=6 · 4=9 · 5=12',penguin:'1=1 · 2=3 · 3=5',sailor:'2 = 5 Punkte',lighthouse:'+1 je Boot',shoal:'+1 je Fisch',colony:'+2 je Pinguin',captain:'+3 je Anker',mermaid:'Wertet häufigste Farbe · 4 = Sofortsieg',jellyfish:'Qualle + Schwimmer = 1 Pkt · Gegner nur 1 Karte',lobster:'Hummer + Mr Krabs = 1 Pkt · Top 5, 1 wählen',crabBasket:'+1 je Mr Krabs',starfish:'Duo + Seestern = 3 Pkt · Effekt entfällt',seahorse:'ersetzt 1 Sammelkarte · mind. 1 echte'};
+const R={
+crab:'2 = 1 Pkt · Ablage durchsuchen',
+boat:'2 = 1 Pkt · Extra-Zug',
+fish:'2 = 1 Pkt · 1 Karte ziehen',
+shark:'Hai + Schwimmer = 1 Pkt · Karte stehlen',
+swimmer:'Hai/Qualle + Schwimmer = 1 Pkt',
+shell:'2=2 · 3=4 · 4=6 · 5=8 · 6=10',
+octopus:'2=3 · 3=6 · 4=9 · 5=12',
+penguin:'1=1 · 2=3 · 3=5',
+sailor:'2 = 5 Punkte',
+lighthouse:'+1 je Boot',
+shoal:'+1 je Fisch',
+colony:'+2 je Pinguin',
+captain:'+3 je Anker',
+mermaid:'Wertet häufigste Farbe · 4 = Sofortsieg',
+jellyfish:'Qualle + Schwimmer = 1 Pkt · Gegner nur 1 Karte',
+lobster:'Hummer + Mr Krabs = 1 Pkt · Top 5, 1 wählen',
+crabBasket:'+1 je Mr Krabs',
+starfish:'Duo + Seestern = 3 Pkt · Effekt entfällt',
+seahorse:'ersetzt 1 Sammelkarte · mind. 1 echte'
+};
 
-const CN={darkblue:'Dunkelblau',turquoise:'Hellblau',yellow:'Gelb',black:'Schwarz',green:'Hellgrün',gray:'Hellgrau',lavender:'Lila',pink:'Hellrosa',peach:'Hellorange',orange:'Orange',white:'Weiß'};
+const CN={
+darkblue:'Dunkelblau',
+turquoise:'Hellblau',
+yellow:'Gelb',
+black:'Schwarz',
+green:'Hellgrün',
+gray:'Hellgrau',
+lavender:'Lila',
+pink:'Hellrosa',
+peach:'Hellorange',
+orange:'Orange',
+white:'Weiß'
+};
 
-const CH={darkblue:'#356b93',turquoise:'#73c3cc',yellow:'#e6ca48',black:'#4f5154',green:'#9acb83',gray:'#c8c9cb',lavender:'#9a80b9',pink:'#e59eb8',peach:'#eab385',orange:'#df7c2f',white:'#f7f4eb'};
+const CH={
+darkblue:'#356b93',
+turquoise:'#73c3cc',
+yellow:'#e6ca48',
+black:'#4f5154',
+green:'#9acb83',
+gray:'#c8c9cb',
+lavender:'#9a80b9',
+pink:'#e59eb8',
+peach:'#eab385',
+orange:'#df7c2f',
+white:'#f7f4eb'
+};
 
-const C={crab:9,boat:8,fish:7,shark:5,swimmer:5,shell:6,octopus:5,penguin:3,sailor:2,lighthouse:1,shoal:1,colony:1,captain:1,mermaid:4,jellyfish:2,lobster:1,crabBasket:1,starfish:3,seahorse:1};
+const C={
+crab:9,
+boat:8,
+fish:7,
+shark:5,
+swimmer:5,
+shell:6,
+octopus:5,
+penguin:3,
+sailor:2,
+lighthouse:1,
+shoal:1,
+colony:1,
+captain:1,
+mermaid:4,
+jellyfish:2,
+lobster:1,
+crabBasket:1,
+starfish:3,
+seahorse:1
+};
 
 const sp=(t,a)=>a.map(color=>({type:t,color}));
 
@@ -90,9 +270,36 @@ const EXTRA=[
 
 let uid=1;
 
-const S={deck:[],piles:[[],[]],hand:[],sh:[],played:[],sp:[],yt:0,st:0,started:false,busy:false,roundOver:true,gameOver:false,turn:'none',phase:'draw',next:'you',starter:'you',wait:false,name:null,lastWho:'',last:[],msg:'',yj:false,sj:false,sExtra:false,result:''};
+const S={
+deck:[],
+piles:[[],[]],
+hand:[],
+sh:[],
+played:[],
+sp:[],
+yt:0,
+st:0,
+started:false,
+busy:false,
+roundOver:true,
+gameOver:false,
+turn:'none',
+phase:'draw',
+next:'you',
+starter:'you',
+wait:false,
+name:null,
+lastWho:'',
+last:[],
+msg:'',
+yj:false,
+sj:false,
+sExtra:false,
+result:''
+};
 
-const safe=v=>Number.isFinite(Number(v))?Number(v):0,arr=v=>Array.isArray(v)?v.filter(Boolean):[];
+const safe=v=>Number.isFinite(Number(v))?Number(v):0;
+const arr=v=>Array.isArray(v)?v.filter(Boolean):[];
 
 function shuffle(a){
 a=a.slice();
@@ -117,25 +324,33 @@ if(S.name)localStorage.setItem(PKEY,S.name);
 function load(){
 try{
 const raw=localStorage.getItem(SAVE);
+
 if(!raw){
 S.name=localStorage.getItem(PKEY)||null;
 return false;
 }
+
 const x=JSON.parse(raw);
+
 if(!x?.S)return false;
+
 Object.assign(S,x.S);
+
 uid=safe(x.uid)||1;
+
 S.deck=arr(S.deck);
 S.hand=arr(S.hand);
 S.sh=arr(S.sh);
 S.played=arr(S.played);
 S.sp=arr(S.sp);
 S.piles=Array.isArray(S.piles)?[arr(S.piles[0]),arr(S.piles[1])]:[[],[]];
+
 S.yt=safe(S.yt);
 S.st=safe(S.st);
 S.last=arr(S.last);
 S.name=S.name||localStorage.getItem(PKEY)||'Silke';
 S.busy=false;
+
 return true;
 }catch(e){
 return false;
@@ -159,10 +374,23 @@ return a?safe(a[Math.min(Math.max(0,n),a.length-1)]):0;
 
 function seaGain(cards){
 let best=0;
-for(const [t,m] of Object.entries({shell:6,octopus:5,penguin:3,sailor:2})){
+
+for(const [t,m] of Object.entries({
+shell:6,
+octopus:5,
+penguin:3,
+sailor:2
+})){
 const n=ct(cards,t);
-if(n>=1&&n<m)best=Math.max(best,cscore(t,n+1)-cscore(t,n));
+
+if(n>=1&&n<m){
+best=Math.max(
+best,
+cscore(t,n+1)-cscore(t,n)
+);
 }
+}
+
 return best;
 }
 
@@ -173,7 +401,10 @@ let v=
 Math.floor(ct(a,'crab')/2)+
 Math.floor(ct(a,'boat')/2)+
 Math.floor(ct(a,'fish')/2)+
-Math.min(ct(a,'swimmer'),ct(a,'shark')+ct(a,'jellyfish'));
+Math.min(
+ct(a,'swimmer'),
+ct(a,'shark')+ct(a,'jellyfish')
+);
 
 if(ct(a,'lobster')&&ct(a,'crab')%2)v++;
 
@@ -194,9 +425,16 @@ const m=ct(a,'mermaid');
 
 if(m){
 const f={};
-a.forEach(c=>f[c.color]=(f[c.color]||0)+1);
+
+a.forEach(
+c=>f[c.color]=(f[c.color]||0)+1
+);
+
 const vals=Object.values(f).sort((x,y)=>y-x);
-for(let i=0;i<m;i++)v+=vals[i]||0;
+
+for(let i=0;i<m;i++){
+v+=vals[i]||0;
+}
 }
 
 return safe(v);
@@ -204,8 +442,13 @@ return safe(v);
 
 function bonus(h,p){
 const f={};
-[...arr(h),...arr(p)].forEach(c=>f[c.color]=(f[c.color]||0)+1);
+
+[...arr(h),...arr(p)].forEach(
+c=>f[c.color]=(f[c.color]||0)+1
+);
+
 const v=Object.values(f);
+
 return v.length?Math.max(...v):0;
 }
 
@@ -217,7 +460,9 @@ if(S.lastWho!==w){
 S.lastWho=w;
 S.last=[];
 }
+
 S.last.push(t);
+
 save();
 }
 
@@ -244,17 +489,21 @@ crabBasket:{m:'+1',i:'🦀'}
 };
 
 function card(c,mini=false){
+
 if(!c)return'';
 
-const art=c.type==='seahorse'
+const art=
+c.type==='seahorse'
 ?`<img class="sea" src="${SEA}" alt="Seepferdchen">`
 :`<div class="ico">${I[c.type]||'🃏'}</div>`;
 
 const spc=SPECIAL[c.type];
 
-const cls=`card${mini?' mini':''}${spc?' special':''}`;
+const cls=
+`card${mini?' mini':''}${spc?' special':''}`;
 
-const badge=spc
+const badge=
+spc
 ?`<div class="specialBadge"><span class="mult">${spc.m}</span><span class="target">${spc.i}</span></div>`
 :'';
 
@@ -273,7 +522,8 @@ ${badge}
 <span>${CN[c.color]}</span>
 <span>×${C[c.type]||1}</span>
 </div>
-</div>`;
+</div>
+`;
 }
 
 function defs(h){
@@ -284,7 +534,12 @@ return[
 {k:'shark',l:'Hai + Schwimmer',a:'shark',b:'swimmer'},
 {k:'jellyfish',l:'Qualle + Schwimmer',a:'jellyfish',b:'swimmer'},
 {k:'lobster',l:'Hummer + Mr Krabs',a:'lobster',b:'crab'}
-].filter(d=>d.a===d.b?ct(h,d.a)>=2:ct(h,d.a)&&ct(h,d.b));
+].filter(
+d=>
+d.a===d.b
+?ct(h,d.a)>=2
+:ct(h,d.a)&&ct(h,d.b)
+);
 }
 
 function render(){
@@ -296,15 +551,24 @@ $('dc').textContent=S.deck.length;
 $('yp').textContent=yscore();
 $('sc').textContent=S.sh.length;
 
-$('sback').innerHTML=S.sh.map(()=>'<div class="back">✦</div>').join('');
+$('sback').innerHTML=
+S.sh.map(()=>'<div class="back">✦</div>').join('');
 
-$('splayed').innerHTML=S.sp.length
+$('splayed').innerHTML=
+S.sp.length
 ?S.sp.map(c=>card(c,true)).join('')
 :'<span class="sub">Noch nichts ausgespielt.</span>';
 
 if(S.lastWho&&S.last.length){
-$('last').innerHTML=`<strong>${S.lastWho}:</strong><ul>${S.last.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+
+$('last').innerHTML=
+`<strong>${S.lastWho}:</strong>
+<ul>
+${S.last.map(x=>`<li>${x}</li>`).join('')}
+</ul>`;
+
 }else{
+
 $('last').textContent='Noch kein Zug.';
 }
 
@@ -317,11 +581,13 @@ const b=top(1);
 $('pac').innerHTML=a?card(a):'leer';
 $('pbc').innerHTML=b?card(b):'leer';
 
-$('hand').innerHTML=S.hand.length
+$('hand').innerHTML=
+S.hand.length
 ?S.hand.map(c=>card(c)).join('')
 :'<span class="sub">Noch keine Karten.</span>';
 
-$('played').innerHTML=S.played.length
+$('played').innerHTML=
+S.played.length
 ?S.played.map(c=>card(c,true)).join('')
 :'<span class="sub">Noch nichts ausgespielt.</span>';
 
@@ -335,18 +601,44 @@ S.turn==='you';
 const dr=yt&&S.phase==='draw';
 const ac=yt&&S.phase==='action';
 
-$('drawlabel').textContent=dr&&S.yj?'1 Karte ziehen':'2 Karten ziehen';
+$('drawlabel').textContent=
+dr&&S.yj
+?'1 Karte ziehen'
+:'2 Karten ziehen';
 
-$('draw').disabled=!dr||S.deck.length<(S.yj?1:2);
-$('pa').disabled=!dr||S.yj||!a;
-$('pb').disabled=!dr||S.yj||!b;
-$('end').disabled=!ac||S.yj;
+$('draw').disabled=
+!dr||
+S.deck.length<(S.yj?1:2);
+
+$('pa').disabled=
+!dr||
+S.yj||
+!a;
+
+$('pb').disabled=
+!dr||
+S.yj||
+!b;
+
+$('end').disabled=
+!ac||
+S.yj;
 
 const ok=yscore()>=7;
 
-$('stop').disabled=!ac||!ok||S.yj;
-$('chance').disabled=!ac||!ok||S.yj;
-$('round').disabled=!S.started||S.gameOver;
+$('stop').disabled=
+!ac||
+!ok||
+S.yj;
+
+$('chance').disabled=
+!ac||
+!ok||
+S.yj;
+
+$('round').disabled=
+!S.started||
+S.gameOver;
 
 $('duos').innerHTML='';
 
@@ -355,42 +647,58 @@ if(ac&&!S.yj){
 const ds=defs(S.hand);
 
 ds.forEach(d=>{
+
 const b=document.createElement('button');
+
 b.className='btn duo';
 b.textContent=d.l+' ausspielen';
 b.onclick=()=>playDuo(d);
+
 $('duos').appendChild(b);
 });
 
 if(ct(S.hand,'starfish')){
 
 ds.forEach(d=>{
+
 const b=document.createElement('button');
+
 b.className='btn duo';
 b.textContent='Seestern + '+d.l+' = 3 Pkt';
 b.onclick=()=>playStar(d);
+
 $('duos').appendChild(b);
 });
-
 }
 }
 
 if(S.roundOver&&S.result){
 
 $('result').classList.remove('hidden');
-$('rt').textContent=S.gameOver?'Partie beendet':'Rundenergebnis';
+
+$('rt').textContent=
+S.gameOver
+?'Partie beendet'
+:'Rundenergebnis';
+
 $('rtext').innerHTML=S.result;
 
-const all=[...S.sh,...S.sp];
+const all=[
+...S.sh,
+...S.sp
+];
 
-$('reveal').innerHTML=all.map(c=>card(c)).join('');
+$('reveal').innerHTML=
+all.map(c=>card(c)).join('');
 
-$('next').classList.toggle('hidden',S.gameOver);
+$('next').classList.toggle(
+'hidden',
+S.gameOver
+);
 
 }else{
 
 $('result').classList.add('hidden');
-
 }
 }
 
@@ -400,6 +708,7 @@ S.busy=true;
 
 $('ct').textContent=title;
 $('cg').innerHTML='';
+
 $('choice').classList.remove('hidden');
 
 opts.forEach(o=>{
@@ -411,7 +720,6 @@ b.innerHTML=o.html||o.label;
 b.onclick=o.fn;
 
 $('cg').appendChild(b);
-
 });
 
 render();
@@ -431,7 +739,9 @@ function startRound(){
 
 if(S.gameOver){
 
-show('Die Partie ist beendet. Bitte „Neues Spiel“ drücken.');
+show(
+'Die Partie ist beendet. Bitte „Neues Spiel“ drücken.'
+);
 
 return;
 }
@@ -469,7 +779,10 @@ if(st==='you'){
 
 S.busy=false;
 
-show(pname()+' beginnt diese Runde.');
+show(
+pname()+
+' beginnt diese Runde.'
+);
 
 save();
 
@@ -477,7 +790,9 @@ save();
 
 S.busy=true;
 
-show('Silas beginnt diese Runde.');
+show(
+'Silas beginnt diese Runde.'
+);
 
 choose(
 'Silas beginnt diese Runde. Schau dir Ablage A und B in Ruhe an.',
@@ -497,8 +812,10 @@ hide();
 render();
 save();
 
-setTimeout(silasTurn,400);
-
+setTimeout(
+silasTurn,
+400
+);
 }
 }
 ]
@@ -516,9 +833,11 @@ function newGame(){
 
 S.yt=0;
 S.st=0;
+
 S.gameOver=false;
 S.started=false;
 S.roundOver=true;
+
 S.next='you';
 S.msg='';
 
@@ -841,7 +1160,8 @@ fn:()=>{
 
 S.hand.push(c);
 
-S.deck=shuffle(
+S.deck=
+shuffle(
 S.deck.concat(
 seen.filter(x=>x.id!==c.id)
 )
@@ -948,7 +1268,10 @@ hide();
 
 render();
 
-setTimeout(silasTurn,500);
+setTimeout(
+silasTurn,
+500
+);
 }
 
 function val(c){
@@ -966,45 +1289,44 @@ const tot=t=>ct(a,t);
 
 if(c.type==='mermaid')return 8;
 
-if(c.type==='penguin')return n('penguin')?5.5:4.3;
+if(c.type==='penguin')
+return n('penguin')?5.5:4.3;
 
-if(c.type==='shell')return n('shell')?4.5:.2;
+if(c.type==='shell')
+return n('shell')?4.5:.2;
 
-if(c.type==='octopus')return n('octopus')?5.2:1.5;
+if(c.type==='octopus')
+return n('octopus')?5.2:1.5;
 
-if(c.type==='sailor')return n('sailor')?6.5:.5;
+if(c.type==='sailor')
+return n('sailor')?6.5:.5;
 
-if(c.type==='starfish')return defs(S.sh).length?5:.7;
+if(c.type==='starfish')
+return defs(S.sh).length?5:.7;
 
-if(c.type==='lobster')return n('crab')?5.8:1;
+if(c.type==='lobster')
+return n('crab')?5.8:1;
 
-if(c.type==='jellyfish')return n('swimmer')?6:1.2;
+if(c.type==='jellyfish')
+return n('swimmer')?6:1.2;
 
-if(c.type==='crab')return n('crab')||n('lobster')?5.5:1.4;
+if(c.type==='crab')
+return n('crab')||n('lobster')?5.5:1.4;
 
-if(c.type==='boat'){
-return
-(n('boat')?6:1.8)
-+
-(tot('lighthouse')?1.5:0);
-}
+if(c.type==='boat')
+return(n('boat')?6:1.8)+(tot('lighthouse')?1.5:0);
 
-if(c.type==='fish'){
-return
-(n('fish')?5.7:1.8)
-+
-(tot('shoal')?1.5:0);
-}
+if(c.type==='fish')
+return(n('fish')?5.7:1.8)+(tot('shoal')?1.5:0);
 
-if(c.type==='shark')return n('swimmer')?6:1.2;
+if(c.type==='shark')
+return n('swimmer')?6:1.2;
 
-if(c.type==='swimmer')return n('shark')||n('jellyfish')?6:1.2;
+if(c.type==='swimmer')
+return n('shark')||n('jellyfish')?6:1.2;
 
-if(c.type==='seahorse'){
-return seaGain(a)>0
-?3.5+seaGain(a)
-:.5;
-}
+if(c.type==='seahorse')
+return seaGain(a)>0?3.5+seaGain(a):.5;
 
 return 2;
 }
@@ -1213,7 +1535,9 @@ if(poss.length){
 
 const i=
 poss[
-Math.floor(Math.random()*poss.length)
+Math.floor(
+Math.random()*poss.length
+)
 ];
 
 const c=S.piles[i].pop();
@@ -1255,7 +1579,10 @@ S.busy=true;
 render();
 save();
 
-setTimeout(silasTurn,500);
+setTimeout(
+silasTurn,
+500
+);
 }
 
 function silasTurn(){
@@ -1304,7 +1631,10 @@ S.sExtra=false;
 render();
 save();
 
-setTimeout(silasTurn,500);
+setTimeout(
+silasTurn,
+500
+);
 
 return;
 }
@@ -1351,19 +1681,22 @@ if(yp>=sp){
 ya=yp+yb;
 sa=sb;
 
-txt=`${pname()} gewinnt die Letzte Chance.`;
+txt=
+`${pname()} gewinnt die Letzte Chance.`;
 
 }else{
 
 ya=yb;
 sa=sp;
 
-txt=`${pname()} verliert die Letzte Chance.`;
+txt=
+`${pname()} verliert die Letzte Chance.`;
 }
 
 }else{
 
-txt='Stopp: Beide erhalten ihre Kartenpunkte.';
+txt=
+'Stopp: Beide erhalten ihre Kartenpunkte.';
 }
 
 S.yt+=ya;
@@ -1455,7 +1788,9 @@ $('round').onclick=startRound;
 
 $('change').onclick=
 ()=>
-$('overlay').classList.remove('hidden');
+$('overlay')
+.classList
+.remove('hidden');
 
 $('draw').onclick=
 ()=>
